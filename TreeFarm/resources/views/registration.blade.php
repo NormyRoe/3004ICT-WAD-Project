@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Logan River Tree Farm Signin
+    Logan River Tree Farm User Registration
 @endsection
 
 
@@ -12,20 +12,44 @@
         
         <!-- Login Form Title -->
         <div>
-            <h2 class="text-4xl text-rose-700 text-center font-bold mb-6">User Login</h2>
+            <h2 class="text-4xl text-rose-700 text-center font-bold mb-6">User Registration</h2>
         </div>
 
-        <!-- Login Form -->
+        <!-- Registration Form -->
         <div>
-            <form method="POST" action="{{ route('landing') }}">
+            <form method="#" action="#">
                 {{csrf_field()}}
-                <label class="text-orange-900 font-semibold">Username or Email Address</label> <br>
+                <label class="text-orange-900 font-semibold">First Name</label> <br>
                 <input 
                     class="rounded w-full mt-2 p-2 border border-yellow-800"
                     type="text" 
-                    name="name"
+                    name="first_name"
+                    required
+                    placeholder="Enter your first name"
+                > <br><br>
+                <label class="text-orange-900 font-semibold">Surname</label> <br>
+                <input 
+                    class="rounded w-full mt-2 p-2 border border-yellow-800"
+                    type="text" 
+                    name="surname"
+                    required
+                    placeholder="Enter surname"
+                > <br><br>
+                <label class="text-orange-900 font-semibold">Username</label> <br>
+                <input 
+                    class="rounded w-full mt-2 p-2 border border-yellow-800"
+                    type="text" 
+                    name="username"
                     required
                     placeholder="Enter username or email address"
+                > <br><br>
+                <label class="text-orange-900 font-semibold">Email Address</label> <br>
+                <input 
+                    class="rounded w-full mt-2 p-2 border border-yellow-800"
+                    type="text" 
+                    name="password"
+                    required
+                    placeholder="Enter email address"
                 > <br><br>
                 <label class="text-orange-900 font-semibold mt-4">Password</label> <br>
                 <input 
@@ -54,7 +78,7 @@
                 <!-- Register Link -->
                 <div class="text-center mt-6">
                     <span class="text-stone-700">Click here to </span>
-                    <a class="text-orange-900 font-semibold hover:underline" href="{{ route('register') }}">Register</a>
+                    <a class="text-orange-900 font-semibold hover:underline" href="{{ route('signin') }}">Sign in</a>
                 </div>
 
             </form>
