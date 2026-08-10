@@ -14,7 +14,7 @@
 
     <div class="flex flex-row gap-x-20">
         <!-- Current Profile  -->
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 bg-yellow-100 p-6 rounded border border-yellow-800">
             <div>
                 <label class="text-orange-900 font-semibold block">First Name</label>
                 <label class="text-black block">(First Name)</label>
