@@ -1,4 +1,10 @@
 
+@props([
+    'headings',
+    'rows',
+    'hideColumns' => [],
+])
+
 <!-- Basic Table without filtering, sorting or searching --> 
 <!-- With responsive behaviour -->
 <div class="overflow-x-auto mt-6">
@@ -26,5 +32,6 @@
                 </tr>
             @endforeach
         </tbody>
-    </table>
+    </table>    
+
 </div>

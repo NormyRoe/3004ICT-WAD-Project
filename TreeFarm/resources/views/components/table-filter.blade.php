@@ -1,15 +1,24 @@
 
-<!-- Table with filtering, sorting and searching -->
+@props([
+    'headings',
+    'rows',
+    'hideColumns' => [],
+    'filterColumns' => [],
+])
+
+<!-- Table with filtering and sorting -->
 <!-- With responsive behaviour -->
 <div class="mt-6">
-
-    <!-- Search Bar -->
-    <div class="mb-4">
-        <input 
-            type="text"
-            placeholder="Search..."
-            class="w-full p-2 border border-yellow-800 rounded"
-        >
+    
+    <!-- Column Filters -->
+    <div class="flex flex-wrap gap-4 mb-4">
+        @foreach ($headings as $index => $heading)
+            @if(in_array($index, $filterColumns))
+                <select class="p-2 border border-yellow-800 rounded text-xs md:text-sm">
+                    <option value="">Filter {{ $heading }}</option>
+                </select>
+            @endif
+        @endforeach
     </div>
 
     <!-- Table -->
@@ -38,7 +47,8 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table>        
+
     </div>
 
 </div>
