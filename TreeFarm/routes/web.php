@@ -89,3 +89,51 @@ Route::get('/tasks', function () {
     ]);
 })->name('tasks');
 
+
+/***************************************************
+
+    Routes for the applications's Admin menu
+
+****************************************************/
+
+Route::get('/admin/details', function () {
+    return view('admin.details', [
+        'name' => session('name')
+    ]);
+})->name('admin.details');
+
+Route::get('/admin/locations', function () {
+    return view('admin.locations', [
+        'name' => session('name')
+    ]);
+})->name('admin.locations');
+
+Route::get('/admin/pots', function () {
+    return view('admin.pots', [
+        'name' => session('name')
+    ]);
+})->name('admin.pots');
+
+Route::get('/admin/prices', function () {
+    return view('admin.prices', [
+        'name' => session('name')
+    ]);
+})->name('admin.prices');
+
+Route::get('/admin/tasks', function () {
+    return view('admin.tasks', [
+        'name' => session('name')
+    ]);
+})->name('admin.tasks');
+
+Route::get('/admin/trees', function () {
+    return view('admin.trees', [
+        'name' => session('name')
+    ]);
+})->name('admin.trees');
+
+Route::get('/admin/users', function () {
+    return view('admin.users', [
+        'name' => session('name')
+    ]);
+})->name('admin.users');

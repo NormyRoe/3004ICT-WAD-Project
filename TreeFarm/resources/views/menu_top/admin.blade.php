@@ -15,40 +15,40 @@
     <!-- Grid Containing the Reference Data options  -->
     <div class="grid grid-cols-2 gap-10 mt-10">
 
-        <a href="#"
+        <a href="{{ route('admin.details') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Farm Details
         </a>
 
-        <a href="#"
+        <a href="{{ route('admin.pots') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Pots
         </a>
 
-        <a href="#"
+        <a href="{{ route('admin.trees') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Trees
         </a>
 
-        <a href="#"
+        <a href="{{ route('admin.locations') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Tree Locations
         </a>
 
-        <a href="#"
+        <a href="{{ route('admin.prices') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Prices
         </a>
 
-        <a href="#"
+        <a href="{{ route('admin.tasks') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Task Types
         </a>
 
-        <a href="#"
+        <a href="{{ route('admin.users') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Users and Roles
         </a>
-        
+
     </div>
 @endsection
