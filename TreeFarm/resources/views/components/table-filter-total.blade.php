@@ -1,4 +1,8 @@
 
+<!-- Table with filtering and sorting -->
+<!-- With responsive behaviour -->
+<!-- Table with totals -->
+
 @props([
     'headings',
     'rows',
@@ -7,12 +11,14 @@
     'sumColumn' => null,
 ])
 
-<!-- Table with filtering, sorting and searching -->
-<!-- With responsive behaviour -->
 
-<x-table-filter :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" :filterColumns="$filterColumns"/>
+<!-- Render main filtered table -->
+<x-table-filter :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" :filterColumns="$filterColumns" />
 
-<!-- Total Table -->
+
+<!-- ========================================= -->
+<!-- Total Table (uses filteredRows) -->
+<!-- ========================================= -->
 <div class="mt-6">
     
         <table class="min-w-full border border-yellow-800 bg-yellow-100 rounded">
