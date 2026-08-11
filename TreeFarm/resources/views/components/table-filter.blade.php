@@ -22,6 +22,7 @@
     foreach ($filterColumns as $colIndex) {
         $filterValues[$colIndex] = collect($rows)
             ->pluck($colIndex)
+            ->filter(fn($v) => $v !== null && $v !== '')   // remove empty values
             ->unique()
             ->sort()
             ->values()

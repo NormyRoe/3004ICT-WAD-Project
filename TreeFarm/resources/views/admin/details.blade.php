@@ -115,7 +115,29 @@
 
             </form>
 
-        </div>
+        </div>        
+
+    </div>
+
+    <!-- Logo Upload -->
+    <div class="mt-10 bg-yellow-100 p-6 rounded border border-yellow-800">
+
+        <label class="text-orange-900 font-semibold block">Upload New Logo</label>
+
+        <input 
+            class="rounded w-full mt-2 p-2 border border-yellow-800 block"
+            type="file"
+            name="logo"
+            accept="image/jpeg"
+            disabled
+        >
+
+        <p class="text-stone-600 text-sm mt-2">
+            Logo upload functionality will be enabled once controllers are implemented.<br><br>
+
+            Only .jpeg files will be allowed
+
+        </p>
 
     </div>
 

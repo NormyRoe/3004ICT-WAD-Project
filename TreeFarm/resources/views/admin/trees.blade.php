@@ -17,7 +17,7 @@
     </p>
 
     <!-- ========================= -->
-    <!-- Tree Types (Basic Table) -->
+    <!-- Tree Types (Basic Table with Total) -->
     <!-- ========================= -->
     
 
@@ -55,7 +55,7 @@
     
 
     <!-- ========================= -->
-    <!-- Trees (Filtering Table) -->
+    <!-- Trees (Filtering Table with Total) -->
     <!-- ========================= -->
 
     <!-- Label and Buttons -->
