@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->decimal('Delivery_Fee', 10, 2)->nullable();
             $table->decimal('Discount', 10, 2)->nullable();
             $table->decimal('Total_Sales_Price', 10, 2)->nullable();
+            $table->string('Status', 45)->nullable();
 
             $table->foreignId('Customer_id')
                   ->constrained('customer')

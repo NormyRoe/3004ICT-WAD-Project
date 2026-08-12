@@ -9,6 +9,7 @@
 
     <h2 class="text-3xl font-bold text-green-900">Welcome to the Inventory area, {{ $name }}</h2>
 
+    <!-- Page text  -->
     <p class="mt-4 text-stone-700">
         Here is all of the current inventory:
     </p>
@@ -19,7 +20,7 @@
 
     <!-- Label and Buttons -->
     <div class="flex justify-between items-center mt-10">
-        <h3 class="text-2xl font-bold text-green-900">Inventory</h3>
+        <h3 class="text-2xl font-bold text-green-900">Plants</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="update" value="Update" />
             <x-button-admin type="submit" name="add" value="Add" />

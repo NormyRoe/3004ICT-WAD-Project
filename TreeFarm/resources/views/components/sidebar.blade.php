@@ -2,7 +2,7 @@
 @props(['name'])
 
 <!-- Sidebar -->
-<aside class="w-full md:w-64 bg-amber-600 p-5">
+<aside class="w-full md:w-64 bg-amber-600 p-5 min-h-screen">
 
     <!-- Logged In Text -->
     <div class="text-green-900 font-semibold mb-4">

@@ -11,7 +11,7 @@
     <!-- Back to Admin Menu Button  -->
     <x-back-admin />
 
-    <!-- Placeholder page text  -->
+    <!-- Page text  -->
     <p class="mt-4 text-stone-700">
         Below are the Prices and Exception Prices. This list is hard-coded for now and will later be replaced with database data.
     </p>

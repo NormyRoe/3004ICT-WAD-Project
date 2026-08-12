@@ -11,7 +11,7 @@
     <!-- Back to Admin Menu Button  -->
     <x-back-admin />
 
-    <!-- Placeholder page text  -->
+    <!-- Page text  -->
     <p class="mt-4 text-stone-700">
         Below are the current details for the Tree Farm.  Use the form to update any details that need changing.
     </p>
