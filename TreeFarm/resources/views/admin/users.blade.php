@@ -2,18 +2,18 @@
 @extends('layouts.app')
 
 @section('title')
-    Users and Roles
+    Users
 @endsection
 
 @section('content')
-    <h2 class="text-3xl font-bold text-green-900">Welcome to the Users and Roles reference data, {{ $name }}</h2>
+    <h2 class="text-3xl font-bold text-green-900">Welcome to the Users data, {{ $name }}</h2>
 
     <!-- Back to Admin Menu Button  -->
     <x-back-admin />
 
     <!-- Page text  -->
     <p class="mt-4 text-stone-700">
-        Below are the Users Awaiting Approval, Roles, and Users. These lists are hard-coded for now and will later be replaced with database data.
+        Below are the Users Awaiting Approval, and all other Users. These lists are hard-coded for now and will later be replaced with database data.
     </p>
 
     <!-- ========================= -->
@@ -55,43 +55,6 @@
         :sumColumn=null
     />
 
-    <!-- ========================= -->
-    <!-- Roles (Basic Table) -->
-    <!-- ========================= -->
-    
-
-    <!-- Label and Buttons -->
-    <div class="flex justify-between items-center mt-10">
-        <h3 class="text-2xl font-bold text-green-900">Roles</h3>
-        <div class="flex gap-4">
-            <x-button-admin type="submit" name="update" value="Update" />
-            <x-button-admin type="submit" name="add" value="Add" />
-            <x-button-admin type="submit" name="delete" value="Delete" />
-        </div>
-        
-    </div>
-
-    @php
-        $rolesHeadings = ['Role'];
-
-        $rolesRows = [
-            ["Owner"],
-            ["Operations"],
-            ["Operations Manager"],
-            ["Sales"],
-            ["Sales Manager"],
-            ["Field Hand"],
-        ];
-
-        // Hide No Columns
-        $hideColumns = [];
-
-    @endphp
-
-    <x-table-basic 
-        :headings="$rolesHeadings" 
-        :rows="$rolesRows"
-    />
 
     <!-- ========================= -->
     <!-- Users (Filtering Table with Total) -->
@@ -104,7 +67,7 @@
             <x-button-admin type="submit" name="update" value="Update" />
             <x-button-admin type="submit" name="add" value="Add" />
             <x-button-admin type="submit" name="view_roles" value="View Roles" />
-            <x-button-admin type="submit" name="deactivate" value="deactivate" />
+            <x-button-admin type="submit" name="deactivate" value="Deactivate" />
         </div>
         
     </div>

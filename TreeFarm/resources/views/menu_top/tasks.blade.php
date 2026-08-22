@@ -10,7 +10,8 @@
 
     <!-- Page text  -->
     <p class="mt-4 text-stone-700">
-        Here are all of your currently allocated tasks.  If you are a manager, than this page also shows all currently allocated tasks.
+        Here are all of your currently allocated tasks.  If you are a manager, than this page also shows all unallocated and 
+        all currently allocated tasks.
     </p>
 
     <!-- ========================= -->
@@ -57,6 +58,52 @@
         :sumColumn=null
     />
 
+
+    <!-- ========================= -->
+    <!-- Unallocated Tasks (Filtering Table with Total) -->
+    <!-- ========================= -->
+
+    <!-- Label and Buttons -->
+    <div class="flex justify-between items-center mt-10">
+        <h3 class="text-2xl font-bold text-green-900">Unallocated Tasks</h3>
+        <div class="flex gap-4">
+            <x-button-admin type="submit" name="update" value="Update" />
+            <x-button-admin type="submit" name="add" value="Add" />
+        </div>
+        
+    </div>
+    
+
+    @php
+        $unallocatedTasksHeadings = [
+            "Date",
+            "Task",
+            "Tree",
+            "Location_1",
+            "Location_2",
+            "Quantity",
+            "Notes",
+        ];
+
+        $unallocatedTasksRows = [
+            ["11/07/2026","Move", "Northern form Lilly Pilly","Block A Aisle 1","Block D Aisle 4","200",""],
+            ["12/07/2026","Weed", "","Block C","","","Weed all of the trees in the block"],
+        ];
+
+        // Hide Columns on small screens
+        $hideColumns = [];
+
+    @endphp
+
+    <x-table-filter-total 
+        :headings="$unallocatedTasksHeadings" 
+        :rows="$unallocatedTasksRows"
+        :hideColumns="$hideColumns"
+        :filterColumns="[0]"
+        :sumColumn=null
+    />
+
+
     <!-- ========================= -->
     <!-- All User Tasks (Filtering Table with Total) -->
     <!-- ========================= -->
@@ -65,7 +112,7 @@
     <div class="flex justify-between items-center mt-10">
         <h3 class="text-2xl font-bold text-green-900">All Current Tasks</h3>
         <div class="flex gap-4">
-            <x-button-admin type="submit" name="done" value="Done" />
+            <x-button-admin type="submit" name="update" value="Update" />
             <x-button-admin type="submit" name="add" value="Add" />
         </div>
         

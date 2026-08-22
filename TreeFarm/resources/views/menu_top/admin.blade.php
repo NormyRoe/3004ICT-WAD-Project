@@ -47,7 +47,7 @@
 
         <a href="{{ route('admin.users') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
-            Users and Roles
+            Users
         </a>
 
     </div>

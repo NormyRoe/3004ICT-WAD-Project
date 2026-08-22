@@ -9,28 +9,39 @@ return new class extends Migration {
         Schema::create('allocated_tasks', function (Blueprint $table) {
             $table->id();
 
+            // Core fields
             $table->dateTime('Date')->nullable();
             $table->string('Notes', 200)->nullable();
-            $table->tinyInteger('Done')->nullable();
+            $table->tinyInteger('Done')->nullable();      // 0 or 1
+            $table->tinyInteger('Allocated');             // must be 0 or 1
 
+            // Foreign keys
             $table->foreignId('Tasks_id')
                   ->constrained('tasks')
                   ->restrictOnDelete()
-                  ->cascadeOnUpdate();
+                  ->restrictOnUpdate();
 
             $table->foreignId('Users_id')
                   ->constrained('users')
                   ->restrictOnDelete()
-                  ->cascadeOnUpdate();
+                  ->restrictOnUpdate();
 
             $table->foreignId('Trees_id')
                   ->nullable()
                   ->constrained('trees')
                   ->restrictOnDelete()
-                  ->cascadeOnUpdate();
+                  ->restrictOnUpdate();
 
+            $table->foreignId('Pot_Sizes_id')
+                  ->nullable()
+                  ->constrained('pot_sizes')
+                  ->restrictOnDelete()
+                  ->restrictOnUpdate();
+
+            // Quantity
             $table->integer('Quantity')->nullable();
 
+            // Custom timestamps
             $table->dateTime('created_on')->nullable();
             $table->dateTime('modified_on')->nullable();
         });
