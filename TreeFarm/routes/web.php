@@ -2,9 +2,38 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /***************************************************
 
-    Routes for intial access for the application
+    Resource Routes for the application
+
+****************************************************/
+
+Route::resource('users', UsersController::class);
+Route::resource('roles', RolesController::class);
+Route::resource('users_roles', UsersRolesController::class);
+Route::resource('pot_sizes', PotSizesController::class);
+Route::resource('tree_types', TreeTypesController::class);
+Route::resource('trees', TreesController::class);
+Route::resource('blocks', BlocksController::class);
+Route::resource('aisles', AislesController::class);
+Route::resource('areas', AreasController::class);
+Route::resource('locations', LocationsController::class);
+Route::resource('inventories', InventoriesController::class);
+Route::resource('prices', PricesController::class);
+Route::resource('exception_prices', ExceptionPricesController::class);
+Route::resource('tasks', TasksController::class);
+Route::resource('allocated_tasks', AllocatedTasksController::class);
+Route::resource('allocated_tasks_users', AllocatedTasksUsersController::class);
+Route::resource('customers', CustomersController::class);
+Route::resource('sales', SalesController::class);
+Route::resource('sale_items', SaleItemsController::class);
+Route::resource('farm_details', FarmDetailsController::class);
+
+
+/***************************************************
+
+    Web Routes for intial access for the application
 
 ****************************************************/
 
@@ -19,7 +48,7 @@ Route::get('/register', function () {
 
 /***************************************************
 
-    Route for intial entry in to the application
+    Web Route for intial entry in to the application
 
 ****************************************************/
 
@@ -35,7 +64,7 @@ Route::post('/landing', function () {
 
 /***************************************************
 
-    Route for logging out of the application
+    Web Route for logging out of the application
 
 ****************************************************/
 
@@ -49,7 +78,7 @@ Route::get('/logout', function () {
 
 /***************************************************
 
-    Routes for the applications's top level menu
+    Web Routes for the applications's top level menu
 
 ****************************************************/
 
@@ -92,7 +121,7 @@ Route::get('/tasks', function () {
 
 /***************************************************
 
-    Routes for the applications's Admin menu
+    Web Routes for the applications's Admin menu
 
 ****************************************************/
 
