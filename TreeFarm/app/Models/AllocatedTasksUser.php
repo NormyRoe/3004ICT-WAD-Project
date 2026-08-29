@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Exception_Price extends Model
+class AllocatedTasksUser extends Model
 {
     
     /***************************************************
@@ -13,9 +13,8 @@ class Exception_Price extends Model
 
     ****************************************************/
     protected $fillable = [
-        'tree_id',
-        'pot_size_id',
-        'price',
+        'allocated_task_id',
+        'user_id',
         'created_by',
         'modified_by'
     ];
@@ -38,16 +37,16 @@ class Exception_Price extends Model
 
     ****************************************************/
 
-    // An exception price belongs to a tree
-    public function tree()
+    // An allocated task user belongs to an allocated task
+    public function allocated_task()
     {
-        return $this->belongsTo(Tree::class, 'tree_id');
+        return $this->belongsTo(AllocatedTask::class, 'allocated_task_id');
     }
 
-    // An exception price belongs to a pot size
-    public function pot_size()
+    // An allocated task user belongs to a user
+    public function user()
     {
-        return $this->belongsTo(Pot_Size::class, 'pot_size_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 

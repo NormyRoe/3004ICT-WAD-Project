@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Farm_Detail extends Model
+class SaleItem extends Model
 {
     
     /***************************************************
@@ -13,11 +13,12 @@ class Farm_Detail extends Model
 
     ****************************************************/
     protected $fillable = [
-        'name',
-        'street_address_1',
-        'street_address_2',
-        'suburb',
-        'postcode',
+        'sales_id',
+        'inventory_id',
+        'quantity',
+        'unit_price',
+        'discount',
+        'total_price',
         'created_by',
         'modified_by'
     ];
@@ -40,7 +41,17 @@ class Farm_Detail extends Model
 
     ****************************************************/
 
-    
+    // A sale item belongs to a sale
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class, 'sales_id');
+    }
+
+    // A sale item belongs to an inventory record
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class, 'inventory_id');
+    }
 
 
     /***************************************************

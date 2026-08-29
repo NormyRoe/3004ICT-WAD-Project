@@ -42,7 +42,7 @@ class User extends Model
     // A user can have many allocated_tasks_users records
     public function allocated_tasks_users()
     {
-        return $this->hasMany(Allocated_Tasks_User::class, 'user_id');
+        return $this->hasMany(AllocatedTasksUser::class, 'user_id');
     }
 
     // A user can have many sales (as salesperson)
@@ -101,17 +101,17 @@ class User extends Model
 
     public function created_users_roles()
     {
-        return $this->hasMany(Users_Role::class, 'created_by');
+        return $this->hasMany(UsersRole::class, 'created_by');
     }
 
     public function created_pot_sizes()
     {
-        return $this->hasMany(Pot_Size::class, 'created_by');
+        return $this->hasMany(PotSize::class, 'created_by');
     }
 
     public function created_tree_types()
     {
-        return $this->hasMany(Tree_Type::class, 'created_by');
+        return $this->hasMany(TreeType::class, 'created_by');
     }
 
     public function created_trees()
@@ -151,7 +151,7 @@ class User extends Model
 
     public function created_exception_prices()
     {
-        return $this->hasMany(Exception_Price::class, 'created_by');
+        return $this->hasMany(ExceptionPrice::class, 'created_by');
     }
 
     public function created_tasks()
@@ -161,12 +161,12 @@ class User extends Model
 
     public function created_allocated_tasks()
     {
-        return $this->hasMany(Allocated_Task::class, 'created_by');
+        return $this->hasMany(AllocatedTask::class, 'created_by');
     }
 
     public function created_allocated_task_users()
     {
-        return $this->hasMany(Allocated_Task_User::class, 'created_by');
+        return $this->hasMany(AllocatedTaskUser::class, 'created_by');
     }
 
     public function created_customers()
@@ -181,12 +181,12 @@ class User extends Model
 
     public function created_sale_items()
     {
-        return $this->hasMany(Sale_Item::class, 'created_by');
+        return $this->hasMany(SaleItem::class, 'created_by');
     }
 
     public function created_farm_details()
     {
-        return $this->hasMany(Farm_Detail::class, 'created_by');
+        return $this->hasMany(FarmDetail::class, 'created_by');
     }
 
 
@@ -208,17 +208,17 @@ class User extends Model
 
     public function modified_users_roles()
     {
-        return $this->hasMany(Users_Role::class, 'modified_by');
+        return $this->hasMany(UsersRole::class, 'modified_by');
     }
     
     public function modified_pot_sizes()
     {
-        return $this->hasMany(Pot_Size::class, 'modified_by');
+        return $this->hasMany(PotSize::class, 'modified_by');
     }
 
     public function modified_tree_types()
     {
-        return $this->hasMany(Tree_Type::class, 'modified_by');
+        return $this->hasMany(TreeType::class, 'modified_by');
     }
 
     public function modified_trees()
@@ -258,7 +258,7 @@ class User extends Model
 
     public function modified_exception_prices()
     {
-        return $this->hasMany(Exception_Price::class, 'modified_by');
+        return $this->hasMany(ExceptionPrice::class, 'modified_by');
     }
 
     public function modified_tasks()
@@ -268,12 +268,12 @@ class User extends Model
 
     public function modified_allocated_tasks()
     {
-        return $this->hasMany(Allocated_Task::class, 'modified_by');
+        return $this->hasMany(AllocatedTask::class, 'modified_by');
     }
 
     public function modified_allocated_task_users()
     {
-        return $this->hasMany(Allocated_Task_User::class, 'modified_by');
+        return $this->hasMany(AllocatedTaskUser::class, 'modified_by');
     }
 
     public function modified_customers()
@@ -288,12 +288,12 @@ class User extends Model
 
     public function modified_sale_items()
     {
-        return $this->hasMany(Sale_Item::class, 'modified_by');
+        return $this->hasMany(SaleItem::class, 'modified_by');
     }
 
     public function modified_farm_details()
     {
-        return $this->hasMany(Farm_Detail::class, 'modified_by');
+        return $this->hasMany(FarmDetail::class, 'modified_by');
     }
 
 }

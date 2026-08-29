@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Exception_Price;
+use App\Models\ExceptionPrice;
 use Illuminate\Http\Request;
 
 class ExceptionPricesController extends Controller
@@ -34,7 +34,7 @@ class ExceptionPricesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Exception_Price $exception_Price)
+    public function show(ExceptionPrice $exception_Price)
     {
         //
     }
@@ -42,7 +42,7 @@ class ExceptionPricesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exception_Price $exception_Price)
+    public function edit(ExceptionPrice $exception_Price)
     {
         //
     }
@@ -50,7 +50,7 @@ class ExceptionPricesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Exception_Price $exception_Price)
+    public function update(Request $request, ExceptionPrice $exception_Price)
     {
         //
     }
@@ -58,7 +58,7 @@ class ExceptionPricesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Exception_Price $exception_Price)
+    public function destroy(ExceptionPrice $exception_Price)
     {
         //
     }

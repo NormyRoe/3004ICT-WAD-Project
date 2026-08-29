@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tree_Type;
+use App\Models\TreeType;
 use Illuminate\Http\Request;
 
 class TreeTypesController extends Controller
@@ -34,7 +34,7 @@ class TreeTypesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tree_Type $tree_Type)
+    public function show(TreeType $tree_Type)
     {
         //
     }
@@ -42,7 +42,7 @@ class TreeTypesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tree_Type $tree_Type)
+    public function edit(TreeType $tree_Type)
     {
         //
     }
@@ -50,7 +50,7 @@ class TreeTypesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tree_Type $tree_Type)
+    public function update(Request $request, TreeType $tree_Type)
     {
         //
     }
@@ -58,7 +58,7 @@ class TreeTypesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tree_Type $tree_Type)
+    public function destroy(TreeType $tree_Type)
     {
         //
     }

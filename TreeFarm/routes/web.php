@@ -2,6 +2,33 @@
 
 use Illuminate\Support\Facades\Route;
 
+/***************************************************
+
+    Add Controllers for the application
+
+****************************************************/
+
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsersRolesController;
+use App\Http\Controllers\PotSizesController;
+use App\Http\Controllers\TreeTypesController;
+use App\Http\Controllers\TreesController;
+use App\Http\Controllers\BlocksController;
+use App\Http\Controllers\AislesController;
+use App\Http\Controllers\AreasController;
+use App\Http\Controllers\LocationsController;
+use App\Http\Controllers\InventoriesController;
+use App\Http\Controllers\PricesController;
+use App\Http\Controllers\ExceptionPricesController;
+use App\Http\Controllers\TasksController;
+use App\Http\Controllers\AllocatedTasksController;
+use App\Http\Controllers\AllocatedTasksUsersController;
+use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\SaleItemsController;
+use App\Http\Controllers\FarmDetailsController;
+
 
 /***************************************************
 
@@ -29,6 +56,16 @@ Route::resource('customers', CustomersController::class);
 Route::resource('sales', SalesController::class);
 Route::resource('sale_items', SaleItemsController::class);
 Route::resource('farm_details', FarmDetailsController::class);
+
+/***************************************************
+
+    Additional Controller Routes for the application
+    (these are not part of the standard 7 resource 
+    routes)
+
+****************************************************/
+Route::post('farm_details/{id}/logo', [FarmDetailsController::class, 'update_logo'])
+        ->name('farm_details.logo');
 
 
 /***************************************************
@@ -124,12 +161,6 @@ Route::get('/tasks', function () {
     Web Routes for the applications's Admin menu
 
 ****************************************************/
-
-Route::get('/admin/details', function () {
-    return view('admin.details', [
-        'name' => session('name')
-    ]);
-})->name('admin.details');
 
 Route::get('/admin/locations', function () {
     return view('admin.locations', [

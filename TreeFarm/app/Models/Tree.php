@@ -42,13 +42,13 @@ class Tree extends Model
     // A tree can have many exception prices
     public function exception_prices()
     {
-        return $this->hasMany(Exception_Price::class, 'tree_id');
+        return $this->hasMany(ExceptionPrice::class, 'tree_id');
     }
 
     // A tree can have many allocated tasks
     public function allocated_tasks()
     {
-        return $this->hasMany(Allocated_Task::class, 'tree_id');
+        return $this->hasMany(AllocatedTask::class, 'tree_id');
     }
 
 
@@ -62,7 +62,7 @@ class Tree extends Model
     // A tree belongs to a tree type
     public function tree_type()
     {
-        return $this->belongsTo(Tree_Type::class, 'tree_type_id');
+        return $this->belongsTo(TreeType::class, 'tree_type_id');
     }
 
 

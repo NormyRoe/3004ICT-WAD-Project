@@ -15,7 +15,7 @@
     <!-- Grid Containing the Reference Data options  -->
     <div class="grid grid-cols-2 gap-10 mt-10">
 
-        <a href="{{ route('admin.details') }}"
+        <a href="{{ route('farm_details.index') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Farm Details
         </a>

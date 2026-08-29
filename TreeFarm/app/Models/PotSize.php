@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Users_Role extends Model
+class PotSize extends Model
 {
 
     /***************************************************
     
         Mass Assignment
-    
+
     ****************************************************/
     protected $fillable = [
-        'users_id',
-        'roles_id',
+        'size',
         'created_by',
         'modified_by'
     ];
@@ -24,9 +23,31 @@ class Users_Role extends Model
     
         Relationships (One-to-Many)
         - Excluding created_by and modified_by
-    
-    ****************************************************/
 
+    ****************************************************/
+    // A pot size can have many inventories
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class, 'pot_size_id');
+    }
+
+    // A pot size can have many prices
+    public function prices()
+    {
+        return $this->hasMany(Price::class, 'pot_size_id');
+    }
+
+    // A pot size can have many exception prices
+    public function exception_prices()
+    {
+        return $this->hasMany(ExceptionPrice::class, 'pot_size_id');
+    }
+
+    // A pot size can have many allocated tasks
+    public function allocated_tasks()
+    {
+        return $this->hasMany(AllocatedTask::class, 'pot_size_id');
+    }
     
 
 
@@ -34,20 +55,10 @@ class Users_Role extends Model
     
         Relationships (Many-to-One)
         - Excluding created_by and modified_by
-    
+
     ****************************************************/
 
-    // Link belongs to a user
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'users_id');
-    }
-
-    // Link belongs to a role
-    public function role()
-    {
-        return $this->belongsTo(Role::class, 'roles_id');
-    }
+    
 
 
     /***************************************************

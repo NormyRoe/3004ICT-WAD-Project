@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tree_Type extends Model
+class UsersRole extends Model
 {
 
     /***************************************************
@@ -13,7 +13,8 @@ class Tree_Type extends Model
     
     ****************************************************/
     protected $fillable = [
-        'name',
+        'users_id',
+        'roles_id',
         'created_by',
         'modified_by'
     ];
@@ -26,11 +27,7 @@ class Tree_Type extends Model
     
     ****************************************************/
 
-    // A tree type can have many trees
-    public function trees()
-    {
-        return $this->hasMany(Tree::class, 'tree_type_id');
-    }
+    
 
 
     /***************************************************
@@ -40,11 +37,21 @@ class Tree_Type extends Model
     
     ****************************************************/
 
-    
+    // Link belongs to a user
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
+
+    // Link belongs to a role
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'roles_id');
+    }
 
 
     /***************************************************
-     
+    
         Relationships (created_by and modified_by)
     
     ****************************************************/

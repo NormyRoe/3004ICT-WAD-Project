@@ -37,13 +37,13 @@ class Location extends Model
     // A location can be used as location_1 in allocated tasks
     public function allocated_tasks_location_1()
     {
-        return $this->hasMany(Allocated_Task::class, 'location_1_id');
+        return $this->hasMany(AllocatedTask::class, 'location_1_id');
     }
 
     // A location can be used as location_2 in allocated tasks
     public function allocated_tasks_location_2()
     {
-        return $this->hasMany(Allocated_Task::class, 'location_2_id');
+        return $this->hasMany(AllocatedTask::class, 'location_2_id');
     }
 
 

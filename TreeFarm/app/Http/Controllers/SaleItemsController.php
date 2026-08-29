@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sale_Item;
+use App\Models\SaleItem;
 use Illuminate\Http\Request;
 
 class SaleItemsController extends Controller
@@ -34,7 +34,7 @@ class SaleItemsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sale_Item $sale_Item)
+    public function show(SaleItem $sale_Item)
     {
         //
     }
@@ -42,7 +42,7 @@ class SaleItemsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sale_Item $sale_Item)
+    public function edit(SaleItem $sale_Item)
     {
         //
     }
@@ -50,7 +50,7 @@ class SaleItemsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Sale_Item $sale_Item)
+    public function update(Request $request, SaleItem $sale_Item)
     {
         //
     }
@@ -58,7 +58,7 @@ class SaleItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sale_Item $sale_Item)
+    public function destroy(SaleItem $sale_Item)
     {
         //
     }

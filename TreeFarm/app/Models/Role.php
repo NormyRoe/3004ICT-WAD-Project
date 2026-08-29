@@ -25,7 +25,7 @@ class Role extends Model
     // A role can have many user-role link records
     public function users_roles()
     {
-        return $this->hasMany(Users_Role::class, 'roles_id');
+        return $this->hasMany(UsersRole::class, 'roles_id');
     }
 
 

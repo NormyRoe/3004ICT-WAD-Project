@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Allocated_Task;
+use App\Models\AllocatedTask;
 use Illuminate\Http\Request;
 
 class AllocatedTasksController extends Controller
@@ -34,7 +34,7 @@ class AllocatedTasksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Allocated_Task $allocated_Task)
+    public function show(AllocatedTask $allocated_Task)
     {
         //
     }
@@ -42,7 +42,7 @@ class AllocatedTasksController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Allocated_Task $allocated_Task)
+    public function edit(AllocatedTask $allocated_Task)
     {
         //
     }
@@ -50,7 +50,7 @@ class AllocatedTasksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Allocated_Task $allocated_Task)
+    public function update(Request $request, AllocatedTask $allocated_Task)
     {
         //
     }
@@ -58,7 +58,7 @@ class AllocatedTasksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Allocated_Task $allocated_Task)
+    public function destroy(AllocatedTask $allocated_Task)
     {
         //
     }

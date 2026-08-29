@@ -6,6 +6,13 @@
 @endsection
 
 @section('content')
+    <!-- Update Success Message  -->
+    @if(session('success'))
+        <div class="bg-amber-200 text-orange-900 p-4 rounded mb-4 border border-amber-600 shadow-sm">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <h2 class="text-3xl font-bold text-green-900">Welcome to the Farm Details reference data, {{ $name }}</h2>
 
     <!-- Back to Admin Menu Button  -->
@@ -15,6 +22,11 @@
     <p class="mt-4 text-stone-700">
         Below are the current details for the Tree Farm.  Use the form to update any details that need changing.
     </p>
+    <p class="mt-6 text-stone-700">
+        <span class="text-orange-900 font-bold">Note: </span>
+        <span>'Street Address 2' will only update when 'Street Address 1' is updated.  
+            This includes when removing what is currently in the field.</span>
+    </p>
 
     <div class="flex flex-row gap-x-20 mt-8">
 
@@ -22,31 +34,31 @@
         <div class="flex flex-col space-y-4 bg-yellow-100 p-6 rounded border border-yellow-800">
             <div>
                 <label class="text-orange-900 font-semibold block">Farm Name</label>
-                <label class="text-black block">Logan River Tree Farm</label>
+                <label class="text-black block">{{ $farm->name }}</label>
             </div>
             <div>
                 <label class="text-orange-900 font-semibold block">Street Address 1</label>
-                <label class="text-black block">59-63 Chapman Drive</label>
+                <label class="text-black block">{{ $farm->street_address_1 }}</label>
             </div>
             <div>
                 <label class="text-orange-900 font-semibold block">Street Address 2</label>
-                <label class="text-black block">(Street Address 2)</label>
+                <label class="text-black block">{{ $farm->street_address_2 }}</label>
             </div>
             <div>
                 <label class="text-orange-900 font-semibold block">Suburb</label>
-                <label class="text-black block">Beenleigh</label>
+                <label class="text-black block">{{ $farm->suburb }}</label>
             </div>
             <div>
                 <label class="text-orange-900 font-semibold block">Postcode</label>
-                <label class="text-black block">4207</label>
+                <label class="text-black block">{{ $farm->postcode }}</label>
             </div>  
         </div>
 
         <!-- Update Farm Details  -->
         <div class="flex flex-col space-y-6">
-            <form method="#" action="#">
+            <form method="POST" action="{{ route('farm_details.update', $farm->id) }}">
                 {{csrf_field()}}
-
+                {{ method_field('PUT') }}
                 <!-- Form Fields -->
                 <div>
                     <label class="text-orange-900 font-semibold block">Farm Name</label>
@@ -122,22 +134,36 @@
     <!-- Logo Upload -->
     <div class="mt-10 bg-yellow-100 p-6 rounded border border-yellow-800">
 
-        <label class="text-orange-900 font-semibold block">Upload New Logo</label>
+        <form method="POST" action="{{ route('farm_details.logo', $farm->id) }}" enctype="multipart/form-data">
+        @csrf
 
-        <input 
-            class="rounded w-full mt-2 p-2 border border-yellow-800 block"
-            type="file"
-            name="logo"
-            accept="image/jpeg"
-            disabled
-        >
+            <label class="text-orange-900 font-semibold block">Upload New Logo</label>
 
-        <p class="text-stone-600 text-sm mt-2">
-            Logo upload functionality will be enabled once controllers are implemented.<br><br>
+            <input 
+                class="rounded w-full mt-2 p-2 border border-yellow-800 block"
+                type="file"
+                name="logo"
+                accept="image/jpeg"
+            >
 
-            Only .jpeg files will be allowed
+            <p class="text-stone-600 text-sm mt-2">
+                <span class="text-orange-900 font-bold">Note: </span>
+                <span>Only .jpeg or .jpg files are allowed</span>
+            </p>
 
-        </p>
+            <p class="text-stone-600 text-sm mt-2">
+                <span class="text-orange-900 font-bold">Note: </span>
+                <span>File size cannot be greater than 2mb</span>
+            </p>
+
+            <button 
+                class="bg-amber-700 text-black px-4 py-2 rounded hover:bg-rose-700 cursor-pointer mt-4"
+                type="submit"
+            >
+                Upload Logo
+            </button>
+
+        </form>
 
     </div>
 

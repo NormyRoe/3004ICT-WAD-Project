@@ -29,7 +29,7 @@ class Task extends Model
     // A task can have many allocated tasks
     public function allocated_tasks()
     {
-        return $this->hasMany(Allocated_Task::class, 'task_id');
+        return $this->hasMany(AllocatedTask::class, 'task_id');
     }
 
 

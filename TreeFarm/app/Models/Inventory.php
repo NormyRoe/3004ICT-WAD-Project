@@ -32,7 +32,7 @@ class Inventory extends Model
     // An inventory record can have many sale items
     public function sale_items()
     {
-        return $this->hasMany(Sale_Item::class, 'inventory_id');
+        return $this->hasMany(SaleItem::class, 'inventory_id');
     }
 
 
@@ -52,7 +52,7 @@ class Inventory extends Model
     // An inventory record belongs to a pot size
     public function pot_size()
     {
-        return $this->belongsTo(Pot_Size::class, 'pot_size_id');
+        return $this->belongsTo(PotSize::class, 'pot_size_id');
     }
 
     // An inventory record belongs to a location
