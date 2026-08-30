@@ -68,6 +68,10 @@ Route::post('farm_details/{id}/logo', [FarmDetailsController::class, 'update_log
         ->name('farm_details.logo');
 Route::get('pot_sizes/{id}/delete', [PotSizesController::class, 'delete_confirm'])
         ->name('pot_sizes.delete_confirm');
+Route::get('tree_types/{id}/delete', [TreeTypesController::class, 'delete_confirm'])
+        ->name('tree_types.delete_confirm');
+Route::get('trees/{id}/delete', [TreesController::class, 'delete_confirm'])
+        ->name('trees.delete_confirm');
 
 
 /***************************************************
@@ -79,6 +83,10 @@ Route::get('pot_sizes/{id}/delete', [PotSizesController::class, 'delete_confirm'
 ****************************************************/
 Route::get('pot_sizes/json', [PotSizesController::class, 'list_json'])
         ->name('pot_sizes.json');
+Route::get('trees/json', [TreesController::class, 'list_json'])
+        ->name('trees.json');
+Route::get('tree_types/json', [TreeTypesController::class, 'list_json'])
+        ->name('tree_types.json');
 
 
 /***************************************************
@@ -192,12 +200,6 @@ Route::get('/admin/tasks', function () {
         'name' => session('name')
     ]);
 })->name('admin.tasks');
-
-Route::get('/admin/trees', function () {
-    return view('admin.trees', [
-        'name' => session('name')
-    ]);
-})->name('admin.trees');
 
 Route::get('/admin/users', function () {
     return view('admin.users', [

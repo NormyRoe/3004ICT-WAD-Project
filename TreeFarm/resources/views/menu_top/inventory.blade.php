@@ -53,11 +53,12 @@
 
     @endphp
 
-    <x-table-filter-total 
+    <x-table-filter
         :headings="$inventoryHeadings" 
         :rows="$inventoryRows"
         :hideColumns="$hideColumns"
         :filterColumns="[0, 1, 2, 3, 4]"
+        :showTotals="true"
         :sumColumn="6"
     />
 

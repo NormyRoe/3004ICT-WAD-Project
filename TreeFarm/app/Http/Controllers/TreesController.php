@@ -3,63 +3,145 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tree;
+use App\Models\TreeType;
 use Illuminate\Http\Request;
 
 class TreesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    /***************************************************
+
+    index()
+
+    This function displays the information regarding Trees.
+
+    ****************************************************/
     public function index()
     {
-        //
+        // Get the tree types from the database
+        $tree_types = TreeType::get();
+
+        // Get the trees from the database
+        $trees = Tree::with('tree_type')->get();
+
+        // Return the index view and pass it the two arrays
+        return view('admin.trees.index', [
+            'name' => session('name'),
+            'tree_types' => $tree_types,
+            'trees' => $trees
+        ]);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+    /***************************************************
+
+    create()
+
+    This function displays the form for creating new Trees.
+
+    ****************************************************/
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    /***************************************************
+
+    store(Request $request)
+
+    This function validates the new Tree and 
+    adds it to the database if it is valid.
+
+    ****************************************************/
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tree $tree)
+
+    /***************************************************
+
+    show($id)
+
+    This function displays the form for viewing the 
+    Tree's details.
+
+    ****************************************************/
+    public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tree $tree)
+
+    /***************************************************
+
+    edit($id)
+
+    This function displays the form for updating a Tree.
+
+    ****************************************************/
+    public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tree $tree)
+
+    /***************************************************
+
+    update(Request $request, $id)
+
+    This function updates the specified tree object.
+
+    ****************************************************/
+    public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tree $tree)
+
+    /***************************************************
+
+    destroy($id)
+
+    This function deletes the specified tree object.
+
+    ****************************************************/
+    public function destroy($id)
     {
         //
     }
+
+
+    /***************************************************
+
+    delete_confirm($id)
+
+    This function requires the user to confirm the 
+    deletion request.
+
+    ****************************************************/
+    public function delete_confirm($id)
+    {
+        // Get the tree object
+        
+
+    }
+
+
+    /***************************************************
+
+    list_json()
+
+    This function returns the current Trees data.
+
+    ****************************************************/
+    public function list_json()
+    {
+        // Return the current data from the database
+        return Tree::select()->orderBy('id')->get();
+
+    }
+
 }

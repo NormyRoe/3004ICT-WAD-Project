@@ -1,20 +1,11 @@
 
-<!-- Table with filtering and sorting -->
-<!-- With responsive behaviour -->
 <!-- Table with totals -->
+<!-- With responsive behaviour -->
 
 @props([
-    'headings',
     'rows',
-    'hideColumns' => [],
-    'filterColumns' => [],
     'sumColumn' => null,
-    'tbodyId' => null,
 ])
-
-
-<!-- Render main filtered table -->
-<x-table-filter :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" :filterColumns="$filterColumns" :tbodyId="$tbodyId" />
 
 
 <!-- ========================================= -->

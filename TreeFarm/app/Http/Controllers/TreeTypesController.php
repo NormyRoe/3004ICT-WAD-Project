@@ -7,59 +7,100 @@ use Illuminate\Http\Request;
 
 class TreeTypesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    
+    /***************************************************
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    create()
+
+    This function displays the form for creating new Tree Types.
+
+    ****************************************************/
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    /***************************************************
+
+    store(Request $request)
+
+    This function validates the new Tree Type and 
+    adds it to the database if it is valid.
+
+    ****************************************************/
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TreeType $tree_Type)
+
+    /***************************************************
+
+    edit($id)
+
+    This function displays the form for editing a Tree Type.
+
+    ****************************************************/
+    public function edit($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TreeType $tree_Type)
+
+    /***************************************************
+
+    update(Request $request, $id)
+
+    This function updates the specified tree_type object.
+
+    ****************************************************/
+    public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, TreeType $tree_Type)
+
+    /***************************************************
+
+    destroy($id)
+
+    This function deletes the specified tree_type object.
+
+    ****************************************************/
+    public function destroy($id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(TreeType $tree_Type)
+
+    /***************************************************
+
+    delete_confirm($id)
+
+    This function requires the user to confirm the 
+    deletion request.
+
+    ****************************************************/
+    public function delete_confirm($id)
     {
-        //
+        // Get the tree_type object
+        
+
     }
+
+    /***************************************************
+
+    list_json()
+
+    This function returns the current Tree Types data.
+
+    ****************************************************/
+    public function list_json()
+    {
+        // Return the current data from the database
+        return TreeType::select()->orderBy('id')->get();
+
+    }
+
 }

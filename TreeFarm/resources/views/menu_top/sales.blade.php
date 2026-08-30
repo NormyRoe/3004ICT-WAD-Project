@@ -51,11 +51,12 @@
 
     @endphp
 
-    <x-table-filter-total 
+    <x-table-filter
         :headings="$currentSalesHeadings" 
         :rows="$currentSalesRows"
         :hideColumns="$hideColumns"
         :filterColumns="[0, 2, 7, 8]"
+        :showTotals="true"
         :sumColumn="7"
     />
 

@@ -25,7 +25,7 @@
             Pots
         </a>
 
-        <a href="{{ route('admin.trees') }}"
+        <a href="{{ route('trees.index') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Trees
         </a>

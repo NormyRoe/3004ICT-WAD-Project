@@ -157,5 +157,11 @@
             @endforeach
         </tbody>
 
-    </table>        
+    </table>
+
+    <!-- Render totals table -->
+    @if ($showTotals)
+        <x-table-filter-total :rows="$filteredRows" :sumColumn="$sumColumn" />
+    @endif    
+
 </div>

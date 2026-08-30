@@ -94,11 +94,12 @@
 
     @endphp
 
-    <x-table-filter-total 
+    <x-table-filter
         :headings="$usersHeadings" 
         :rows="$usersRows"
         :hideColumns="$hideColumns"
         :filterColumns="[4, 5]"
+        :showTotals="true"
         :sumColumn=null
     />
     

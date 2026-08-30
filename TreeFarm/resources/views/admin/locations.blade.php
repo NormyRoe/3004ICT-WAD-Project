@@ -190,11 +190,12 @@
 
     @endphp
 
-    <x-table-filter-total 
+    <x-table-filter
         :headings="$locationHeadings" 
         :rows="$locationRows"
         :hideColumns="$hideColumns"
         :filterColumns="[0, 1, 2]"
+        :showTotals="true"
         :sumColumn=null
     />
     

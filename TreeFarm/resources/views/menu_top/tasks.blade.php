@@ -50,11 +50,12 @@
 
     @endphp
 
-    <x-table-filter-total 
+    <x-table-filter
         :headings="$currentUserTasksHeadings" 
         :rows="$currentUserTasksRows"
         :hideColumns="$hideColumns"
         :filterColumns="[0]"
+        :showTotals="true"
         :sumColumn=null
     />
 
@@ -95,11 +96,12 @@
 
     @endphp
 
-    <x-table-filter-total 
+    <x-table-filter
         :headings="$unallocatedTasksHeadings" 
         :rows="$unallocatedTasksRows"
         :hideColumns="$hideColumns"
         :filterColumns="[0]"
+        :showTotals="true"
         :sumColumn=null
     />
 
@@ -144,11 +146,12 @@
 
     @endphp
 
-    <x-table-filter-total 
+    <x-table-filter
         :headings="$allUserTasksHeadings" 
         :rows="$allUserTasksRows"
         :hideColumns="$hideColumns"
         :filterColumns="[0, 7]"
+        :showTotals="true"
         :sumColumn=null
     />
 
