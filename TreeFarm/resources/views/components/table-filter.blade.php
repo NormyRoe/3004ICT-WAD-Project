@@ -9,6 +9,7 @@
     'filterColumns' => [],
     'showTotals' => false,
     'sumColumn' => null,
+    'tbodyId' => null,
 ])
 
 <!-- ========================================= -->
@@ -126,14 +127,31 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody @if($tbodyId) id="{{ $tbodyId }}" @endif>
             @foreach ($filteredRows as $row)
                 <tr class="hover:bg-amber-200">
+
+                    <!-- Radio button column -->
+                    <td class="px-2 py-1 border border-yellow-800 text-center w-12">
+                        <input 
+                            type="radio" 
+                            name="selected_row" 
+                            value="{{ $row[0] }}" 
+                            class="select-row"
+                        >
+                    </td>
+
+                    <!-- Other columns -->
                     @foreach ($row as $index => $cell)
-                        <td class="px-4 py-2 border border-yellow-800 whitespace-nowrap text-xs md:text-sm 
-                            {{ in_array($index, $hideColumns ?? []) ? 'hidden md:table-cell' : '' }}">
-                            {{ $cell }}
-                        </td>
+                        @if ($index === 0)
+                            <!-- Hide ID column -->
+                            <td class="hidden"></td>
+                        @else
+                            <td class="px-4 py-2 border border-yellow-800 whitespace-nowrap text-xs md:text-sm 
+                                {{ in_array($index, $hideColumns ?? []) ? 'hidden md:table-cell' : '' }}">
+                                {{ $cell }}
+                            </td>
+                        @endif
                     @endforeach
                 </tr>
             @endforeach

@@ -9,11 +9,12 @@
     'hideColumns' => [],
     'filterColumns' => [],
     'sumColumn' => null,
+    'tbodyId' => null,
 ])
 
 
 <!-- Render main filtered table -->
-<x-table-filter :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" :filterColumns="$filterColumns" />
+<x-table-filter :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" :filterColumns="$filterColumns" :tbodyId="$tbodyId" />
 
 
 <!-- ========================================= -->

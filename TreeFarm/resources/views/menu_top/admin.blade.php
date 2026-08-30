@@ -20,7 +20,7 @@
             Farm Details
         </a>
 
-        <a href="{{ route('admin.pots') }}"
+        <a href="{{ route('pot_sizes.index') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Pots
         </a>

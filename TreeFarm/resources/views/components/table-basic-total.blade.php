@@ -4,12 +4,13 @@
     'rows',
     'hideColumns' => [],
     'sumColumn' => null,
+    'tbodyId' => null,
 ])
 
 <!-- Basic Table without filtering, sorting or searching --> 
 <!-- With responsive behaviour -->
 
-<x-table-basic :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" />
+<x-table-basic :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" :tbodyId="$tbodyId" />
 
 <!-- Total Table -->
 <div class="overflow-x-auto mt-6">

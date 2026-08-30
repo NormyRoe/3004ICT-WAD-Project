@@ -61,11 +61,24 @@ Route::resource('farm_details', FarmDetailsController::class);
 
     Additional Controller Routes for the application
     (these are not part of the standard 7 resource 
-    routes)
+    routes and aren't part of AJAX functionality)
 
 ****************************************************/
 Route::post('farm_details/{id}/logo', [FarmDetailsController::class, 'update_logo'])
         ->name('farm_details.logo');
+Route::get('pot_sizes/{id}/delete', [PotSizesController::class, 'delete_confirm'])
+        ->name('pot_sizes.delete_confirm');
+
+
+/***************************************************
+
+    AJAX Controller Routes for the application
+    (these are for refreshing tables without 
+    reloading the page)
+
+****************************************************/
+Route::get('pot_sizes/json', [PotSizesController::class, 'list_json'])
+        ->name('pot_sizes.json');
 
 
 /***************************************************
@@ -167,12 +180,6 @@ Route::get('/admin/locations', function () {
         'name' => session('name')
     ]);
 })->name('admin.locations');
-
-Route::get('/admin/pots', function () {
-    return view('admin.pots', [
-        'name' => session('name')
-    ]);
-})->name('admin.pots');
 
 Route::get('/admin/prices', function () {
     return view('admin.prices', [
