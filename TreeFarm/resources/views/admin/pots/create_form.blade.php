@@ -29,10 +29,18 @@
                 value="{{ old('size') }}"
                 required
             >
+
             <!-- Error Message  -->
-            @error('size')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
+            @if (count($errors) > 0)
+                <div class="text-red-600 text-sm mt-1">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
         </div>
 
         <!-- Button  -->
