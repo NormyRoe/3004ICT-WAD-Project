@@ -308,4 +308,33 @@ class User extends Authenticatable
         return $this->hasMany(FarmDetail::class, 'modified_by');
     }
 
+    /***************************************************
+    
+        Pivot Table Relationship (Many-to-Many)
+        
+    ****************************************************/
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id');
+    }
+
+
+    /***************************************************
+    
+        Helper Functions for checking roles
+        
+    ****************************************************/
+    public function hasRole($roleName)
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
+
+    public function hasAnyRole(array $roles)
+    {
+        return $this->roles()->whereIn('name', $roles)->exists();
+    }
+
+
 }
+
+    

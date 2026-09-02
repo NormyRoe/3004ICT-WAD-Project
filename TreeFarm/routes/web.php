@@ -40,15 +40,44 @@ use App\Http\Controllers\FarmDetailsController;
 /***************************************************
 
     Resource Routes for the application
-    (Protected by authentication middleware)
+    (Protected by authentication and authorization 
+    middleware)
 
 ****************************************************/
 
 Route::middleware('auth')->group(function () {
+    
+    Route::resource('allocated_tasks', AllocatedTasksController::class);
+    Route::resource('allocated_tasks_users', AllocatedTasksUsersController::class);
 
+});
+
+Route::middleware(['auth', 'can.inventory'])->group(function () {
+
+    Route::resource('inventories', InventoriesController::class);
+
+});
+
+Route::middleware(['auth', 'can.sales'])->group(function () {
+
+    Route::resource('customers', CustomersController::class);
+    Route::resource('sales', SalesController::class);
+    Route::resource('sale_items', SaleItemsController::class);
+
+});
+
+Route::middleware(['auth', 'can.admin'])->group(function () {
+
+    Route::resource('farm_details', FarmDetailsController::class);
     Route::resource('users', UsersController::class);
     Route::resource('roles', RolesController::class);
     Route::resource('users_roles', UsersRolesController::class);
+    Route::resource('tasks', TasksController::class);
+
+});
+
+Route::middleware(['auth', 'can.admin-ops'])->group(function () {
+
     Route::resource('pot_sizes', PotSizesController::class);
     Route::resource('tree_types', TreeTypesController::class);
     Route::resource('trees', TreesController::class);
@@ -56,18 +85,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('aisles', AislesController::class);
     Route::resource('areas', AreasController::class);
     Route::resource('locations', LocationsController::class);
-    Route::resource('inventories', InventoriesController::class);
-    Route::resource('prices', PricesController::class);
-    Route::resource('exception_prices', ExceptionPricesController::class);
-    Route::resource('tasks', TasksController::class);
-    Route::resource('allocated_tasks', AllocatedTasksController::class);
-    Route::resource('allocated_tasks_users', AllocatedTasksUsersController::class);
-    Route::resource('customers', CustomersController::class);
-    Route::resource('sales', SalesController::class);
-    Route::resource('sale_items', SaleItemsController::class);
-    Route::resource('farm_details', FarmDetailsController::class);
 
 });
+
+Route::middleware(['auth', 'can.admin-sales'])->group(function () {
+
+    Route::resource('prices', PricesController::class);
+    Route::resource('exception_prices', ExceptionPricesController::class);
+
+});
+
 
 /***************************************************
 
@@ -78,10 +105,16 @@ Route::middleware('auth')->group(function () {
 
 ****************************************************/
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'can.admin'])->group(function () {
 
     Route::post('farm_details/{id}/logo', [FarmDetailsController::class, 'update_logo'])
             ->name('farm_details.logo');
+    
+
+});
+
+Route::middleware(['auth', 'can.admin-ops'])->group(function () {
+
     Route::get('pot_sizes/{id}/delete', [PotSizesController::class, 'delete_confirm'])
             ->name('pot_sizes.delete_confirm');
     Route::get('tree_types/{id}/delete', [TreeTypesController::class, 'delete_confirm'])
@@ -90,6 +123,7 @@ Route::middleware('auth')->group(function () {
             ->name('trees.delete_confirm');
 
 });
+
 
 /***************************************************
 
@@ -100,7 +134,7 @@ Route::middleware('auth')->group(function () {
 
 ****************************************************/
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'can.admin-ops'])->group(function () {
 
     Route::get('pot_sizes/json', [PotSizesController::class, 'list_json'])
             ->name('pot_sizes.json');
@@ -162,31 +196,16 @@ Route::get('/landing', function () {
 /***************************************************
 
     Web Routes for the applications's top level menu
-    (Protected by authentication middleware)
+    (Protected by authentication and authorization
+    middleware)
 
 ****************************************************/
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/admin', function () {
-        return view('menu_top.admin');
-    })->name('admin');
-
-    Route::get('/customers', function () {
-        return view('menu_top.customers');        
-    })->name('customers');
-
-    Route::get('/inventory', function () {
-        return view('menu_top.inventory');
-    })->name('inventory');
-
     Route::get('/profile', function () {
         return view('menu_top.profile');
-    })->name('profile');
-
-    Route::get('/sales', function () {
-        return view('menu_top.sales');
-    })->name('sales');
+    })->name('profile');    
 
     Route::get('/tasks', function () {
         return view('menu_top.tasks');
@@ -194,13 +213,42 @@ Route::middleware('auth')->group(function () {
 
 });
 
+Route::middleware(['auth', 'can.inventory'])->group(function () {
+
+    Route::get('/inventory', function () {
+        return view('menu_top.inventory');
+    })->name('inventory');
+
+});
+
+Route::middleware(['auth', 'can.sales'])->group(function () {
+
+    Route::get('/customers', function () {
+        return view('menu_top.customers');        
+    })->name('customers');
+
+    Route::get('/sales', function () {
+        return view('menu_top.sales');
+    })->name('sales');
+
+});
+
+Route::middleware(['auth', 'can.admin'])->group(function () {
+
+    Route::get('/admin', function () {
+        return view('menu_top.admin');
+    })->name('admin');
+
+});
+
 /***************************************************
 
     Web Routes for the applications's Admin menu
+    (Protected by authentication and authorization
+    middleware)
 
 ****************************************************/
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'can.admin'])->group(function () {
 
     Route::get('/admin/locations', function () {
         return view('admin.locations');
@@ -219,3 +267,4 @@ Route::middleware('auth')->group(function () {
     })->name('admin.users');
 
 });
+

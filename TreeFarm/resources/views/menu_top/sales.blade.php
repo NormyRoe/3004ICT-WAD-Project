@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <h2 class="text-3xl font-bold text-green-900">Welcome to the Sales area, {{ $name }}</h2>
+    <h2 class="text-3xl font-bold text-green-900">Welcome to the Sales area, {{ auth()->user()->first_name }}</h2>
 
     <!-- Page text  -->
     <p class="mt-4 text-stone-700">

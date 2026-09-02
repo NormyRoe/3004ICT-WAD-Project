@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <h2 class="text-3xl font-bold text-green-900">Welcome to the Farm Details reference data, {{ $name }}</h2>
+    <h2 class="text-3xl font-bold text-green-900">Welcome to the Farm Details reference data, {{ auth()->user()->first_name }}</h2>
 
     <!-- Back to Admin Menu Button  -->
     <x-back-admin />

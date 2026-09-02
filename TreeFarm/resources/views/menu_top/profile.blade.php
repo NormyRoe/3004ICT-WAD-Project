@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <h2 class="text-3xl font-bold text-green-900">Welcome to the Profile page, {{ $name }}</h2>
+    <h2 class="text-3xl font-bold text-green-900">Welcome to the Profile page, {{ auth()->user()->first_name }}</h2>
 
     <p class="mt-4 text-stone-700">
         Here are the current details of your profile.  Use the form to update your username, email address and/or password.
