@@ -3,17 +3,21 @@
 
 @section('body')
 
-<div class="flex flex-col md:flex-row">
+@auth
 
-    <!-- Sidebar -->
-    <x-sidebar :name="$name" />
+    <div class="flex flex-col md:flex-row">
 
-    <!-- Main Content Area -->
-    <main class="flex-1 p-6">
-        @yield('content')
-        
-    </main>
+        <!-- Sidebar -->
+        <x-sidebar :name="auth()->user()->username" />
 
-</div>
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6">
+            @yield('content')
+            
+        </main>
+
+    </div>
+
+@endauth 
 
 @endsection

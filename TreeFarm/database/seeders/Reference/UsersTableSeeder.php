@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
                 'job_title'   => 'admin',
                 'manager_id'  => null,
                 'status'      => 'Approved',
-                'password'    => 'ella99@Treefarm',
+                'password'    => bcrypt('ella99@Treefarm'),
                 'created_by'  => null,
                 'modified_by' => null,
                 'created_at'  => now(),

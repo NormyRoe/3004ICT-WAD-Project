@@ -41,6 +41,7 @@ return new class extends Migration
             $table->string('job_title', 100)->nullable();            
             $table->string('status', 45)->nullable();
             $table->string('password', 150);
+            $table->rememberToken();
 
             
             /***************************************************

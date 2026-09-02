@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Logan River Tree Farm Signin
+    {{ $farmName }} Signin
 @endsection
 
 
@@ -15,9 +15,16 @@
             <h2 class="text-4xl text-rose-700 text-center font-bold mb-6">User Login</h2>
         </div>
 
+        <!-- Registration Success Message  -->
+        @if (session('status'))
+            <div class="bg-amber-200 text-orange-900 p-4 rounded mb-4 border border-amber-600 shadow-sm">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <!-- Login Form -->
         <div>
-            <form method="POST" action="{{ route('landing') }}">
+            <form method="POST" action="{{ route('login') }}">
                 {{csrf_field()}}
                 <div class="flex flex-col space-y-6">
 
@@ -27,10 +34,11 @@
                         <input 
                             class="rounded w-full mt-2 p-2 border border-yellow-800 block"
                             type="text" 
-                            name="name"
+                            name="login"
                             required
                             placeholder="Enter username or email address"
                         >
+                        <x-input-error :messages="$errors->get('login')" class="mt-2" />
                     </div>
 
                     <div>
@@ -41,7 +49,17 @@
                             name="password"
                             required
                             placeholder="Enter password"
-                        > <br>
+                        >
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" /><br>
+
+                        <!-- Forgot Password link -->
+                        @if (Route::has('password.request'))
+                            <a class="underline text-sm text-orange-900 font-semibold hover:bg-stone-500 hover:text-white" 
+                                href="{{ route('password.request') }}"
+                            >
+                                {{ __('Forgot your password?') }}
+                            </a>
+                        @endif
                     </div>
 
                     <!-- Buttons -->

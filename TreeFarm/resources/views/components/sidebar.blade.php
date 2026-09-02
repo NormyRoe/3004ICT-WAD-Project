@@ -14,10 +14,17 @@
 
     <!-- Logout Option -->
     <div class="text-center mt-6">
-        <a class="text-rose-800 font-semibold hover:underline" 
-            href="{{ route('logout') }}"
-            onclick="return confirm('Are you sure that you want to logout?');"
-        >Logout</a>
+        
+        <form method="POST" action="{{ route('logout') }}"
+          onsubmit="return confirm('Are you sure that you want to logout?');"
+        >
+            @csrf
+            <button class="text-rose-800 font-semibold hover:underline">
+                Logout
+            </button>
+
+        </form>
+
     </div>
 
 </aside>

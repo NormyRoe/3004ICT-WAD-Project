@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use Notifiable;
     
     /***************************************************
     
@@ -23,6 +25,16 @@ class User extends Model
         'password',
         'created_by',
         'modified_by'
+    ];
+
+    /***************************************************
+    
+        Fields which are not to appear in JSON responses.
+
+    ****************************************************/
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
 
