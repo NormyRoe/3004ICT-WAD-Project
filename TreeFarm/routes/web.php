@@ -159,6 +159,17 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+
+/***************************************************
+
+    Forgot Password Route
+
+****************************************************/
+Route::get('forgot-password', function () {
+    return view('password_reset');
+})->middleware('guest')->name('password.forgot');
+
+
 /***************************************************
 
     Web Routes for intial access for the application

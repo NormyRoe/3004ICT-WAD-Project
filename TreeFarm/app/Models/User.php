@@ -37,6 +37,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    /***************************************************
+    
+        To automatically hash passwords
+
+    ****************************************************/
+
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
 
     /***************************************************
     

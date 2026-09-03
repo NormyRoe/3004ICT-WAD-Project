@@ -53,9 +53,9 @@
                         <x-input-error :messages="$errors->get('password')" class="mt-2" /><br>
 
                         <!-- Forgot Password link -->
-                        @if (Route::has('password.request'))
+                        @if (Route::has('password.forgot'))
                             <a class="underline text-sm text-orange-900 font-semibold hover:bg-stone-500 hover:text-white" 
-                                href="{{ route('password.request') }}"
+                                href="{{ route('password.forgot') }}"
                             >
                                 {{ __('Forgot your password?') }}
                             </a>
