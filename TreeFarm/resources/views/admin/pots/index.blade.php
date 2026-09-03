@@ -67,121 +67,21 @@
         :headings="$potSizeHeadings" 
         :rows="$potSizeRows"
         tbodyId="pot_size_table_body"
+        :paginate="false"
     />
 
     <!-- ========================= -->
-    <!-- AJAX Scripts -->
+    <!-- Import Scripts -->
     <!-- ========================= -->
-    <script>
+    @push('scripts')
+        <script>
 
-        /******************************************************************
-        * refresh_pot_sizes()
-        * ------------------
-        * Fetches the latest Pot Sizes from the database (via JSON route)
-        * and rebuilds the <tbody> contents dynamically.
-        *
-        * This keeps the table up-to-date without reloading the page.
-        *******************************************************************/
-        function refresh_pot_sizes() {
+            const potSizesEditRoute = "{{ route('pot_sizes.edit', ':id') }}";
+            const potSizesDeleteRoute = "{{ route('pot_sizes.delete_confirm', ':id') }}";
 
-            // Fetch the current database data
-            fetch("{{ route('pot_sizes.json') }}")
-                .then(response => response.json())
-                .then(data => {
-
-                    // Get the table body
-                    const tbody = document.getElementById("pot_size_table_body");
-
-                    // Clear existing rows
-                    tbody.innerHTML = "";
-
-                    // Rebuild each row
-                    data.forEach(pot => {
-
-                        const row = document.createElement("tr");
-                        row.classList.add("hover:bg-amber-200");
-
-                        // Radio button column (for selecting a row)
-                        const radioCell = `
-
-                            <td class="px-2 py-1 border border-yellow-800 text-center w-12">
-                                <input 
-                                    type="radio" 
-                                    name="selected_row" 
-                                    value="${pot.id}" 
-                                    class="select-row"
-                                >
-                            </td>
-                        `;
-
-                        // Hidden ID column (index 0)
-                        const hiddenIdCell = `<td class="hidden"></td>`;
-
-                        // Size column
-                        const sizeCell = `
-                            <td class="px-4 py-2 border border-yellow-800">
-                                ${pot.size}
-                            </td>
-                        `;
-
-                        // Build the row HTML
-                        row.innerHTML = radioCell + hiddenIdCell + sizeCell;
-
-                        // Add row to table
-                        tbody.appendChild(row);
-                    });
-                })
-                .catch(error => console.error("Error refreshing pot sizes:", error));
-
-        }
-
-        // Refresh every 5 seconds
-        setInterval(refresh_pot_sizes, 5000);
-
-        /******************************************************************
-        * get_selected_row_id()
-        * -------------------
-        * Returns the ID of the currently selected row (radio button).
-        * If no row is selected, returns null.
-        ********************************************************************/
-        function get_selected_row_id() {
-            const selected = document.querySelector('input[name="selected_row"]:checked');
-            return selected ? selected.value : null;
-        }
-
-        /******************************************************************
-        * Update button handler
-        * ----------------------
-        * Redirects to the edit page for the selected Pot Size.
-        *******************************************************************/
-        document.querySelector('input[name="update"]').addEventListener('click', function () {
-            const id = get_selected_row_id();
-
-            if (!id) {
-                alert("Please select a pot size to update.");
-                return;
-            }
-
-            window.location.href = "{{ route('pot_sizes.edit', ':id') }}".replace(':id', id);
-
-        });
-
-        /******************************************************************
-        * Delete button handler
-        * ----------------------
-        * Redirects to the delete confirmation page for the selected Pot Size.
-        ******************************************************************/
-        document.querySelector('input[name="delete"]').addEventListener('click', function () {
-            const id = get_selected_row_id();
-
-            if (!id) {
-                alert("Please select a pot size to delete.");
-                return;
-            }
-
-            window.location.href = "{{ route('pot_sizes.delete_confirm', ':id') }}".replace(':id', id);
-        });
-
-    </script>
+        </script>
+        <script src="{{ asset('js/table_helpers.js') }}"></script>
+        <script src="{{ asset('js/admin/pots.js') }}"></script>
+    @endpush
     
 @endsection

@@ -18,6 +18,8 @@
 
     </div>
 
-@endauth 
+@endauth
+
+@stack('scripts')
 
 @endsection

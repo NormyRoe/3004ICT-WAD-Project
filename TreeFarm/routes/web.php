@@ -39,6 +39,22 @@ use App\Http\Controllers\FarmDetailsController;
 
 /***************************************************
 
+    AJAX Controller Routes for the application
+    (these are for refreshing tables without 
+    reloading the page)
+    (Protected by authentication middleware)
+
+****************************************************/
+
+Route::middleware(['auth', 'can.admin-ops'])->group(function () {
+
+    Route::get('pot_sizes/json', [PotSizesController::class, 'list_json'])
+            ->name('pot_sizes.json');
+
+});
+
+/***************************************************
+
     Resource Routes for the application
     (Protected by authentication and authorization 
     middleware)
@@ -124,26 +140,6 @@ Route::middleware(['auth', 'can.admin-ops'])->group(function () {
 
 });
 
-
-/***************************************************
-
-    AJAX Controller Routes for the application
-    (these are for refreshing tables without 
-    reloading the page)
-    (Protected by authentication middleware)
-
-****************************************************/
-
-Route::middleware(['auth', 'can.admin-ops'])->group(function () {
-
-    Route::get('pot_sizes/json', [PotSizesController::class, 'list_json'])
-            ->name('pot_sizes.json');
-    Route::get('trees/json', [TreesController::class, 'list_json'])
-            ->name('trees.json');
-    Route::get('tree_types/json', [TreeTypesController::class, 'list_json'])
-            ->name('tree_types.json');
-
-});
 
 /***************************************************
 

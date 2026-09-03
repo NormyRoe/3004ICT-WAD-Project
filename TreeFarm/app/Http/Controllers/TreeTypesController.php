@@ -89,18 +89,5 @@ class TreeTypesController extends Controller
 
     }
 
-    /***************************************************
-
-    list_json()
-
-    This function returns the current Tree Types data.
-
-    ****************************************************/
-    public function list_json()
-    {
-        // Return the current data from the database
-        return TreeType::select()->orderBy('id')->get();
-
-    }
 
 }

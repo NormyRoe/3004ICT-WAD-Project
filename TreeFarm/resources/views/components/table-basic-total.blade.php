@@ -5,12 +5,13 @@
     'hideColumns' => [],
     'sumColumn' => null,
     'tbodyId' => null,
+    'paginate' => false,
 ])
 
 <!-- Basic Table without filtering, sorting or searching --> 
 <!-- With responsive behaviour -->
 
-<x-table-basic :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" :tbodyId="$tbodyId" />
+<x-table-basic :headings="$headings" :rows="$rows" :hideColumns="$hideColumns" :tbodyId="$tbodyId" :paginate="$paginate" />
 
 <!-- Total Table -->
 <div class="overflow-x-auto mt-6">

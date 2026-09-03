@@ -130,18 +130,4 @@ class TreesController extends Controller
     }
 
 
-    /***************************************************
-
-    list_json()
-
-    This function returns the current Trees data.
-
-    ****************************************************/
-    public function list_json()
-    {
-        // Return the current data from the database
-        return Tree::select()->orderBy('id')->get();
-
-    }
-
 }
