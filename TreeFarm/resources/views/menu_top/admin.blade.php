@@ -34,7 +34,7 @@
                 Trees
             </a>
 
-            <a href="{{ route('admin.locations') }}"
+            <a href="{{ route('locations.index') }}"
             class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
                 Tree Locations
             </a>

@@ -7,59 +7,86 @@ use Illuminate\Http\Request;
 
 class AislesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    /***************************************************
+
+    create()
+
+    This function displays the form for creating new Aisles.
+
+    ****************************************************/
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    /***************************************************
+
+    store(Request $request)
+
+    This function validates the new Aisle and 
+    adds it to the database if it is valid.
+
+    ****************************************************/
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Aisle $aisle)
+
+    /***************************************************
+
+    edit($id)
+
+    This function displays the form for updating an Aisle.
+
+    ****************************************************/
+    public function edit($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Aisle $aisle)
+
+    /***************************************************
+
+    update(Request $request, $id)
+
+    This function updates the specified aisle object.
+
+    ****************************************************/
+    public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Aisle $aisle)
+
+    /***************************************************
+
+    destroy($id)
+
+    This function deletes the specified aisle object.
+
+    ****************************************************/
+    public function destroy($id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Aisle $aisle)
+
+    /***************************************************
+
+    delete_confirm($id)
+
+    This function requires the user to confirm the 
+    deletion request.
+
+    ****************************************************/
+    public function delete_confirm($id)
     {
-        //
+        // Get the tree object
+              
+
     }
+    
 }

@@ -137,6 +137,14 @@ Route::middleware(['auth', 'can.admin-ops'])->group(function () {
             ->name('tree_types.delete_confirm');
     Route::get('trees/{id}/delete', [TreesController::class, 'delete_confirm'])
             ->name('trees.delete_confirm');
+    Route::get('locations/{id}/delete', [LocationsController::class, 'delete_confirm'])
+            ->name('locations.delete_confirm');
+    Route::get('areas/{id}/delete', [AreasController::class, 'delete_confirm'])
+            ->name('areas.delete_confirm');
+    Route::get('blocks/{id}/delete', [BlocksController::class, 'delete_confirm'])
+            ->name('blocks.delete_confirm');
+    Route::get('aisles/{id}/delete', [AislesController::class, 'delete_confirm'])
+            ->name('aisles.delete_confirm');
 
 });
 
@@ -256,10 +264,6 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
 
 ****************************************************/
 Route::middleware(['auth', 'can.admin'])->group(function () {
-
-    Route::get('/admin/locations', function () {
-        return view('admin.locations');
-    })->name('admin.locations');
 
     Route::get('/admin/prices', function () {
         return view('admin.prices');

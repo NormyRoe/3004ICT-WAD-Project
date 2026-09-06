@@ -26,7 +26,6 @@ class TreesController extends Controller
 
         // Return the index view and pass it the two arrays
         return view('admin.trees.index', [
-            'name' => session('name'),
             'tree_types' => $tree_types,
             'trees' => $trees
         ]);
@@ -222,7 +221,6 @@ class TreesController extends Controller
             'tree' => $tree,
         ]);
         
-
     }
 
 
