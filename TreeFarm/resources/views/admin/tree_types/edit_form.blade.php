@@ -1,32 +1,32 @@
 @extends('layouts.app')
 
 @section('title')
-    Edit a Pot Size
+    Edit a Tree Type
 @endsection
 
 @section('content')
-    <h2 class="text-3xl font-bold text-green-900">Update an existing Pot Size</h2>
+    <h2 class="text-3xl font-bold text-green-900">Update an existing Tree Type</h2>
 
     <!-- Back to Index Button  -->
-    <x-back-controller route='pot_sizes.index' label='Back to Pots Page' />
+    <x-back-controller route='trees.index' label='Back to Trees Page' />
     
     <!-- ========================= -->
     <!-- Update Form -->
     <!-- ========================= -->
-    <form method="POST" action="{{ route('pot_sizes.update', $pot_size->id) }}" class="mt-6">
+    <form method="POST" action="{{ route('tree_types.update', $tree_type->id) }}" class="mt-6">
         @csrf
         {{ method_field('PUT') }}
         <div class="mb-4">
 
             <!-- Size Label  -->
-            <label class="block text-green-900 font-semibold mb-2">Size</label>
+            <label class="block text-green-900 font-semibold mb-2">Type</label>
 
-            <!-- Size Input Field  -->
+            <!-- Type Input Field  -->
             <input 
                 type="text" 
-                name="size" 
+                name="type" 
                 class="border border-yellow-800 rounded p-2 w-64"
-                value="{{ old('size', $pot_size->size) }}"
+                value="{{ old('type', $tree_type->name) }}"
                 required
             >
 
@@ -44,7 +44,7 @@
         </div>
 
         <!-- Button  -->
-        <x-button-admin type="submit" value="Update Pot Size" />
+        <x-button-admin type="submit" value="Update Tree Type" />
 
     </form>
 @endsection

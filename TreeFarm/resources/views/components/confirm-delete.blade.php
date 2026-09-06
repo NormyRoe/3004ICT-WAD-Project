@@ -21,7 +21,7 @@
 
     <!-- Message Text -->
     <p class="mt-4 text-stone-700">
-        {{ $message }}
+        {{ $name }}: {{ $message }}
     </p>
 
     @if($itemTitle)

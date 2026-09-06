@@ -21,7 +21,6 @@ class PotSizesController extends Controller
 
         // Return the index view and pass it the pot_sizes array
         return view('admin.pots.index', [
-            'name' => session('name'),
             'pot_sizes' => $pot_sizes,
         ]);
     }
@@ -37,9 +36,7 @@ class PotSizesController extends Controller
     public function create()
     {
         // Return the create_form view
-        return view('admin.pots.create_form', [
-            'name' => session('name'),
-        ]);
+        return view('admin.pots.create_form');
 
     }
 
@@ -62,8 +59,8 @@ class PotSizesController extends Controller
         // Create the new validated Pot Size and add it to the database
         PotSize::create([
             'size' => $validated['size'],
-            'created_by' => null,
-            'modified_by' => null,
+            'created_by' => auth()->id(),
+            'modified_by' => auth()->id(),
         ]);
 
         // Return to the index view and pass it a success message
@@ -86,7 +83,6 @@ class PotSizesController extends Controller
 
         // Return the edit view and pass it the pot_size object
         return view('admin.pots.edit_form', [
-            'name' => session('name'),
             'pot_size' => $pot_size,
         ]);
 
@@ -113,7 +109,7 @@ class PotSizesController extends Controller
         // Update the validated Pot Size in the database
         $pot_size->update([
             'size' => $validated['size'],
-            'modified_by' => null,
+            'modified_by' => auth()->id(),
         ]);
 
         // Return to the index view and pass it a success message
@@ -156,24 +152,8 @@ class PotSizesController extends Controller
 
         // Return the confirm_delete view and pass it the pot_size object
         return view('admin.pots.confirm_delete', [
-            'name' => session('name'),
             'pot_size' => $pot_size,
         ]);
-
-    }
-
-
-    /***************************************************
-
-    list_json()
-
-    This function returns the current Pot Sizes data.
-
-    ****************************************************/
-    public function list_json()
-    {
-        // Return the current data from the database
-        return PotSize::select('id', 'size')->orderBy('id')->get();
 
     }
 

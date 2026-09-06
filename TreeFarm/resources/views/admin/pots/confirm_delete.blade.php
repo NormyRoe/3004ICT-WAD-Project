@@ -9,5 +9,5 @@
     ]"
     :deleteRoute="route('pot_sizes.destroy', $pot_size->id)"
     :cancelRoute="route('pot_sizes.index')"
-    :name="$name"
+    :name="auth()->user()->first_name"
 />

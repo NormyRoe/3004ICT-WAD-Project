@@ -33,7 +33,9 @@
         <h3 class="text-2xl font-bold text-green-900">Tree Types</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="update_type" value="Update" />
-            <x-button-admin type="submit" name="add_type" value="Add" />
+            <a href="{{ route('tree_types.create') }}">
+                <x-button-admin type="submit" name="add_type" value="Add" />
+            </a>            
             <x-button-admin type="submit" name="delete_type" value="Delete" />
         </div>
         
@@ -81,7 +83,9 @@
         <div class="flex gap-4">
             <x-button-admin type="submit" name="view_tree" value="View" />
             <x-button-admin type="submit" name="update_tree" value="Update" />
-            <x-button-admin type="submit" name="add_tree" value="Add" />
+            <a href="{{ route('trees.create') }}">
+                <x-button-admin type="submit" name="add_tree" value="Add" />
+            </a>            
             <x-button-admin type="submit" name="delete_tree" value="Delete" />
         </div>
         
