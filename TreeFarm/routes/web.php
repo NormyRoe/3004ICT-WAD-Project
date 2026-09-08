@@ -148,6 +148,15 @@ Route::middleware(['auth', 'can.admin-ops'])->group(function () {
 
 });
 
+Route::middleware(['auth', 'can.admin-sales'])->group(function () {
+
+    Route::get('prices/{id}/delete', [PricesController::class, 'delete_confirm'])
+            ->name('prices.delete_confirm');
+    Route::get('exception_prices/{id}/delete', [ExceptionPricesController::class, 'delete_confirm'])
+            ->name('exception_prices.delete_confirm');
+
+});
+
 
 /***************************************************
 
@@ -264,10 +273,6 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
 
 ****************************************************/
 Route::middleware(['auth', 'can.admin'])->group(function () {
-
-    Route::get('/admin/prices', function () {
-        return view('admin.prices');
-    })->name('admin.prices');
 
     Route::get('/admin/tasks', function () {
         return view('admin.tasks');

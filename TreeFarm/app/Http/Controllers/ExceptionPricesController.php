@@ -7,59 +7,90 @@ use Illuminate\Http\Request;
 
 class ExceptionPricesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    /***************************************************
+
+    create()
+
+    This function displays the form for creating new 
+    Exception Prices.
+
+    ****************************************************/
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    /***************************************************
+
+    store(Request $request)
+
+    This function validates the new Exception Price and 
+    adds it to the database if it is valid.
+
+    ****************************************************/
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ExceptionPrice $exception_Price)
+
+    /***************************************************
+
+    edit($id)
+
+    This function displays the form for updating an 
+    Exception Price.
+
+    ****************************************************/
+    public function edit($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ExceptionPrice $exception_Price)
+
+    /***************************************************
+
+    update(Request $request, $id)
+
+    This function updates the specified exception price 
+    object.
+
+    ****************************************************/
+    public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ExceptionPrice $exception_Price)
+
+    /***************************************************
+
+    destroy($id)
+
+    This function deletes the specified exception price 
+    object.
+
+    ****************************************************/
+    public function destroy($id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ExceptionPrice $exception_Price)
+
+    /***************************************************
+
+    delete_confirm($id)
+
+    This function requires the user to confirm the 
+    deletion request.
+
+    ****************************************************/
+    public function delete_confirm($id)
     {
-        //
+        // Get the price object
+                    
+
     }
+    
 }

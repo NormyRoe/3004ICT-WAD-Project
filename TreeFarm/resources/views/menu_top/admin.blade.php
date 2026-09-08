@@ -44,7 +44,7 @@
         <!-- Only those with Admin Sales access can see this menu option -->
         @can('admin-sales-access')
 
-            <a href="{{ route('admin.prices') }}"
+            <a href="{{ route('prices.index') }}"
             class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
                 Prices
             </a>
