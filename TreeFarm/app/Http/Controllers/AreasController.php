@@ -17,7 +17,9 @@ class AreasController extends Controller
     ****************************************************/
     public function create()
     {
-        //
+        // Return the create_form view
+        return view('admin.areas.create_form');
+
     }
 
 
@@ -31,7 +33,21 @@ class AreasController extends Controller
     ****************************************************/
     public function store(Request $request)
     {
-        //
+        // Validate the request
+        $validated = $request->validate([
+            'area' => 'required|string|max:45|unique:areas,name',
+        ]);
+
+        // Create the new validated Area and add it to the database
+        Area::create([
+            'name' => $validated['area'],
+            'created_by' => auth()->id(),
+            'modified_by' => auth()->id(),
+        ]);
+
+        // Return to the index view and pass it a success message
+        return redirect('locations')->with('success', 'The new Area has been successfully added.');
+
     }
 
 
@@ -44,7 +60,14 @@ class AreasController extends Controller
     ****************************************************/
     public function edit($id)
     {
-        //
+        // Get the area object
+        $area = Area::findOrFail($id);
+
+        // Return the edit view and pass it the area object
+        return view('admin.areas.edit_form', [
+            'area' => $area,
+        ]);
+
     }
 
 
@@ -57,7 +80,23 @@ class AreasController extends Controller
     ****************************************************/
     public function update(Request $request, $id)
     {
-        //
+        // Get the area object
+        $area = Area::findOrFail($id);
+
+        // Validate the request
+        $validated = $request->validate([
+            'area' => 'required|string|max:45|unique:areas,name,' . $area->id,
+        ]);        
+
+        // Update the validated Area in the database
+        $area->update([
+            'name' => $validated['area'],
+            'modified_by' => auth()->id(),
+        ]);
+
+        // Return to the index view and pass it a success message
+        return redirect('locations')->with('success', 'The Area has been successfully updated.');
+
     }
 
 
@@ -70,7 +109,15 @@ class AreasController extends Controller
     ****************************************************/
     public function destroy($id)
     {
-        //
+        // Get the area object
+        $area = Area::findOrFail($id);
+
+        // Delete the area object
+        $area->delete();
+
+        // Return to the index view and pass it a success message
+        return redirect('locations')->with('success', 'The Area has been successfully deleted.');
+
     }
 
     
@@ -84,9 +131,14 @@ class AreasController extends Controller
     ****************************************************/
     public function delete_confirm($id)
     {
-        // Get the tree object
-              
+        // Get the area object
+        $area = Area::findOrFail($id);
 
+        // Return the confirm_delete view and pass it the area object
+        return view('admin.areas.confirm_delete', [
+            'area' => $area,
+        ]);
+        
     }
 
 }

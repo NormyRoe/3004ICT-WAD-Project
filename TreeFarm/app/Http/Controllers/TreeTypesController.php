@@ -133,7 +133,7 @@ class TreeTypesController extends Controller
         // Return the confirm_delete view and pass it the tree_type object
         return view('admin.tree_types.confirm_delete', [
             'tree_type' => $tree_type,
-        ]);        
+        ]);
 
     }
 

@@ -16,6 +16,13 @@
         Below are the current Areas, Blocks, Aisle and Locations.
     </p>
 
+    <!-- Update Success Message  -->
+    @if(session('success'))
+        <div class="bg-amber-200 text-orange-900 p-4 rounded mb-4 mt-4 border border-amber-600 shadow-sm">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <!-- ========================= -->
     <!-- Areas (Basic Table with Total) -->
     <!-- ========================= -->
@@ -26,7 +33,9 @@
         <h3 class="text-2xl font-bold text-green-900">Areas</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="update_area" value="Update" />
-            <x-button-admin type="submit" name="add_area" value="Add" />
+            <a href="{{ route('areas.create') }}">
+                <x-button-admin type="submit" name="add_area" value="Add" />
+            </a>   
             <x-button-admin type="submit" name="delete_area" value="Delete" />
         </div>
         
@@ -73,7 +82,9 @@
         <h3 class="text-2xl font-bold text-green-900">Blocks</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="update_block" value="Update" />
-            <x-button-admin type="submit" name="add_block" value="Add" />
+            <a href="{{ route('blocks.create') }}">
+                <x-button-admin type="submit" name="add_block" value="Add" />
+            </a>
             <x-button-admin type="submit" name="delete_block" value="Delete" />
         </div>
         
@@ -120,7 +131,9 @@
         <h3 class="text-2xl font-bold text-green-900">Aisles</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="update_aisle" value="Update" />
-            <x-button-admin type="submit" name="add_aisle" value="Add" />
+            <a href="{{ route('aisles.create') }}">
+                <x-button-admin type="submit" name="add_aisle" value="Add" />
+            </a>
             <x-button-admin type="submit" name="delete_aisle" value="Delete" />
         </div>
         
@@ -166,7 +179,9 @@
         <h3 class="text-2xl font-bold text-green-900">Locations</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="update_location" value="Update" />
-            <x-button-admin type="submit" name="add_location" value="Add" />
+            <a href="{{ route('locations.create') }}">
+                <x-button-admin type="submit" name="add_location" value="Add" />
+            </a>            
             <x-button-admin type="submit" name="delete_location" value="Delete" />
         </div>
         

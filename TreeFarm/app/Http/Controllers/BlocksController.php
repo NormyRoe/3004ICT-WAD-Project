@@ -17,7 +17,9 @@ class BlocksController extends Controller
     ****************************************************/
     public function create()
     {
-        //
+        // Return the create_form view
+        return view('admin.blocks.create_form');
+
     }
 
 
@@ -31,7 +33,21 @@ class BlocksController extends Controller
     ****************************************************/
     public function store(Request $request)
     {
-        //
+        // Validate the request
+        $validated = $request->validate([
+            'block' => 'required|string|max:45|unique:blocks,name',
+        ]);
+
+        // Create the new validated Block and add it to the database
+        Block::create([
+            'name' => $validated['block'],
+            'created_by' => auth()->id(),
+            'modified_by' => auth()->id(),
+        ]);
+
+        // Return to the index view and pass it a success message
+        return redirect('locations')->with('success', 'The new Block has been successfully added.');
+
     }
 
 
@@ -44,7 +60,14 @@ class BlocksController extends Controller
     ****************************************************/
     public function edit($id)
     {
-        //
+        // Get the block object
+        $block = Block::findOrFail($id);
+
+        // Return the edit view and pass it the block object
+        return view('admin.blocks.edit_form', [
+            'block' => $block,
+        ]);
+
     }
 
 
@@ -57,7 +80,23 @@ class BlocksController extends Controller
     ****************************************************/
     public function update(Request $request, $id)
     {
-        //
+        // Get the block object
+        $block = Block::findOrFail($id);
+
+        // Validate the request
+        $validated = $request->validate([
+            'block' => 'required|string|max:45|unique:blocks,name,' . $block->id,
+        ]);        
+
+        // Update the validated Block in the database
+        $block->update([
+            'name' => $validated['block'],
+            'modified_by' => auth()->id(),
+        ]);
+
+        // Return to the index view and pass it a success message
+        return redirect('locations')->with('success', 'The Block has been successfully updated.');
+
     }
 
 
@@ -70,7 +109,15 @@ class BlocksController extends Controller
     ****************************************************/
     public function destroy($id)
     {
-        //
+        // Get the block object
+        $block = Block::findOrFail($id);
+
+        // Delete the block object
+        $block->delete();
+
+        // Return to the index view and pass it a success message
+        return redirect('locations')->with('success', 'The Block has been successfully deleted.');
+
     }
 
 
@@ -84,8 +131,13 @@ class BlocksController extends Controller
     ****************************************************/
     public function delete_confirm($id)
     {
-        // Get the tree object
-              
+        // Get the block object
+        $block = Block::findOrFail($id);
+
+        // Return the confirm_delete view and pass it the block object
+        return view('admin.blocks.confirm_delete', [
+            'block' => $block,
+        ]);              
 
     }
     
