@@ -33,7 +33,9 @@
         <h3 class="text-2xl font-bold text-green-900">Prices</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="update_price" value="Update" />
-            <x-button-admin type="submit" name="add_price" value="Add" />
+            <a href="{{ route('prices.create') }}">
+                <x-button-admin type="submit" name="add_price" value="Add" />
+            </a>            
             <x-button-admin type="submit" name="delete_price" value="Delete" />
         </div>
         

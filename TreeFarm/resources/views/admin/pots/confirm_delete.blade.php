@@ -1,4 +1,12 @@
 
+@extends('layouts.app')
+
+@section('title')
+    Delete Pot Size Confirmation
+@endsection
+
+@section('content')
+
 <x-confirm-delete
     :title="'Delete Pot Size'"
     :message="'Are you sure you want to delete this Pot Size?'"
@@ -11,3 +19,5 @@
     :cancelRoute="route('pot_sizes.index')"
     :name="auth()->user()->first_name"
 />
+
+@endsection

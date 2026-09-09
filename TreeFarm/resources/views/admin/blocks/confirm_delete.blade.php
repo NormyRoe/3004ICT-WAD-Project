@@ -1,4 +1,12 @@
 
+@extends('layouts.app')
+
+@section('title')
+    Delete Block Confirmation
+@endsection
+
+@section('content')
+
 <x-confirm-delete
     :title="'Delete Block'"
     :message="'Are you sure you want to delete this Block?'"
@@ -11,3 +19,5 @@
     :cancelRoute="route('locations.index')"
     :name="auth()->user()->first_name"
 />
+
+@endsection

@@ -1,4 +1,12 @@
 
+@extends('layouts.app')
+
+@section('title')
+    Delete Tree Confirmation
+@endsection
+
+@section('content')
+
 <x-confirm-delete
     :title="'Delete Tree'"
     :message="'Are you sure you want to delete this Tree?'"
@@ -12,3 +20,5 @@
     :cancelRoute="route('trees.index')"
     :name="auth()->user()->first_name"
 />
+
+@endsection

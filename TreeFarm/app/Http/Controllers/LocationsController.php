@@ -244,7 +244,7 @@ class LocationsController extends Controller
         // Return the confirm_delete view and pass it the location object
         return view('admin.locations.confirm_delete', [
             'location' => $location,
-        ]);              
+        ]);
 
     }
 

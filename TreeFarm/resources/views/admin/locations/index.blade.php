@@ -35,7 +35,7 @@
             <x-button-admin type="submit" name="update_area" value="Update" />
             <a href="{{ route('areas.create') }}">
                 <x-button-admin type="submit" name="add_area" value="Add" />
-            </a>   
+            </a>
             <x-button-admin type="submit" name="delete_area" value="Delete" />
         </div>
         

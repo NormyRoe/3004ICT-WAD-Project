@@ -1,4 +1,12 @@
 
+@extends('layouts.app')
+
+@section('title')
+    Delete Location Confirmation
+@endsection
+
+@section('content')
+
 <x-confirm-delete
     :title="'Delete Location'"
     :message="'Are you sure you want to delete this Location?'"
@@ -16,3 +24,5 @@
     :cancelRoute="route('locations.index')"
     :name="auth()->user()->first_name"
 />
+
+@endsection

@@ -9,13 +9,7 @@
     'name' => null,
 ])
 
-@extends('layouts.app')
-
-@section('title')
-    {{ $title }}
-@endsection
-
-@section('content')
+<div>
     <!-- Header Text -->
     <h2 class="text-3xl font-bold text-red-700">{{ $title }}</h2>
 
@@ -38,6 +32,10 @@
         @foreach($details as $label => $value)            
             <p><strong>{{ $label }}:</strong> {{ $value }}</p>
         @endforeach
+
+        <!-- Add a slot for adding additional messages to the box. -->
+        {{ $slot }}
+        
     </div>
 
     <div class="flex gap-4 mt-8">
@@ -56,4 +54,4 @@
         
     </div>
 
-@endsection
+</div>
