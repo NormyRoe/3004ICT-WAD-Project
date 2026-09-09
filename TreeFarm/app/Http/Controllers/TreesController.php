@@ -43,7 +43,7 @@ class TreesController extends Controller
     public function create()
     {
         // Get the tree types from the database
-        $tree_types = TreeType::get();
+        $tree_types = TreeType::orderBy('name')->get();
 
         // Return the create view and pass it the tree_types array
         return view('admin.trees.create_form', [
@@ -129,7 +129,7 @@ class TreesController extends Controller
         $tree = Tree::findOrFail($id);
 
         // Get the tree types from the database
-        $tree_types = TreeType::get();
+        $tree_types = TreeType::orderBy('name')->get();
 
         // Return the edit view and pass it the tree object and 
         // the tree_types array

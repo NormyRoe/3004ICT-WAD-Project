@@ -90,7 +90,9 @@
         <h3 class="text-2xl font-bold text-green-900">Exception Prices</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="update_exception" value="Update" />
-            <x-button-admin type="submit" name="add_exception" value="Add" />
+            <a href="{{ route('exception_prices.create') }}">
+                <x-button-admin type="submit" name="add_exception" value="Add" />
+            </a>            
             <x-button-admin type="submit" name="delete_exception" value="Delete" />
         </div>
         

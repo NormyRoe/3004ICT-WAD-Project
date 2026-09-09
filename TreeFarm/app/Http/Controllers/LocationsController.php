@@ -54,13 +54,13 @@ class LocationsController extends Controller
     public function create()
     {
         // Get the areas from the database
-        $areas = Area::get();
+        $areas = Area::orderBy('name')->get();
 
         // Get the blocks from the database
-        $blocks = Block::get();
+        $blocks = Block::orderBy('name')->get();
 
         // Get the aisles from the database
-        $aisles = Aisle::get();
+        $aisles = Aisle::orderBy('name')->get();
 
         // Return the create_form view and pass it the arrays
         return view('admin.locations.create_form', [
@@ -134,13 +134,13 @@ class LocationsController extends Controller
         $location = Location::findOrFail($id);
 
         // Get the areas from the database
-        $areas = Area::get();
+        $areas = Area::orderBy('name')->get();
 
         // Get the blocks from the database
-        $blocks = Block::get();
+        $blocks = Block::orderBy('name')->get();
 
         // Get the aisles from the database
-        $aisles = Aisle::get();
+        $aisles = Aisle::orderBy('name')->get();
 
         // Return the edit view and pass it the location object and 
         // the other arrays

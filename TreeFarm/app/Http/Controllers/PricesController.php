@@ -46,7 +46,7 @@ class PricesController extends Controller
     public function create()
     {
         // Get the pot_sizes from the database
-        $pot_sizes = PotSize::get();
+        $pot_sizes = PotSize::orderBy('size')->get();
 
         // Return the create_form view and pass it the arrays
         return view('admin.prices.create_form', [
@@ -165,7 +165,7 @@ class PricesController extends Controller
         $price = Price::findOrFail($id);
 
         // Get the pot_sizes from the database
-        $pot_sizes = PotSize::get();
+        $pot_sizes = PotSize::orderBy('size')->get();
 
         // Return the edit view and pass it the price object and 
         // the other array
@@ -315,7 +315,6 @@ class PricesController extends Controller
         return view('admin.prices.confirm_delete', [
             'price' => $price,
         ]);
-                    
 
     }
 
