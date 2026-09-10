@@ -19,10 +19,10 @@ class TreesController extends Controller
     public function index()
     {
         // Get the tree types from the database
-        $tree_types = TreeType::get();
+        $tree_types = TreeType::orderBy('name')->get();
 
         // Get the trees from the database
-        $trees = Tree::with('tree_type')->get();
+        $trees = Tree::with('tree_type')->orderBy('botanical_name')->get();
 
         // Return the index view and pass it the two arrays
         return view('admin.trees.index', [

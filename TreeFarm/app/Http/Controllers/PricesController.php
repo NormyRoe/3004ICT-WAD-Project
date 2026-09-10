@@ -22,10 +22,21 @@ class PricesController extends Controller
     public function index()
     {
         // Get the prices from the database
-        $prices = Price::with('pot_size')->get();
+        $prices = Price::with('pot_size')
+                        ->join('pot_sizes', 'prices.pot_size_id', '=', 'pot_sizes.id')
+                        ->orderBy('pot_sizes.size')
+                        ->orderBy('prices.name')
+                        ->select('prices.*')
+                        ->get();
 
         // Get the exception_prices from the database
-        $exception_prices = ExceptionPrice::with('pot_size')->with('tree')->get();
+        $exception_prices = ExceptionPrice::with('pot_size')
+                                ->join('trees', 'exception_prices.tree_id', '=', 'trees.id')
+                                ->join('pot_sizes', 'exception_prices.pot_size_id', '=', 'pot_sizes.id')
+                                ->orderBy('trees.common_name')
+                                ->orderBy('pot_sizes.size')
+                                ->select('exception_prices.*')
+                                ->get();
 
         // Return the index view and pass it the arrays
         return view('admin.prices.index', [

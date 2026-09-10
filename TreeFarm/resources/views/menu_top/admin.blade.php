@@ -54,9 +54,9 @@
         <!-- Only those with Admin Ops access can see this menu option -->
         @can('admin-ops-access')
 
-            <a href="{{ route('admin.tasks') }}"
+            <a href="{{ route('tasks.index') }}"
             class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
-                Task Types
+                Tasks
             </a>
 
         @endcan

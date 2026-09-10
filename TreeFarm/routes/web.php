@@ -87,8 +87,7 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
     Route::resource('farm_details', FarmDetailsController::class);
     Route::resource('users', UsersController::class);
     Route::resource('roles', RolesController::class);
-    Route::resource('users_roles', UsersRolesController::class);
-    Route::resource('tasks', TasksController::class);
+    Route::resource('users_roles', UsersRolesController::class);    
 
 });
 
@@ -101,6 +100,7 @@ Route::middleware(['auth', 'can.admin-ops'])->group(function () {
     Route::resource('aisles', AislesController::class);
     Route::resource('areas', AreasController::class);
     Route::resource('locations', LocationsController::class);
+    Route::resource('tasks', TasksController::class);
 
 });
 
@@ -125,7 +125,6 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
 
     Route::post('farm_details/{id}/logo', [FarmDetailsController::class, 'update_logo'])
             ->name('farm_details.logo');
-    
 
 });
 
@@ -145,6 +144,8 @@ Route::middleware(['auth', 'can.admin-ops'])->group(function () {
             ->name('blocks.delete_confirm');
     Route::get('aisles/{id}/delete', [AislesController::class, 'delete_confirm'])
             ->name('aisles.delete_confirm');
+    Route::get('tasks/{id}/delete', [TasksController::class, 'delete_confirm'])
+            ->name('tasks.delete_confirm');
 
 });
 
@@ -231,9 +232,9 @@ Route::middleware('auth')->group(function () {
         return view('menu_top.profile');
     })->name('profile');    
 
-    Route::get('/tasks', function () {
+    Route::get('/menu/tasks', function () {
         return view('menu_top.tasks');
-    })->name('tasks');
+    })->name('menu.tasks');
 
 });
 
@@ -273,11 +274,7 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
 
 ****************************************************/
 Route::middleware(['auth', 'can.admin'])->group(function () {
-
-    Route::get('/admin/tasks', function () {
-        return view('admin.tasks');
-    })->name('admin.tasks');
-
+    
     Route::get('/admin/users', function () {
         return view('admin.users');
     })->name('admin.users');

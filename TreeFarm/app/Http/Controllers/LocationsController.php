@@ -22,16 +22,23 @@ class LocationsController extends Controller
     public function index()
     {
         // Get the areas from the database
-        $areas = Area::get();
+        $areas = Area::orderBy('name')->get();
 
         // Get the blocks from the database
-        $blocks = Block::get();
+        $blocks = Block::orderBy('name')->get();
 
         // Get the aisles from the database
-        $aisles = Aisle::get();
+        $aisles = Aisle::orderBy('name')->get();
 
         // Get the locations from the database
-        $locations = Location::with('area')->with('block')->with('aisle')->get();
+        $locations = Location::with('area')->with('block')->with('aisle')
+                                ->leftJoin('areas', 'locations.area_id', '=', 'areas.id')
+                                ->leftJoin('blocks', 'locations.block_id', '=', 'blocks.id')
+                                ->leftJoin('aisles', 'locations.aisle_id', '=', 'aisles.id')
+                                ->orderBy('areas.name')
+                                ->orderByRaw('COALESCE(blocks.name, "") ASC')           // NULL block names first
+                                ->select('locations.*')
+                                ->get();
 
         // Return the index view and pass it the arrays
         return view('admin.locations.index', [

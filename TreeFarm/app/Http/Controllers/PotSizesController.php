@@ -17,7 +17,7 @@ class PotSizesController extends Controller
     public function index()
     {
         // Get the pot details from the database
-        $pot_sizes = PotSize::get();
+        $pot_sizes = PotSize::orderBy('size')->get();
 
         // Return the index view and pass it the pot_sizes array
         return view('admin.pots.index', [
