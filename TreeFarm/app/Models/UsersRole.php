@@ -13,8 +13,8 @@ class UsersRole extends Model
     
     ****************************************************/
     protected $fillable = [
-        'users_id',
-        'roles_id',
+        'user_id',
+        'role_id',
         'created_by',
         'modified_by'
     ];
@@ -40,13 +40,13 @@ class UsersRole extends Model
     // Link belongs to a user
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Link belongs to a role
     public function role()
     {
-        return $this->belongsTo(Role::class, 'roles_id');
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
 

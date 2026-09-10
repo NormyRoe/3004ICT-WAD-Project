@@ -125,6 +125,16 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
 
     Route::post('farm_details/{id}/logo', [FarmDetailsController::class, 'update_logo'])
             ->name('farm_details.logo');
+    Route::post('users/{id}/approve', [UsersController::class, 'approve'])
+            ->name('users.approve');
+    Route::get('users/{id}/reject', [UsersController::class, 'reject'])
+            ->name('users.reject');
+    Route::get('users/{id}/deactivate', [UsersController::class, 'deactivate'])
+            ->name('users.deactivate');
+    Route::get('users/{id}/reactivate', [UsersController::class, 'reactivate'])
+            ->name('users.reactivate');
+    Route::get('users/{id}/approval', [UsersController::class, 'approval'])
+            ->name('users.approval');
 
 });
 
@@ -263,21 +273,6 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
     Route::get('/admin', function () {
         return view('menu_top.admin');
     })->name('admin');
-
-});
-
-/***************************************************
-
-    Web Routes for the applications's Admin menu
-    (Protected by authentication and authorization
-    middleware)
-
-****************************************************/
-Route::middleware(['auth', 'can.admin'])->group(function () {
-    
-    Route::get('/admin/users', function () {
-        return view('admin.users');
-    })->name('admin.users');
 
 });
 

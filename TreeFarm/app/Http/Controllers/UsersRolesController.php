@@ -7,58 +7,95 @@ use Illuminate\Http\Request;
 
 class UsersRolesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    /***************************************************
+
+    index()
+
+    This function displays the information regarding User Roles.
+
+    ****************************************************/
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+    /***************************************************
+
+    create()
+
+    This function displays the form for creating new User Roles.
+
+    ****************************************************/
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    /***************************************************
+
+    store(Request $request)
+
+    This function validates the new User Role and 
+    adds it to the database if it is valid.
+
+    ****************************************************/
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(UsersRole $users_Role)
+
+    /***************************************************
+
+    show($id)
+
+    This function displays the form for viewing the 
+    User Role's details.
+
+    ****************************************************/
+    public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(UsersRole $users_Role)
+
+    /***************************************************
+
+    edit($id)
+
+    This function displays the form for updating a User Role.
+
+    ****************************************************/
+    public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, UsersRole $users_Role)
+
+    /***************************************************
+
+    update(Request $request, $id)
+
+    This function updates the specified user role object.
+
+    ****************************************************/
+    public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(UsersRole $users_Role)
+
+    /***************************************************
+
+    destroy($id)
+
+    This function deletes the specified user role object.
+
+    ****************************************************/
+    public function destroy($id)
     {
         //
     }

@@ -62,7 +62,7 @@
         @endcan
 
         <!-- Both sub Admin access groups can see this menu option -->
-        <a href="{{ route('admin.users') }}"
+        <a href="{{ route('users.index') }}"
            class="bg-amber-600 text-green-900 font-semibold p-6 rounded hover:bg-amber-700 text-center">
             Users
         </a>
