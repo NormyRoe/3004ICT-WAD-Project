@@ -51,9 +51,9 @@
     @endcan
 
     <!-- Everyone can see this menu option -->
-    <a class="{{ request()->routeIs('profile') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
+    <a class="{{ request()->routeIs('user_profile.show') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
                 hover:bg-yellow-200 py-3 px-2" 
-        href="{{ route('profile') }}"
+        href="{{ route('user_profile.show', auth()->id()) }}"
     >Profile</a>
 
 </nav>

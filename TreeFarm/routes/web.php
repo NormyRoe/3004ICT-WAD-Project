@@ -36,6 +36,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SaleItemsController;
 use App\Http\Controllers\FarmDetailsController;
+use App\Http\Controllers\UserProfileController;
 
 /***************************************************
 
@@ -120,6 +121,15 @@ Route::middleware(['auth', 'can.admin-sales'])->group(function () {
     (Protected by authentication middleware)
 
 ****************************************************/
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('user_profile/{id}', [UserProfileController::class, 'show'])
+            ->name('user_profile.show');
+    Route::post('user_profile/{id}', [UserProfileController::class, 'update'])
+            ->name('user_profile.update');
+
+});
 
 Route::middleware(['auth', 'can.admin'])->group(function () {
 
@@ -237,10 +247,6 @@ Route::get('/landing', function () {
 ****************************************************/
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('/profile', function () {
-        return view('menu_top.profile');
-    })->name('profile');    
 
     Route::get('/menu/tasks', function () {
         return view('menu_top.tasks');
