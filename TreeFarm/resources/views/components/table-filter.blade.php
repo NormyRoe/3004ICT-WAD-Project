@@ -155,7 +155,20 @@
 
         <tbody id="{{ $tbodyId }}">
             @if(!$paginate)
-                @foreach ($rows as $row)
+
+                @if(empty($filteredRows))
+                    <tr>
+
+                        <!-- Empty Row -->
+                        <td colspan="{{ count($headings) }}" 
+                            class="px-4 py-2 border border-yellow-800 whitespace-nowrap text-xs md:text-sm" 
+                        >
+                            No records found
+                        </td>
+                    </tr>
+                @endif
+
+                @foreach ($filteredRows as $row)
                     <tr class="hover:bg-amber-200">
 
                         <!-- Radio button column -->

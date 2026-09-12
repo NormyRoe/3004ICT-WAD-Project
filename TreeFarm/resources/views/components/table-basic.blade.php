@@ -58,6 +58,18 @@
         <tbody id="{{ $tbodyId }}">
             @if(!$paginate)
 
+                @if(empty($rows))
+                    <tr>
+
+                        <!-- Empty Row -->
+                        <td colspan="{{ count($headings) }}" 
+                            class="px-4 py-2 border border-yellow-800 whitespace-nowrap text-xs md:text-sm" 
+                        >
+                            No records found
+                        </td>
+                    </tr>
+                @endif
+
                 @foreach ($rows as $row)
                     <tr class="hover:bg-amber-200">
 

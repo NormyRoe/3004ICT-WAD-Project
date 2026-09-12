@@ -152,6 +152,26 @@ function paginateTable(pageParam, tbodyId) {
         // Clear existing rows
         tbody.innerHTML = "";
 
+        // If there are no rows, render a single empty row
+        if (pageRows.length === 0) 
+        {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td colspan="100%" class="px-4 py-2 border border-yellow-800 text-center text-stone-600">
+                    No records found.
+                </td>
+            `;
+            tbody.appendChild(tr);
+
+            // Update page number display in the pagination footer
+            const pagination = tbody.closest('.overflow-x-auto').querySelector('.table-pagination');
+            pagination.querySelector('[data-page-display]').textContent = currentPage;
+
+            // Return out of the function
+            return;
+
+        }
+
         // Build each row using the row function
         pageRows.forEach(row => {
             const tr = document.createElement("tr");
