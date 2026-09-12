@@ -22,6 +22,11 @@
     <!-- ========================= -->
 
     <div class="flex flex-col space-y-4 bg-yellow-100 p-6 rounded border border-yellow-800 max-w-xl">
+        <!-- Status  -->
+        <div>
+            <label class="block text-green-900 font-semibold block">Status</label>
+            <label class="text-black block">{{ $user->status }}</label>
+        </div>
         <!-- First Name  -->
         <div>
             <label class="block text-green-900 font-semibold block">First Name</label>
@@ -74,21 +79,22 @@
     <!-- ========================= -->
     
     <div class="flex justify-center gap-24 mt-10 max-w-xl">
-
-        <!-- Update -->
-        <a href="{{ route('users.edit', $user->id) }}">
-            <x-button-admin type="button" value="Update" />
-        </a>
-
-        <!-- Deactivate -->
+ 
+        <!-- If current user -->
         @if ($user->status === 'Approved')
+            <!-- Update -->
+            <a href="{{ route('users.edit', $user->id) }}">
+                <x-button-admin type="button" value="Update" />
+            </a>
+            <!-- Deactivate -->
             <a href="{{ route('users.deactivate', $user->id) }}">
                 <x-button-admin type="button" value="Deactivate" />
             </a>
         @endif
 
-        <!-- Reactivate -->
-        @if ($user->status === 'Inactive')
+        <!-- If inactive or rejected user -->
+        @if ($user->status === 'Inactive' || $user->status === 'Rejected')
+            <!-- Reactivate -->
             <a href="{{ route('users.reactivate', $user->id) }}">
                 <x-button-admin type="button" value="Reactivate" />
             </a>

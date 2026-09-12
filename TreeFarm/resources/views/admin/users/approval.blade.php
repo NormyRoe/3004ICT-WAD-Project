@@ -8,7 +8,7 @@
 @section('content')
 
     <h2 class="text-3xl font-bold text-green-900">
-        Assign a Manager and Roles to {{ $user->first_name }} {{ $user->last_name }}
+        Assign a Job Title, Manager and Roles to {{ $user->first_name }} {{ $user->last_name }}
     </h2>
 
     <!-- Back to Index Button  -->
@@ -29,8 +29,18 @@
             If the user has a manager, please select who the manager is.
         </p>
 
+        <!-- Job Title  -->
+        <label class="block text-green-900 font-semibold mb-2">{{ $user->first_name }}'s Job Title</label>
+        <input 
+            type="text" 
+            name="job_title" 
+            class="border border-yellow-800 rounded p-2 w-64"
+            value="{{ old('job_title') }}"
+            required
+        >
+
         <!-- Manager  --> 
-        <label class="block text-green-900 font-semibold mb-2">Manager</label>
+        <label class="block text-green-900 font-semibold mb-2">{{ $user->first_name }}'s Manager</label>
         <select 
             name="manager_id"
             class="p-2 border border-yellow-800 rounded text-xs md:text-sm"
@@ -52,7 +62,7 @@
 
         <!-- Roles (Multiple Selection)  -->
         <div class="mt-6 space-y-4">
-            <label class="block text-green-900 font-semibold mb-2">Roles</label>
+            <label class="block text-green-900 font-semibold mb-2">{{ $user->first_name }}'s Roles</label>
             
             @foreach ($roles as $role)
                 <label class="flex items-center gap-3">                    

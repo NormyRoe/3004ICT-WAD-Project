@@ -11,9 +11,9 @@ attachUpdateHandler('input[name="update_current_user"]', currentUserEditRoute);
 attachViewHandler('input[name="view_current_user"]', currentUserShowRoute);
 attachDeleteHandler('input[name="deactivate_user"]', deactivateUserRoute);
 
-attachUpdateHandler('input[name="update_old_user"]', oldUserEditRoute);
-attachViewHandler('input[name="view_old_user"]', oldUserShowRoute);
 attachUpdateHandler('input[name="reactivate_user"]', reactivateUserRoute);
+attachViewHandler('input[name="view_old_user"]', oldUserShowRoute);
+
 
 
 /******************************************************************

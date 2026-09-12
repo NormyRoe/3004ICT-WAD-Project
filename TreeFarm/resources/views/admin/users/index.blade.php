@@ -43,9 +43,9 @@
         // Set the headings to be displayed
         $usersForApprovalHeadings = [
             'Select',
-            'First_Name',
-            'Last_Name',
-            'username',
+            'First Name',
+            'Surname',
+            'Username',
             'Email',
         ];
 
@@ -103,11 +103,11 @@
         // Set the headings to be displayed
         $currentUserHeadings = [
             'Select',
-            'First_Name',
-            'Last_Name',
-            'username',
+            'First Name',
+            'Surname',
+            'Username',
             'Email',
-            'Job_Title',
+            'Job Title',
         ];
 
         // Initialise an empty array for the rows
@@ -151,7 +151,6 @@
     <div class="flex justify-between items-center mt-10">
         <h3 class="text-2xl font-bold text-green-900">Deactivated Users</h3>
         <div class="flex gap-4">
-            <x-button-admin type="submit" name="update_old_user" value="Update" />
             <x-button-admin type="submit" name="view_old_user" value="View" />
             <x-button-admin type="submit" name="reactivate_user" value="Reactivate" />
         </div>
@@ -164,11 +163,11 @@
         // Set the headings to be displayed
         $deactivatedUserHeadings = [
             'Select',
-            'First_Name',
-            'Last_Name',
-            'username',
+            'First Name',
+            'Surname',
+            'Username',
             'Email',
-            'Job_Title',
+            'Job Title',
         ];
 
         // Initialise an empty array for the rows
@@ -218,7 +217,6 @@
             const currentUserShowRoute = "{{ route('users.show', ':id') }}";
             const deactivateUserRoute = "{{ route('users.deactivate', ':id') }}";
             
-            const oldUserEditRoute = "{{ route('users.edit', ':id') }}";
             const oldUserShowRoute = "{{ route('users.show', ':id') }}";
             const reactivateUserRoute = "{{ route('users.reactivate', ':id') }}";
 
