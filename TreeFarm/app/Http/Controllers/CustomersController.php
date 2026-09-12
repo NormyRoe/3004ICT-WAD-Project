@@ -7,59 +7,92 @@ use Illuminate\Http\Request;
 
 class CustomersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    /***************************************************
+
+    index()
+
+    This function displays the information regarding Customers.
+
+    ****************************************************/
     public function index()
     {
-        //
+        // Get the customer from the database
+        $customers = Customer::orderBy('last_name')->get();
+
+        // Return the index view and pass it the two arrays
+        return view('menu_top.customers.index', [
+            'customers' => $customers,
+        ]);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+    /***************************************************
+
+    create()
+
+    This function displays the form for creating new Customers.
+
+    ****************************************************/
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    /***************************************************
+
+    store(Request $request)
+
+    This function validates the new Customer and 
+    adds it to the database if it is valid.
+
+    ****************************************************/
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Customer $customer)
+
+    /***************************************************
+
+    show($id)
+
+    This function displays the form for viewing the 
+    Customer's details.
+
+    ****************************************************/
+    public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Customer $customer)
+
+    /***************************************************
+
+    edit($id)
+
+    This function displays the form for updating a Customer.
+
+    ****************************************************/
+    public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Customer $customer)
+
+    /***************************************************
+
+    update(Request $request, $id)
+
+    This function updates the specified Customer object.
+
+    ****************************************************/
+    public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Customer $customer)
-    {
-        //
-    }
+
 }

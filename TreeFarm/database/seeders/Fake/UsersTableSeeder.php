@@ -141,6 +141,36 @@ class UsersTableSeeder extends Seeder
                 'updated_at'  => now(),
             ],
 
+            [
+                'first_name'  => 'Richard',
+                'last_name'   => 'Osborne',
+                'username'    => 'rickie',
+                'email'       => 'richard@dob.com',
+                'job_title'   => '',
+                'manager_id'  => null,
+                'status'      => 'For Approval',
+                'password'    => bcrypt('Rick@645'),
+                'created_by'  => null,
+                'modified_by' => null,
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ],
+
+            [
+                'first_name'  => 'Luke',
+                'last_name'   => 'Marsh',
+                'username'    => 'lukie',
+                'email'       => 'luke@dob.com',
+                'job_title'   => '',
+                'manager_id'  => null,
+                'status'      => 'Rejected',
+                'password'    => bcrypt('Luk@@861'),
+                'created_by'  => null,
+                'modified_by' => null,
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ],
+
         ]);
 
     }

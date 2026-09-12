@@ -85,7 +85,7 @@
             <x-button-admin type="submit" name="update_tree" value="Update" />
             <a href="{{ route('trees.create') }}">
                 <x-button-admin type="submit" name="add_tree" value="Add" />
-            </a>            
+            </a>
             <x-button-admin type="submit" name="delete_tree" value="Delete" />
         </div>
         

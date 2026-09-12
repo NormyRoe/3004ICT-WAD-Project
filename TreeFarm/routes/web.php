@@ -264,10 +264,6 @@ Route::middleware(['auth', 'can.inventory'])->group(function () {
 
 Route::middleware(['auth', 'can.sales'])->group(function () {
 
-    Route::get('/customers', function () {
-        return view('menu_top.customers');        
-    })->name('customers');
-
     Route::get('/sales', function () {
         return view('menu_top.sales');
     })->name('sales');

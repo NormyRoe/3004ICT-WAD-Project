@@ -29,9 +29,9 @@
             href="{{ route('sales') }}"
         >Sales</a>
 
-        <a class="{{ request()->routeIs('customers') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
+        <a class="{{ request()->routeIs('customers.index') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
                     hover:bg-yellow-200 py-3 px-2" 
-            href="{{ route('customers') }}"
+            href="{{ route('customers.index') }}"
         >Customers</a>
 
     @endcan
