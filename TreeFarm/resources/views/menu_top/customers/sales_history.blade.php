@@ -158,7 +158,7 @@
     @push('scripts')
         
         <script src="{{ asset('js/table_helpers.js') }}"></script>
-        <script src="{{ asset('js/menu_top/sales_history.js') }}"></script>
+        <script src="{{ asset('js/menu_top/customers/sales_history.js') }}"></script>
 
     @endpush
 

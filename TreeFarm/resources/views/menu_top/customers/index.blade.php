@@ -36,7 +36,7 @@
             <x-button-admin type="submit" name="update" value="Update" />
             <a href="{{ route('customers.create') }}">
                 <x-button-admin type="submit" name="add" value="Add" />
-            </a>            
+            </a>
         </div>
         
     </div>
@@ -104,7 +104,7 @@
 
         </script>
         <script src="{{ asset('js/table_helpers.js') }}"></script>
-        <script src="{{ asset('js/menu_top/customers.js') }}"></script>
+        <script src="{{ asset('js/menu_top/customers/customers.js') }}"></script>
     @endpush
 
 @endsection

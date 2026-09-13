@@ -5,21 +5,16 @@
 
 <nav class="rounded border-2 border-emerald-700 mt-2 space-y-1">
 
-    <!-- Everyone can see this menu option -->
+    <!-- Everyone can see these menu options -->
     <a class="{{ request()->routeIs('menu/tasks') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
                 hover:bg-yellow-200 py-3 px-2" 
         href="{{ route('menu.tasks') }}"
     >Tasks</a>
 
-    <!-- Only those with Inventory access can see this menu option -->
-    @can('inventory-access')
-
-        <a class="{{ request()->routeIs('inventory') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
+    <a class="{{ request()->routeIs('inventories.index') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
                     hover:bg-yellow-200 py-3 px-2" 
-            href="{{ route('inventory') }}"
-        >Inventory</a>
-
-    @endcan
+            href="{{ route('inventories.index') }}"
+    >Inventory</a>
 
     <!-- Only those with Sales access can see these menu options -->
     @can('sales-access')

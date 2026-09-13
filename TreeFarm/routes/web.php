@@ -66,12 +66,18 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('allocated_tasks', AllocatedTasksController::class);
     Route::resource('allocated_tasks_users', AllocatedTasksUsersController::class);
+    Route::get('inventories', [InventoriesController::class, 'index'])->name('inventories.index');
+    Route::get('inventories/{id}', [InventoriesController::class, 'show'])->name('inventories.show');
 
 });
 
 Route::middleware(['auth', 'can.inventory'])->group(function () {
 
-    Route::resource('inventories', InventoriesController::class);
+    Route::get('inventories/create', [InventoriesController::class, 'create'])->name('inventories.create');
+    Route::post('inventories', [InventoriesController::class, 'store'])->name('inventories.store');
+    Route::get('inventories/{id}/edit', [InventoriesController::class, 'edit'])->name('inventories.edit');
+    Route::put('inventories/{id}', [InventoriesController::class, 'update'])->name('inventories.update');
+    Route::delete('inventories/{id}', [InventoriesController::class, 'destroy'])->name('inventories.destroy');
 
 });
 
@@ -185,6 +191,13 @@ Route::middleware(['auth', 'can.sales'])->group(function () {
 
 });
 
+Route::middleware(['auth', 'can.inventory'])->group(function () {
+
+    Route::get('inventories/{id}/delete', [InventoriesController::class, 'delete_confirm'])
+            ->name('inventories.delete_confirm');
+
+});
+
 
 /***************************************************
 
@@ -258,14 +271,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/menu/tasks', function () {
         return view('menu_top.tasks');
     })->name('menu.tasks');
-
-});
-
-Route::middleware(['auth', 'can.inventory'])->group(function () {
-
-    Route::get('/inventory', function () {
-        return view('menu_top.inventory');
-    })->name('inventory');
 
 });
 
