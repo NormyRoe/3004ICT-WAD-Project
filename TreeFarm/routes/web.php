@@ -178,6 +178,13 @@ Route::middleware(['auth', 'can.admin-sales'])->group(function () {
 
 });
 
+Route::middleware(['auth', 'can.sales'])->group(function () {
+
+    Route::get('customers/{id}/sales', [CustomersController::class, 'sales_history'])
+            ->name('customers.sales');
+
+});
+
 
 /***************************************************
 

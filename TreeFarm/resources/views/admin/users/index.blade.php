@@ -141,6 +141,7 @@
         :sumColumn=null
         tbodyId="current_users_table_body"
         :paginate="true"
+        filterPrefix="current_"
     />
 
     <!-- ========================= -->
@@ -201,6 +202,7 @@
         :sumColumn=null
         tbodyId="deactivated_users_table_body"
         :paginate="true"
+        filterPrefix="deactivated_"
     />
 
     <!-- ========================= -->

@@ -13,6 +13,10 @@
         Below are all of the customers that have been created in the application.
     </p>
 
+    <p class="mt-4 text-stone-700">
+        When you view one of the customers, you will be able to then get to their sales history.
+    </p>
+
     <!-- Update Success Message  -->
     @if(session('success'))
         <div class="bg-amber-200 text-orange-900 p-4 rounded mb-4 mt-4 border border-amber-600 shadow-sm">

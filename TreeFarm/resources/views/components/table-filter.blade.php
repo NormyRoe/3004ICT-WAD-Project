@@ -11,6 +11,7 @@
     'sumColumn' => null,
     'tbodyId' => null,
     'paginate' => false,
+    'filterPrefix' => '',
     
 ])
 
@@ -43,7 +44,7 @@
     $selectedFilters = [];
 
     foreach ($filterColumns as $colIndex) {
-        $selectedFilters[$colIndex] = request("filter_$colIndex");
+        $selectedFilters[$colIndex] = request($filterPrefix . "filter_$colIndex");
     }
 
 @endphp
@@ -110,7 +111,7 @@
 
                     <!-- Dropdown -->
                     <select 
-                        name="filter_{{ $index }}"
+                        name="{{ $filterPrefix }}filter_{{ $index }}"
                         onchange="this.form.submit()"
                         class="p-2 border border-yellow-800 rounded text-xs md:text-sm"
                     >
@@ -121,7 +122,7 @@
                         @foreach ($filterValues[$index] as $value)
                             <option 
                                 value="{{ $value }}"
-                                {{ request("filter_$index") == $value ? 'selected' : '' }}
+                                {{ request($filterPrefix . "filter_$index") == $value ? 'selected' : '' }}
                             >
                                 {{ $value }}
                             </option>
