@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <h2 class="text-3xl font-bold text-green-900">Welcome to the Sales History for {{ $customer->first_name }} {{ $customer->last_name }}</h2>
+    <h2 class="text-3xl font-bold text-green-900">Sales History for {{ $customer->first_name }} {{ $customer->last_name }}</h2>
 
     <!-- Back to Show Button  -->
     <x-back-controller route='customers.index' label="Back to the Customers Page" />
