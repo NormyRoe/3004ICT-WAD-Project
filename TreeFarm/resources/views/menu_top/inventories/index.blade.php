@@ -14,6 +14,13 @@
         Here is all of the current inventory:
     </p>
 
+    <!-- Update Success Message  -->
+    @if(session('success'))
+        <div class="bg-amber-200 text-orange-900 p-4 rounded mb-4 mt-4 border border-amber-600 shadow-sm">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <!-- ========================= -->
     <!-- Inventory (Filtering Table with Total) -->
     <!-- ========================= -->
@@ -45,6 +52,7 @@
         $inventoryHeadings = [
             'Select',
             'Plant ID',
+            'Type',
             "Tree",
             "Pot_Size",
             "Area",
@@ -67,6 +75,7 @@
                 $inventoryRows[] = [
                     $inventory->id,
                     $inventory->tree->plant_id,
+                    $inventory->tree->tree_type->name,
                     $inventory->tree->common_name,
                     $inventory->pot_size->size,
                     $inventory->location->area->name,
@@ -81,7 +90,7 @@
             }
 
         // Hide Columns on small screens
-        $hideColumns = [3, 5, 6, 8, 9, 10, 11];
+        $hideColumns = [1, 2, 5, 6, 7, 9, 10, 11, 12];
 
     @endphp
 
@@ -89,9 +98,9 @@
         :headings="$inventoryHeadings" 
         :rows="$inventoryRows"
         :hideColumns="$hideColumns"
-        :filterColumns="[1, 2, 3, 4, 5, 6, 8, 9, 10, 11]"
+        :filterColumns="[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12]"
         :showTotals="true"
-        :sumColumn="7"
+        :sumColumn="8"
         tbodyId="inventory_table_body"
         :paginate="true"
     />
@@ -108,7 +117,7 @@
 
         </script>
         <script src="{{ asset('js/table_helpers.js') }}"></script>
-        <script src="{{ asset('js/menu_top/inventories.js') }}"></script>
+        <script src="{{ asset('js/menu_top/inventories/inventories.js') }}"></script>
 
     @endpush
 

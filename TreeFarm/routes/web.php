@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('allocated_tasks', AllocatedTasksController::class);
     Route::resource('allocated_tasks_users', AllocatedTasksUsersController::class);
     Route::get('inventories', [InventoriesController::class, 'index'])->name('inventories.index');
-    Route::get('inventories/{id}', [InventoriesController::class, 'show'])->name('inventories.show');
+    Route::get('inventories/{id}', [InventoriesController::class, 'show'])->whereNumber('id')->name('inventories.show');
 
 });
 

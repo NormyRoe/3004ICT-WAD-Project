@@ -31,8 +31,21 @@
 
         <!-- Tree  -->
         <div>
-            <label class="block text-green-900 font-semibold block">Tree</label>
-            <label class="text-black block">{{ $inventory->tree->common_name }}</label>
+            
+            <div class="flex flex-wrap gap-12 mt-2">
+
+                <div class="flex flex-col space-y-4">
+                    <label class="block text-green-900 font-semibold block">Tree's Type</label>
+                    <label class="text-black block">{{ $inventory->tree->tree_type->name }}</label>
+                </div>
+
+                <div class="flex flex-col space-y-4">
+                    <label class="block text-green-900 font-semibold block">Tree's Common Name</label>
+                    <label class="text-black block">{{ $inventory->tree->common_name }}</label>
+                </div>
+                
+            </div>
+            
         </div>
 
         <!-- Pot Size  -->

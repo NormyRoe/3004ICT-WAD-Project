@@ -19,4 +19,3 @@ if (window["inventory_table_body_paginate"])
     paginateTable("inventory_table_body", "inventory_table_body");
 }
 
-

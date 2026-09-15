@@ -11,7 +11,7 @@
     <x-back-controller route='customers.index' label='Back to Customers Page' />
     
     <!-- ========================= -->
-    <!-- Creation Form -->
+    <!-- Update Form -->
     <!-- ========================= -->
     <form action="{{ route('customers.update', $customer->id) }}" method="POST" class="mt-6">
         @csrf
