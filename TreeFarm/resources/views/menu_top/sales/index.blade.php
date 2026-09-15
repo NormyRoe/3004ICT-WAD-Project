@@ -69,7 +69,7 @@
                     $sale->delivery_kms ?? '',
                     $sale->delivery_fee ?? '',
                     $sale->discount ?? '',
-                    $sale->total_sales_price ?? '',
+                    $sale->total_sales_price ?? 0,
                     $sale->user->last_name. ', ' .$sale->user->first_name,
                 ];
             }
@@ -137,7 +137,7 @@
                     $sale->delivery_kms ?? '',
                     $sale->delivery_fee ?? '',
                     $sale->discount ?? '',
-                    $sale->total_sales_price ?? '',
+                    $sale->total_sales_price ?? 0,
                     $sale->user->last_name. ', ' .$sale->user->first_name,
                 ];
             }
