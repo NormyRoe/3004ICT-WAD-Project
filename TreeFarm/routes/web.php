@@ -274,14 +274,6 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::middleware(['auth', 'can.sales'])->group(function () {
-
-    Route::get('/sales', function () {
-        return view('menu_top.sales');
-    })->name('sales');
-
-});
-
 Route::middleware(['auth', 'can.admin'])->group(function () {
 
     Route::get('/admin', function () {

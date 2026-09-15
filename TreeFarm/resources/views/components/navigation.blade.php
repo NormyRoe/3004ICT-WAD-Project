@@ -19,9 +19,9 @@
     <!-- Only those with Sales access can see these menu options -->
     @can('sales-access')
 
-        <a class="{{ request()->routeIs('sales') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
+        <a class="{{ request()->routeIs('sales.index') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
                     hover:bg-yellow-200 py-3 px-2" 
-            href="{{ route('sales') }}"
+            href="{{ route('sales.index') }}"
         >Sales</a>
 
         <a class="{{ request()->routeIs('customers.index') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 

@@ -20,7 +20,7 @@
 
     <!-- Label and Buttons -->
     <div class="flex justify-between items-center mt-10">
-        <h3 class="text-2xl font-bold text-green-900">{{ $name }}'s Current Tasks</h3>
+        <h3 class="text-2xl font-bold text-green-900">{{ auth()->user()->first_name }}'s Current Tasks</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="done" value="Done" />
             <x-button-admin type="submit" name="add" value="Add" />
