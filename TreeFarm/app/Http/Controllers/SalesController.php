@@ -8,6 +8,12 @@ use App\Models\Customer;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\UsersRole;
+use App\Models\FarmDetail;
+use App\Models\Price;
+use App\Models\ExceptionPrice;
+use App\Models\PotSize;
+use App\Models\Tree;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -128,8 +134,8 @@ class SalesController extends Controller
             'modified_by' => auth()->id(),
         ]);
 
-        // Redirect to the index view and pass it a success message
-        return redirect("sales")->with('success', 'The new Sales record has been successfully created.');
+        // Redirect to the edit view and pass it a success message
+        return redirect()->route('sales.edit', $sale->id)->with('success', 'The new Sales record has been successfully created.');
 
     }
 
@@ -144,7 +150,18 @@ class SalesController extends Controller
     ****************************************************/
     public function show($id)
     {
-        //
+        // Get the sale object
+        $sale = Sale::with('customer')->with('user')->findOrFail($id);
+
+        // Get the sale items
+        $sale_items = $sale->sale_items()->get();
+
+        // Return the show view and pass it the sale object and sale items array
+        return view('menu_top.sales.show', [
+            'sale' => $sale,
+            'sale_items' => $sale_items,
+        ]);
+
     }
 
 
@@ -157,7 +174,39 @@ class SalesController extends Controller
     ****************************************************/
     public function edit($id)
     {
-        //
+        // Get the sale object
+        $sale = Sale::with('customer')->with('user')->findOrFail($id);
+
+        // Get the sale items
+        $sale_items = $sale->sale_items()->get();
+
+        // Get the prices
+        $prices = Price::with('pot_size')->get();
+
+        // Get the exception prices
+        $exception_prices = ExceptionPrice::with('tree')->with('pot_size')->get();
+
+        // Get the current inventory
+        $inventories = Inventory::select('inventories.*')
+                                    ->join('trees', 'inventories.tree_id', '=', 'trees.id')
+                                    ->with([
+                                        'tree',
+                                        'pot_size',
+                                    ])->orderBy('trees.common_name')->get();
+
+        // Get the farm's details from the database
+        $farm = FarmDetail::first();
+
+        // Return the edit view and pass it the sale object and the arrays
+        return view('menu_top.sales.edit_form', [
+            'sale' => $sale,
+            'sale_items' => $sale_items,
+            'prices' => $prices,
+            'exception_prices' => $exception_prices,
+            'inventories' => $inventories,
+            'farm' => $farm,
+        ]);
+
     }
 
 
