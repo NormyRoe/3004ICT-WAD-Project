@@ -100,7 +100,7 @@
                 <!-- Filtered dropdown -->
                 <ul 
                     x-show="open"
-                    class="border border-yellow-800 bg-white rounded mt-1 max-h-40 overflow-y-auto w-64"
+                    class="border border-yellow-800 bg-white rounded mt-1 max-h-40 overflow-y-auto w-64 absolute z-50"
                 >
                     @foreach ($customers as $customer)
                         <li 

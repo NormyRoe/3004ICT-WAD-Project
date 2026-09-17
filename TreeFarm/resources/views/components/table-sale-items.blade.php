@@ -107,26 +107,69 @@
     @if ($deletable)
 
         <!-- Add Item Row -->
-        <div class="flex flex-row gap-6 items-end mt-6">
+        <div class="flex flex-row flex-wrap gap-6 items-end mt-6">
 
             <!-- Inventory Dropdown -->
-            <div>
-                <label class="block text-green-900 font-semibold mb-2">Inventory Item</label>
-                <select class="p-2 border border-yellow-800 rounded text-xs md:text-sm w-64">
-                    <option value="">Select an item...</option>
-                    <!-- Inventory items will be loaded later -->
+            <div x-data="{ search: '', open: false }" class="mt-4">
+
+                <label class="block text-green-900 font-semibold">Inventory Item</label>
+
+                <!-- Search box -->
+                <input 
+                    x-model="search"
+                    @focus="open = true"
+                    @click.away="open = false"
+                    type="text"
+                    placeholder="Search inventory..."
+                    class="border border-yellow-800 rounded p-2 w-64"
+                >
+
+                <!-- Hidden select that actually submits -->
+                <select name="inventory_id" x-ref="inventorySelect" class="hidden">
+                    @foreach ($inventories as $inventory)
+                        <option value="{{ $inventory->id }}">
+                            {{ $inventory->pot_size->size }}, {{ $inventory->tree->common_name }}
+                        </option>
+                    @endforeach
                 </select>
+
+                <!-- Filtered dropdown -->
+                <ul 
+                    x-show="open"
+                    class="border border-yellow-800 bg-white rounded mt-1 max-h-40 overflow-y-auto w-64 absolute z-50"
+                >
+                    @foreach ($inventories as $inventory)
+                        <li 
+                            @click="
+                                $refs.inventorySelect.value = '{{ $inventory->id }}';
+                                search = '{{ $inventory->pot_size->size }}, {{ $inventory->tree->common_name }} : {{ $inventory->quantity }}';
+                                open = false;
+                            "
+                            x-show="'{{ strtolower($inventory->pot_size->size . ', ' . $inventory->tree->common_name) }}'.includes(search.toLowerCase())"
+                            class="p-2 hover:bg-yellow-200 cursor-pointer text-xs md:text-sm"
+                        >
+                            {{ $inventory->pot_size->size }}, {{ $inventory->tree->common_name }} : {{ $inventory->quantity }}
+                        </li>
+                    @endforeach
+                </ul>
+
             </div>
 
             <!-- Quantity -->
             <div>
                 <label class="block text-green-900 font-semibold mb-2">Quantity</label>
-                <input type="number" class="border border-yellow-800 rounded p-2 w-32">
+                <input type="number" name="quantity" class="border border-yellow-800 rounded p-2 w-32">
+            </div>
+
+            <!-- Discount -->
+            <div>
+                <label class="block text-green-900 font-semibold mb-2">Discount</label>
+                <input type="number" name="item_discount" class="border border-yellow-800 rounded p-2 w-32">
             </div>
 
             <!-- Add Button -->
             <div>
-                <x-button-admin type="button" value="Add Item" />
+                <x-button-admin type="button" value="Add Item" data-add-item />
             </div>
 
         </div>

@@ -8,7 +8,14 @@
     <h2 class="text-3xl font-bold text-green-900">View an existing Sale Record</h2>
 
     <!-- Back to Index Button  -->
-    <x-back-controller route='sales.index' label='Back to Sales Page' />    
+    <x-back-controller route='sales.index' label='Back to Sales Page' />
+
+    <!-- Update Success Message  -->
+    @if(session('success'))
+        <div class="bg-amber-200 text-orange-900 p-4 rounded mb-4 mt-4 border border-amber-600 shadow-sm">
+            {{ session('success') }}
+        </div>
+    @endif
     
     <!-- ========================= -->
     <!-- Show Details -->

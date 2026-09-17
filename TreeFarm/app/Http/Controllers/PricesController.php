@@ -23,7 +23,7 @@ class PricesController extends Controller
     {
         // Get the prices from the database
         $prices = Price::with('pot_size')
-                        ->join('pot_sizes', 'prices.pot_size_id', '=', 'pot_sizes.id')
+                        ->leftjoin('pot_sizes', 'prices.pot_size_id', '=', 'pot_sizes.id')
                         ->orderBy('pot_sizes.size')
                         ->orderBy('prices.name')
                         ->select('prices.*')

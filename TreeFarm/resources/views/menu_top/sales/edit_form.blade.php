@@ -32,7 +32,7 @@
     <!-- ========================= -->
     <!-- Update Form -->
     <!-- ========================= -->
-    <form action="{{ route('sales.update', $sale->id) }}" method="POST" class="mt-6">
+    <form id="sale-form" action="{{ route('sales.update', $sale->id) }}" method="POST" class="mt-6">
         @csrf
         {{ method_field('PUT') }}
 
@@ -42,7 +42,7 @@
             <!-- ========================= -->
             <!-- Row: Status, Date and People -->
             <!-- ========================= -->
-            <div class="flex flex-row gap-12 mb-4">
+            <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
 
                 <!-- Status  -->
                 <div>
@@ -115,7 +115,7 @@
             <!-- ========================= -->
             <!-- Row: Delivery Notes and Kms -->
             <!-- ========================= -->
-            <div class="flex flex-row gap-12 mb-4">
+            <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
 
                 <!-- Delivery Notes  -->
                 <div>
@@ -152,34 +152,34 @@
             <!-- ========================= -->
             <!-- Row: Delivery Fee, Discount and Total Sales -->
             <!-- ========================= -->
-            <div class="flex flex-row gap-12 mb-4">
+            <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
 
                 <!-- Delivery Fee  -->
                 <div>
-                    <label class="block text-green-900 font-semibold mb-2">Delivery Fee</label>
+                    <label class="block text-green-900 font-semibold mb-2">Delivery Fee ($)</label>
                     <input 
                         type="text" 
                         name="delivery_fee" 
                         class="border border-yellow-800 rounded p-2 w-64"
                         value="{{ old('delivery_fee', $sale->delivery_fee) }}"
+                        required
                     >
                 </div>
 
                 <!-- Discount  -->
                 <div>
-                    <label class="block text-green-900 font-semibold mb-2">Discount</label>
+                    <label class="block text-green-900 font-semibold mb-2">Discount ($)</label>
                     <input 
                         type="text" 
                         name="discount" 
                         class="border border-yellow-800 rounded p-2 w-64"
                         value="{{ old('discount', $sale->discount) }}"
-                        required
                     >
                 </div>
 
                 <!-- Total Sales  -->
                 <div>
-                    <label class="block text-green-900 font-semibold mb-2">Total Sales</label>
+                    <label class="block text-green-900 font-semibold mb-2">Total Sales ($)</label>
                     <input 
                         type="text" 
                         name="total_sales" 
@@ -209,11 +209,69 @@
             
         </div>
 
+        <!-- Hidden field to store the sale items array -->
+        <input type="hidden" name="items_json" id="items_json">
+
+        @php
+
+            // FARM ADDRESS BUILDER
+            $farmStreet = $farm->street_address_2 
+                ? (preg_match('/\d+/', $farm->street_address_2) ? $farm->street_address_2 : $farm->street_address_1)
+                : $farm->street_address_1;
+
+            $farmFullAddress = "{$farmStreet}, {$farm->suburb} {$farm->postcode}, Australia";
+
+            // CUSTOMER ADDRESS BUILDER
+            $custStreet = $sale->customer->street_address_2 
+                ? (preg_match('/\d+/', $sale->customer->street_address_2) ? $sale->customer->street_address_2 : $sale->customer->street_address_1)
+                : $sale->customer->street_address_1;
+
+            $custFullAddress = "{$custStreet}, {$sale->customer->suburb} {$sale->customer->postcode}, Australia";
+
+        @endphp
+
+        <!-- Hidden field to store the farm's address -->
+        <input type="hidden" id="farm_address" value="{{ $farmFullAddress }}">
+
+        <!-- Hidden field to store the customer's address -->
+        <input type="hidden" id="customer_address" value="{{ $custFullAddress }}">
+
+
         <!-- Button  -->
         <div class="flex mt-12 justify-center max-w-xl">
             <x-button-admin type="submit" value="Update Sale" />
         </div>
 
     </form>
+
+    <!-- ========================= -->
+    <!-- Import Scripts -->
+    <!-- ========================= -->
+    @push('scripts')
+        <script>
+
+            window.existingSaleItems = @json($sale_items);
+            window.prices = @json($prices);
+            window.exceptionPrices = @json($exception_prices);
+
+            // Build a lookup table for inventory names
+            window.inventoryLookup = {
+                @foreach ($inventories as $inventory)
+                    "{{ $inventory->id }}": {
+                        pot_size: "{{ $inventory->pot_size->size }}",
+                        tree_name: "{{ $inventory->tree->common_name }}",
+                        pot_size_id: {{ $inventory->pot_size_id }},
+                        tree_id: {{ $inventory->tree_id }}
+                    },
+                @endforeach
+            };
+
+            window.calcKmsUrl = "{{ route('sales.calcKms') }}";
+
+        </script>
+        
+        <script src="{{ asset('js/menu_top/sales/edit.js') }}"></script>
+
+    @endpush
 
 @endsection

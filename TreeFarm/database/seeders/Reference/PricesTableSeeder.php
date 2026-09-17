@@ -77,8 +77,8 @@ class PricesTableSeeder extends Seeder
             [
                 'name'         => 'Delivery Rate',
                 'pot_size_id'  => null,
-                'price'        => 2.5,
-                'rate'         => null,
+                'price'        => null,
+                'rate'         => 2.5,
                 'created_by'   => null,
                 'modified_by'  => null,
                 'created_at'   => now(),
