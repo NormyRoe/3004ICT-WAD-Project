@@ -29,7 +29,7 @@
                     <th class="px-4 py-2 font-semibold border border-yellow-800 text-xs md:text-sm">Discount</th>
                     <th class="px-4 py-2 font-semibold border border-yellow-800 text-xs md:text-sm">Total Price</th>
 
-                    @if ($deletable)
+                    @if ($deletable && $sale->status == "In Progress")
                         <th class="px-4 py-2 font-semibold border border-yellow-800 text-xs md:text-sm">Remove</th>
                     @endif
                     
@@ -62,7 +62,7 @@
                         ${{ number_format($item->total_price, 2) }}
                     </td>
 
-                    @if ($deletable)
+                    @if ($deletable && $sale->status == "In Progress")
 
                         <td class="px-4 py-2 border border-yellow-800 text-xs md:text-sm">
                             <button 
@@ -104,7 +104,7 @@
 
     </div>
 
-    @if ($deletable)
+    @if ($deletable && $sale->status == "In Progress")
 
         <!-- Add Item Row -->
         <div class="flex flex-row flex-wrap gap-6 items-end mt-6">

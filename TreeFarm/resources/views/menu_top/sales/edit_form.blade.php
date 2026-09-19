@@ -131,19 +131,32 @@
 
                     <div>
                         <label class="block text-green-900 font-semibold mb-2">Delivery Kms</label>
-                        <input 
-                            type="text" 
-                            name="delivery_kms" 
-                            class="border border-yellow-800 rounded p-2 w-64"
-                            value="{{ old('delivery_kms', $sale->delivery_kms) }}"
-                            required
-                        >
+
+                        @if ($sale->status == "In Progress")
+                            <input 
+                                type="text" 
+                                name="delivery_kms" 
+                                class="border border-yellow-800 rounded p-2 w-64"
+                                value="{{ old('delivery_kms', $sale->delivery_kms) }}"
+                                required
+                            >
+                        @else
+                            <label class="text-orange-900 font-semibold block">
+                                {{ $sale->delivery_kms }}
+                            </label>
+                        @endif
+
+                    </label>
                     </div>
 
-                    <!-- Calculate Button -->
-                    <div class="mt-6">                    
-                        <x-button-admin type="button" value="Calculate Delivery Kms" />
-                    </div>
+                    @if ($sale->status == "In Progress")
+
+                        <!-- Calculate Button -->
+                        <div class="mt-6">
+                            <x-button-admin id="btn-calc-kms" type="button" value="Calculate Delivery Distance" />
+                        </div>
+
+                    @endif
 
                 </div>
 
@@ -157,36 +170,60 @@
                 <!-- Delivery Fee  -->
                 <div>
                     <label class="block text-green-900 font-semibold mb-2">Delivery Fee ($)</label>
-                    <input 
-                        type="text" 
-                        name="delivery_fee" 
-                        class="border border-yellow-800 rounded p-2 w-64"
-                        value="{{ old('delivery_fee', $sale->delivery_fee) }}"
-                        required
-                    >
+
+                    @if ($sale->status == "In Progress")
+                        <input 
+                            type="text" 
+                            name="delivery_fee" 
+                            class="border border-yellow-800 rounded p-2 w-64"
+                            value="{{ old('delivery_fee', $sale->delivery_fee) }}"
+                            required
+                        >
+                    @else
+                        <label class="text-orange-900 font-semibold block">
+                            {{ $sale->delivery_fee }}
+                        </label>
+                    @endif
+
                 </div>
 
                 <!-- Discount  -->
                 <div>
                     <label class="block text-green-900 font-semibold mb-2">Discount ($)</label>
-                    <input 
-                        type="text" 
-                        name="discount" 
-                        class="border border-yellow-800 rounded p-2 w-64"
-                        value="{{ old('discount', $sale->discount) }}"
-                    >
+
+                    @if ($sale->status == "In Progress")
+                        <input 
+                            type="text" 
+                            name="discount" 
+                            class="border border-yellow-800 rounded p-2 w-64"
+                            value="{{ old('discount', $sale->discount) }}"
+                        >
+                    @else
+                        <label class="text-orange-900 font-semibold block">
+                            {{ $sale->discount }}
+                        </label>
+                    @endif
+
                 </div>
 
                 <!-- Total Sales  -->
                 <div>
                     <label class="block text-green-900 font-semibold mb-2">Total Sales ($)</label>
-                    <input 
-                        type="text" 
-                        name="total_sales" 
-                        class="border border-yellow-800 rounded p-2 w-64"
-                        value="{{ old('total_sales', $sale->total_sales_price) }}"
-                        required
-                    >
+
+                    @if ($sale->status == "In Progress")
+                        <input 
+                            type="text" 
+                            name="total_sales" 
+                            class="border border-yellow-800 rounded p-2 w-64"
+                            value="{{ old('total_sales', $sale->total_sales_price) }}"
+                            required
+                        >
+                    @else
+                        <label class="text-orange-900 font-semibold block">
+                            {{ $sale->discount }}
+                        </label>
+                    @endif
+
                 </div>
 
             </div>
@@ -250,6 +287,7 @@
     @push('scripts')
         <script>
 
+            window.saleStatus = "{{ trim($sale->status) }}";
             window.existingSaleItems = @json($sale_items);
             window.prices = @json($prices);
             window.exceptionPrices = @json($exception_prices);
@@ -261,7 +299,8 @@
                         pot_size: "{{ $inventory->pot_size->size }}",
                         tree_name: "{{ $inventory->tree->common_name }}",
                         pot_size_id: {{ $inventory->pot_size_id }},
-                        tree_id: {{ $inventory->tree_id }}
+                        tree_id: {{ $inventory->tree_id }},
+                        quantity: {{ $inventory->quantity }}
                     },
                 @endforeach
             };
@@ -270,7 +309,10 @@
 
         </script>
         
-        <script src="{{ asset('js/menu_top/sales/edit.js') }}"></script>
+        <script type="module" src="{{ asset('js/menu_top/sales/init.js') }}"></script>
+        <script type="module" src="{{ asset('js/menu_top/sales/sales_items.js') }}"></script>
+        <script type="module" src="{{ asset('js/menu_top/sales/form_fields.js') }}"></script>
+        <script type="module" src="{{ asset('js/menu_top/sales/generate_kms.js') }}"></script>
 
     @endpush
 

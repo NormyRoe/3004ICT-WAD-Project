@@ -248,6 +248,10 @@ class SalesController extends Controller
 
             ]);
 
+            // Get the old and new statuses
+            $old_status = $sale->status;
+            $new_status = $request->status;
+
             // Decode the items_json array
             $items = json_decode($validated['items_json'], true);
 
@@ -261,6 +265,7 @@ class SalesController extends Controller
             // Create ALL sale_items from items_json
             foreach ($items as $item) {
 
+                // Create the Sale Item
                 SaleItem::create([
                     'sales_id'     => $sale->id,
                     'inventory_id' => $item['inventory_id'],
@@ -273,8 +278,26 @@ class SalesController extends Controller
                 ]);
 
             }
-            
 
+            // If the status has gone straight from "In Progress" to "Delivered"
+            if ($old_status === 'In Progress' && $new_status === 'Delivered')
+            {
+                // For each of the sale items
+                foreach ($items as $item) {
+
+                    // Get the inventory object
+                    $inventory = Inventory::find($item['inventory_id']);
+
+                    // Update the inventory's quantity
+                    $inventory->quantity -= $item['quantity'];
+
+                    // Save the inventory record
+                    $inventory->save();
+
+                }
+
+            }
+            
             // Update the validated Sale record in the database
             $sale->update([
                 'status' => $validated['status'],
@@ -311,8 +334,7 @@ class SalesController extends Controller
     ****************************************************/
     public function calcKms(Request $request)
     {
-        dd($request->all());
-
+        // Validate the request
         $request->validate([
             'farm_address' => 'required|string',
             'customer_address' => 'required|string',
@@ -321,17 +343,31 @@ class SalesController extends Controller
         $farmAddress = $request->farm_address;
         $customerAddress = $request->customer_address;
 
+        /***************************************************
+        *  Griffith Proxy Configuration
+        ***************************************************/
+        $proxyOptions = [
+            'proxy' => [
+                'https' => 'http://s3proxy.itc.griffith.edu.au:3128',
+                'http'  => 'http://s3proxy.itc.griffith.edu.au:3128',
+                'no'    => ['127.0.0.1', 'localhost', '.griffith.edu.au'],
+            ]
+        ];
+        
         // Try block for getting the coordinates for the addresses
         try
         {
             // -----------------------------------------------
             // 1. Geocode farm address
             // -----------------------------------------------
-            $farmGeo = Http::timeout(10)->get('https://api.heigit.org/pelias/v1/search', [
-                'api_key' => env('ORS_API_KEY'),
-                'text' => $farmAddress,
-                'size' => 1
-            ]);
+            $farmGeo = Http::withOptions($proxyOptions)
+                    ->withHeaders([
+                        'Accept' => 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8'
+                    ])->timeout(10)->get('https://api.heigit.org/pelias/v1/search', [
+                        'api_key' => env('ORS_API_KEY'),
+                        'text' => $farmAddress,
+                        'layers' => 'address'
+                    ]);
 
             $farmData = $farmGeo->json();
             $farmCoords = $farmData['features'][0]['geometry']['coordinates'] ?? null;
@@ -343,11 +379,14 @@ class SalesController extends Controller
             // -----------------------------------------------
             // 2. Geocode customer address
             // -----------------------------------------------
-            $custGeo = Http::timeout(10)->get('https://api.heigit.org/pelias/v1/search', [
-                'api_key' => env('ORS_API_KEY'),
-                'text' => $customerAddress,
-                'size' => 1
-            ]);
+            $custGeo = Http::withOptions($proxyOptions)
+                    ->withHeaders([
+                        'Accept' => 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8'
+                    ])->timeout(10)->get('https://api.heigit.org/pelias/v1/search', [
+                        'api_key' => env('ORS_API_KEY'),
+                        'text' => $customerAddress,
+                        'layers' => 'address'
+                    ]);
 
             $custData = $custGeo->json();
             $custCoords = $custData['features'][0]['geometry']['coordinates'] ?? null;
@@ -367,14 +406,18 @@ class SalesController extends Controller
         // -----------------------------------------------
         // 3. Compute driving distance
         // -----------------------------------------------
-        $response = Http::timeout(10)->get(
-            'https://api.heigit.org/openrouteservice/v2/directions/driving-car',
-            [
-                'api_key' => env('ORS_API_KEY'),
-                'start'   => "{$farmCoords[0]},{$farmCoords[1]}",
-                'end'     => "{$custCoords[0]},{$custCoords[1]}"
-            ]
-        );
+        $response = Http::withOptions($proxyOptions)
+                    ->withHeaders([
+                        'Accept' => 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8'
+                    ])->timeout(10)->post(
+                        'https://api.heigit.org/openrouteservice/v2/directions/driving-car?api_key=' . env('ORS_API_KEY'),
+                        [
+                            'coordinates' => [
+                                [$farmCoords[0], $farmCoords[1]],
+                                [$custCoords[0], $custCoords[1]]
+                            ]
+                        ]
+                );
 
         if (!$response->successful()) {
             return response()->json(['error' => 'Routing API failed'], 500);
@@ -390,6 +433,7 @@ class SalesController extends Controller
         $kms = round($meters / 1000, 2);
 
         return response()->json(['kms' => $kms]);
+
     }
 
 
