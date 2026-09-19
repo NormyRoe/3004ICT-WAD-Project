@@ -27,6 +27,16 @@ class AllocatedTask extends Model
         'modified_by'
     ];
 
+    /***************************************************
+    
+        To have date as an actual date
+
+    ****************************************************/
+
+    protected $casts = [
+        'date' => 'date',
+    ];
+
 
     /***************************************************
     
@@ -76,7 +86,7 @@ class AllocatedTask extends Model
     // An allocated task belongs to a pot size (optional)
     public function pot_size()
     {
-        return $this->belongsTo(Pot_Size::class, 'pot_size_id');
+        return $this->belongsTo(PotSize::class, 'pot_size_id');
     }
 
 

@@ -6,9 +6,9 @@
 <nav class="rounded border-2 border-emerald-700 mt-2 space-y-1">
 
     <!-- Everyone can see these menu options -->
-    <a class="{{ request()->routeIs('menu/tasks') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
+    <a class="{{ request()->routeIs('allocated_tasks.index') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
                 hover:bg-yellow-200 py-3 px-2" 
-        href="{{ route('menu.tasks') }}"
+        href="{{ route('allocated_tasks.index') }}"
     >Tasks</a>
 
     <a class="{{ request()->routeIs('inventories.index') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 

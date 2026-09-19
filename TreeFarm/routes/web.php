@@ -151,6 +151,8 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
             ->name('users.reactivate');
     Route::get('users/{id}/approval', [UsersController::class, 'approval'])
             ->name('users.approval');
+    Route::get('allocated_tasks/{id}/delete', [TasksController::class, 'delete_confirm'])
+            ->name('allocated_tasks.delete_confirm');
 
 });
 
@@ -171,7 +173,7 @@ Route::middleware(['auth', 'can.admin-ops'])->group(function () {
     Route::get('aisles/{id}/delete', [AislesController::class, 'delete_confirm'])
             ->name('aisles.delete_confirm');
     Route::get('tasks/{id}/delete', [TasksController::class, 'delete_confirm'])
-            ->name('tasks.delete_confirm');
+            ->name('tasks.delete_confirm');    
 
 });
 
@@ -267,14 +269,6 @@ Route::get('/landing', function () {
     middleware)
 
 ****************************************************/
-
-Route::middleware('auth')->group(function () {
-
-    Route::get('/menu/tasks', function () {
-        return view('menu_top.tasks');
-    })->name('menu.tasks');
-
-});
 
 Route::middleware(['auth', 'can.admin'])->group(function () {
 

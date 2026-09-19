@@ -31,7 +31,7 @@
             <x-button-admin type="submit" name="update" value="Update" />
             <a href="{{ route('sales.create') }}">
                 <x-button-admin type="submit" name="add" value="Add" />
-            </a>            
+            </a>
         </div>
         
     </div>
