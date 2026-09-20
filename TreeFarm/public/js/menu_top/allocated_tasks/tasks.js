@@ -15,6 +15,8 @@ attachUpdateHandler('input[name="update_allocated"]', allocatedEditRoute);
 attachViewHandler('input[name="view_allocated"]', allocatedShowRoute);
 attachDeleteHandler('input[name="delete_allocated"]', allocatedDeleteRoute);
 
+attachViewHandler('input[name="view_completed"]', completedShowRoute);
+
 
 /******************************************************************
 * 
@@ -36,3 +38,7 @@ if (window["allocated_tasks_table_body_paginate"])
     paginateTable("allocated_tasks_table_body", "allocated_tasks_table_body");
 }
 
+if (window["completed_tasks_table_body_paginate"])
+{
+    paginateTable("completed_tasks_table_body", "completed_tasks_table_body");
+}

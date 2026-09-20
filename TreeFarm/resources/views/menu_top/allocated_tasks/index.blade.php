@@ -10,8 +10,8 @@
 
     <!-- Page text  -->
     <p class="mt-4 text-stone-700">
-        Here are all of your currently allocated tasks.  If you are a manager, than this page also shows all unallocated and 
-        all currently allocated tasks.
+        Here are all of your currently allocated tasks.  If you are a manager, then this page also shows all unallocated, 
+        currently allocated and completed tasks.
     </p>
 
     <!-- Update Success Message  -->
@@ -44,8 +44,8 @@
             "Date",
             "Task",
             "Tree",            
-            "Location_1",
-            "Location_2",
+            "Location 1",
+            "Location 2",
             "Quantity",
             "Pot Size",
             "Notes",
@@ -110,7 +110,7 @@
         :headings="$currentUserTaskHeadings" 
         :rows="$currentUserTaskRows"
         :hideColumns="$hideColumns"
-        :filterColumns="[1]"
+        :filterColumns="[1, 2]"
         :showTotals="true"
         :sumColumn=null
         tbodyId="current_tasks_table_body"
@@ -147,8 +147,8 @@
                 "Date",
                 "Task",
                 "Tree",
-                "Location_1",
-                "Location_2",
+                "Location 1",
+                "Location 2",
                 "Quantity",
                 "Pot Size",
                 "Notes",
@@ -213,7 +213,7 @@
             :headings="$unallocatedTaskHeadings" 
             :rows="$unallocatedTaskRows"
             :hideColumns="$hideColumns"
-            :filterColumns="[1]"
+            :filterColumns="[1, 2]"
             :showTotals="true"
             :sumColumn=null
             tbodyId="unallocated_tasks_table_body"
@@ -223,12 +223,13 @@
 
 
         <!-- ========================= -->
-        <!-- All User Tasks (Filtering Table with Total) -->
+        <!-- All Current Allocated Tasks --> 
+        <!-- (Filtering Table with Total) -->
         <!-- ========================= -->
 
         <!-- Label and Buttons -->
         <div class="flex justify-between items-center mt-10">
-            <h3 class="text-2xl font-bold text-green-900">All Allocated Tasks</h3>
+            <h3 class="text-2xl font-bold text-green-900">All Currently Allocated Tasks</h3>
             <div class="flex gap-4">
                 <x-button-admin type="submit" name="view_allocated" value="View" />
                 <x-button-admin type="submit" name="update_allocated" value="Update" />
@@ -249,8 +250,8 @@
                 "Date",
                 "Task",
                 "Tree",
-                "Location_1",
-                "Location_2",
+                "Location 1",
+                "Location 2",
                 "Quantity",
                 "Pot Size",
                 "Notes",
@@ -316,12 +317,110 @@
             :headings="$allAllocatedTaskHeadings" 
             :rows="$allAllocatedTaskRows"
             :hideColumns="$hideColumns"
-            :filterColumns="[1]"
+            :filterColumns="[1, 2]"
             :showTotals="true"
             :sumColumn=null
             tbodyId="allocated_tasks_table_body"
             :paginate="true"
             filterPrefix="allocated_"
+        />
+        
+        <!-- ========================= -->
+        <!-- All Completed Tasks --> 
+        <!-- (Filtering Table with Total) -->
+        <!-- ========================= -->
+
+        <!-- Label and Buttons -->
+        <div class="flex justify-between items-center mt-10">
+            <h3 class="text-2xl font-bold text-green-900">All Completed Tasks</h3>
+            <div class="flex gap-4">
+                <x-button-admin type="submit" name="view_completed" value="View" />
+            </div>
+            
+        </div>
+        
+
+        @php
+
+            // Set the headings to be displayed
+            $completedTaskHeadings = [
+                'Select',
+                "Date",
+                "Task",
+                "Tree",
+                "Location 1",
+                "Location 2",
+                "Quantity",
+                "Pot Size",
+                "Notes",
+                
+            ];
+
+            // Initialise an empty array for the rows
+            $completedTaskRows = [];
+
+            // For each task in completed_tasks
+            foreach ($completed_tasks as $task)
+                {
+                    // Build location_1 string
+                    $location_1 = '';
+
+                    if ($task->location_1) {
+                        $location_1 = $task->location_1->area->name;
+
+                        if ($task->location_1->block) {
+                            $location_1 .= ' : Block ' . $task->location_1->block->name;
+                        }
+
+                        if ($task->location_1->aisle) {
+                            $location_1 .= ' : Aisle ' . $task->location_1->aisle->name;
+                        }
+                    }
+
+                    // Build location_2 string
+                    $location_2 = '';
+
+                    if ($task->location_2) {
+                        $location_2 = $task->location_2->area->name;
+
+                        if ($task->location_2->block) {
+                            $location_2 .= ' : Block ' . $task->location_2->block->name;
+                        }
+
+                        if ($task->location_2->aisle) {
+                            $location_2 .= ' : Aisle ' . $task->location_2->aisle->name;
+                        }
+                    }
+
+                    // Add the contents of the task variable to the table
+                    $completedTaskRows[] = [
+                        $task->id,
+                        $task->date->format('d/m/Y'),
+                        $task->task->name,
+                        $task->tree?->common_name ?? '',
+                        $location_1,
+                        $location_2,
+                        $task->quantity ?? '',
+                        $task->pot_size?->size ?? '',
+                        $task->notes ?? '',
+                    ];
+                }
+
+            // Hide Columns on small screens
+            $hideColumns = [4, 5, 6, 7, 8];
+
+        @endphp
+
+        <x-table-filter
+            :headings="$completedTaskHeadings" 
+            :rows="$completedTaskRows"
+            :hideColumns="$hideColumns"
+            :filterColumns="[1, 2]"
+            :showTotals="true"
+            :sumColumn=null
+            tbodyId="completed_tasks_table_body"
+            :paginate="true"
+            filterPrefix="completed_"
         />
 
     @endcan
@@ -342,6 +441,8 @@
             const allocatedEditRoute = "{{ route('allocated_tasks.edit', ':id') }}";
             const allocatedShowRoute = "{{ route('allocated_tasks.show', ':id') }}";
             const allocatedDeleteRoute = "{{ route('allocated_tasks.delete_confirm', ':id') }}";
+
+            const completedShowRoute = "{{ route('allocated_tasks.show', ':id') }}";
 
         </script>
         <script src="{{ asset('js/table_helpers.js') }}"></script>

@@ -145,7 +145,7 @@
                                 search = '{{ $inventory->pot_size->size }}, {{ $inventory->tree->common_name }} : {{ $inventory->quantity }}';
                                 open = false;
                             "
-                            x-show="'{{ strtolower($inventory->pot_size->size . ', ' . $inventory->tree->common_name) }}'.includes(search.toLowerCase())"
+                            x-show="@js(strtolower($inventory->pot_size->size . ', ' . $inventory->tree->common_name)).includes(search.toLowerCase())"
                             class="p-2 hover:bg-yellow-200 cursor-pointer text-xs md:text-sm"
                         >
                             {{ $inventory->pot_size->size }}, {{ $inventory->tree->common_name }} : {{ $inventory->quantity }}
