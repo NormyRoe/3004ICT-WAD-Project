@@ -151,7 +151,7 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
             ->name('users.reactivate');
     Route::get('users/{id}/approval', [UsersController::class, 'approval'])
             ->name('users.approval');
-    Route::get('allocated_tasks/{id}/delete', [TasksController::class, 'delete_confirm'])
+    Route::get('allocated_tasks/{id}/delete', [AllocatedTasksController::class, 'delete_confirm'])
             ->name('allocated_tasks.delete_confirm');
 
 });

@@ -123,19 +123,19 @@
         </div>
         
         <!-- ========================= -->
-        <!-- Row: Location 1, Location 2 -->
+        <!-- Row: Existing Location, New Location -->
         <!-- ========================= -->
         <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
 
             <!-- Location 1  -->
             <div>
-                <label class="block text-green-900 font-semibold block">Location 1</label>
+                <label class="block text-green-900 font-semibold block">Existing Location</label>
                 <label class="text-black block">{{ $location_1 }}</label>
             </div>
 
             <!-- Location 2  -->
             <div>
-                <label class="block text-green-900 font-semibold block">Location 2</label>
+                <label class="block text-green-900 font-semibold block">New Location</label>
                 <label class="text-black block">{{ $location_2 }}</label>
             </div>
 
@@ -185,10 +185,14 @@
         </a>
 
         @can('admin-access')
-            <!-- Delete -->
-            <a href="{{ route('allocated_tasks.delete_confirm', $task->id) }}">
-                <x-button-admin type="button" value="Delete" />
-            </a>
+
+            @if ($task->done == 0)
+                <!-- Delete -->
+                <a href="{{ route('allocated_tasks.delete_confirm', $task->id) }}">
+                    <x-button-admin type="button" value="Delete" />
+                </a>
+            @endif
+            
         @endcan
 
     </div>

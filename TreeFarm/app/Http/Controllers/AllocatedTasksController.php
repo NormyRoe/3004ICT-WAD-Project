@@ -182,7 +182,7 @@ class AllocatedTasksController extends Controller
         {
             // Return back to the create page with errors
             return back()
-                    ->withErrors(['task_id' => "There is no current Inventory record for this combination of Tree and Location 1"])
+                    ->withErrors(['task_id' => "There is no current Inventory record for this combination of Tree and Existing Location"])
                     ->withInput();
         }
 
@@ -192,7 +192,7 @@ class AllocatedTasksController extends Controller
             // Return back to the create page with errors
             return back()
                     ->withErrors(['task_id' => "You have entered a higher quantity level then exists for this 
-                                    combination of Tree and Location 1"])
+                                    combination of Tree and Existing Location"])
                     ->withInput();
         }
 
@@ -201,7 +201,7 @@ class AllocatedTasksController extends Controller
         {
             // Return back to the create page with errors
             return back()
-                    ->withErrors(['task_id' => "That combination of Tree and Location 1 already has that Pot Size.  
+                    ->withErrors(['task_id' => "That combination of Tree and Existing Location already has that Pot Size.  
                                     You need to select a different Pot Size."])
                     ->withInput();
         }
@@ -215,7 +215,7 @@ class AllocatedTasksController extends Controller
             {
                 // Return back to the create page with errors
                 return back()
-                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Location 1 and Location 2 for a 'Move' task"])
+                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Existing Location and New Location for a 'Move' task"])
                         ->withInput();
             }
 
@@ -229,7 +229,7 @@ class AllocatedTasksController extends Controller
             {
                 // Return back to the create page with errors
                 return back()
-                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Location 1 and Pot Size for a 'Re-Pot' task"])
+                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Existing Location and Pot Size for a 'Re-Pot' task"])
                         ->withInput();
             }
 
@@ -243,7 +243,7 @@ class AllocatedTasksController extends Controller
             {
                 // Return back to the create page with errors
                 return back()
-                        ->withErrors(['task_id' => "You must provide the Tree, Quantity and Location 1 for a 'Destroy' task"])
+                        ->withErrors(['task_id' => "You must provide the Tree, Quantity and Existing Location for a 'Destroy' task"])
                         ->withInput();
             }
 
@@ -376,7 +376,18 @@ class AllocatedTasksController extends Controller
     ****************************************************/
     public function destroy($id)
     {
-        //
+        // Get the allocated task object
+        $task = AllocatedTask::findOrFail($id);
+
+        // Delete ALL existing allocated_tasks_users for this task
+        $task->allocated_task_users()->delete();
+
+        // Delete the task object
+        $task->delete();
+
+        // Return to the index view and pass it a success message
+        return redirect('allocated_tasks')->with('success', 'The Task has been successfully deleted.');
+
     }
 
     /***************************************************
@@ -389,11 +400,32 @@ class AllocatedTasksController extends Controller
     ****************************************************/
     public function delete_confirm($id)
     {
-        // Get the allocated task object
-        
+        // Get the allocated task from the database
+        $task = AllocatedTask::with([
+            'task',
+            'tree',
+            'pot_size',
+            'location_1.area',
+            'location_1.block',
+            'location_1.aisle',
+            'location_2.area',
+            'location_2.block',
+            'location_2.aisle',
+            'allocated_task_users'
+        ])->findOrFail($id);
+
+        // Check if it is a completed task
+        if ($task->done == 1)
+        {
+            // Redirect to the show view to display the Task object and pass it a success message
+            return redirect("allocated_tasks/$task->id")->with('success', "This task can't be deleted as it has already been completed");
+
+        }
 
         // Return the confirm_delete view and pass it the allocated task object
-        return view('menu_top.allocated_tasks.confirm_delete');
+        return view('menu_top.allocated_tasks.confirm_delete', [
+            'task' => $task,
+        ]);
         
     }
 

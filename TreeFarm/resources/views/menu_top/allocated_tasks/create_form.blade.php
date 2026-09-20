@@ -163,14 +163,14 @@
             </div>
             
             <!-- ========================= -->
-            <!-- Row: Location 1, Location 2 -->
+            <!-- Row: Existing Location, New Location -->
             <!-- ========================= -->
             <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
 
                 <!-- Location 1  -->
                 <div x-data="{ search: '', open: false }" class="mt-4">
 
-                    <label class="block text-green-900 font-semibold">Location 1</label>
+                    <label class="block text-green-900 font-semibold">Existing Location</label>
 
                     <!-- Search box -->
                     <input 
@@ -249,7 +249,7 @@
                 <!-- Location 2  -->
                 <div x-data="{ search: '', open: false }" class="mt-4">
 
-                    <label class="block text-green-900 font-semibold">Location 2</label>
+                    <label class="block text-green-900 font-semibold">New Location</label>
 
                     <!-- Search box -->
                     <input 
