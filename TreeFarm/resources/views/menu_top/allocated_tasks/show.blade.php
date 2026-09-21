@@ -86,13 +86,13 @@
         </div>
 
         <!-- ========================= -->
-        <!-- Row: Done -->
+        <!-- Row: Task Completed -->
         <!-- ========================= -->
         <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
 
-            <!-- Done  -->
+            <!-- Task Completed  -->
             <div>
-                <label class="block text-green-900 font-semibold block">Done</label>
+                <label class="block text-green-900 font-semibold block">Task Completed</label>
                 @if ($task->done === 0)
                     <label class="text-black block">No</label>
                 @else

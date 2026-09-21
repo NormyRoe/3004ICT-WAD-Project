@@ -134,6 +134,10 @@ Route::middleware('auth')->group(function () {
             ->name('user_profile.show');
     Route::post('user_profile/{id}', [UserProfileController::class, 'update'])
             ->name('user_profile.update');
+    Route::get('allocated_tasks/report/create', [AllocatedTasksController::class, 'create_report'])
+            ->name('allocated_tasks.create_report');
+    Route::post('allocated_tasks/report/store', [AllocatedTasksController::class, 'store_report'])
+            ->name('allocated_tasks.store_report');
 
 });
 

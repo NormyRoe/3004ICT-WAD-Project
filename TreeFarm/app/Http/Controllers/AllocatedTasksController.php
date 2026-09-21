@@ -224,7 +224,7 @@ class AllocatedTasksController extends Controller
         // If the task is 'Re-Pot'
         if ($task_type->name === 'Re-Pot')
         {
-            // If Tree, Quantity or Pot Size are empty
+            // If Tree, Quantity, Location 1 or Pot Size are empty
             if (!$validated['tree_id'] || !$validated['quantity'] || !$validated['location_1_id'] || !$validated['pot_size_id'])
             {
                 // Return back to the create page with errors
@@ -350,7 +350,62 @@ class AllocatedTasksController extends Controller
     ****************************************************/
     public function edit($id)
     {
-        //
+        // Get the task from the database
+        $task = AllocatedTask::with([
+            'task',
+            'tree',
+            'pot_size',
+            'location_1.area',
+            'location_1.block',
+            'location_1.aisle',
+            'location_2.area',
+            'location_2.block',
+            'location_2.aisle',
+            'allocated_task_users'
+        ])->findOrFail($id);
+
+        // Create the array for currently allocated users
+        $allocated_user_ids = $task->allocated_task_users->pluck('user_id')->toArray();
+
+        // Get the pot sizes from the database
+        $pot_sizes = PotSize::orderBy('size')->get();
+
+        // Get the locations from the database
+        $locations = Location::with('area')->with('block')->with('aisle')
+                                ->leftJoin('areas', 'locations.area_id', '=', 'areas.id')
+                                ->leftJoin('blocks', 'locations.block_id', '=', 'blocks.id')
+                                ->leftJoin('aisles', 'locations.aisle_id', '=', 'aisles.id')
+                                ->orderBy('areas.name')
+                                ->orderByRaw('COALESCE(blocks.name, "") ASC')           // NULL block names first
+                                ->select('locations.*')
+                                ->get();
+
+        // Get all of the current users
+        $current_users = User::where('status', 'Approved')
+                                ->orderBy('last_name')
+                                ->orderBy('first_name')
+                                ->get();
+
+        // Take just the users that can be allocated tasks out of current_users list
+        $users = $current_users->filter(function ($u) {
+                                            return $u->hasAnyRole(['Field Hand', 'Potter']);
+                                        });
+
+        // Take just the management users that can be allocated report tasks out of current_users list
+        $management_users = $current_users->filter(function ($u) {
+                                            return $u->hasAnyRole(['Operational Manager', 'Owner']);
+                                        });
+
+        // Return the edit view and pass it the sale object and the arrays
+        return view('menu_top.allocated_tasks.edit_form', [
+            'task' => $task,
+            'pot_sizes' => $pot_sizes,
+            'locations' => $locations,
+            'users' => $users,
+            'management_users' => $management_users,
+            'allocated_user_ids' => $allocated_user_ids,
+        ]);
+
     }
 
 
@@ -427,6 +482,128 @@ class AllocatedTasksController extends Controller
             'task' => $task,
         ]);
         
+    }
+
+
+    /***************************************************
+
+    create_report()
+
+    This function displays the form for creating a new 
+    'Report' Allocated Task.
+
+    ****************************************************/
+    public function create_report()
+    {
+        // Get the report task from the database
+        $task = Task::where('name', '=', 'Report')->firstOrFail();
+
+        // Get the trees from the database
+        $trees = Tree::orderBy('plant_id')->get();
+
+        // Get the locations from the database
+        $locations = Location::with('area')->with('block')->with('aisle')
+                                ->leftJoin('areas', 'locations.area_id', '=', 'areas.id')
+                                ->leftJoin('blocks', 'locations.block_id', '=', 'blocks.id')
+                                ->leftJoin('aisles', 'locations.aisle_id', '=', 'aisles.id')
+                                ->orderBy('areas.name')
+                                ->orderByRaw('COALESCE(blocks.name, "") ASC')           // NULL block names first
+                                ->select('locations.*')
+                                ->get();        
+        
+        // Return the create_report view and pass it the arrays
+        return view('menu_top.allocated_tasks.create_report', [
+            'task' => $task,
+            'trees' => $trees,
+            'locations' => $locations,
+        ]);
+
+    }
+
+
+    /***************************************************
+
+    store_report(Request $request)
+
+    This function validates the new 'Report' Allocated Task and 
+    adds it to the database if it is valid.
+
+    ****************************************************/
+    public function store_report(Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+
+            'date' => 'required|date',
+            'task_id' => 'required|exists:tasks,id',
+            'notes' => 'required|string|max:200',
+            'tree_id' => 'nullable|exists:trees,id',
+            'location_1_id' => 'nullable|exists:locations,id',
+            
+        ]);
+
+        // Create an inventory variable
+        $inventory = null;
+
+        // If there is a tree and location 1 in the task
+        if ($validated['tree_id'] && $validated['location_1_id'])
+        {
+            // Get the existing inventory record
+            $inventory = Inventory::where('tree_id', $validated['tree_id'])
+                                    ->where('location_id', $validated['location_1_id'])
+                                    ->first();
+        }
+
+        // If the inventory record doesn't exist, but the Tree and Location 1 were provided
+        if (!$inventory && $validated['tree_id'] && $validated['location_1_id'])
+        {
+            // Return back to the create page with errors
+            return back()
+                    ->withErrors(['task_id' => "There is no current Inventory record for this combination of Tree and Existing Location"])
+                    ->withInput();
+        }
+
+        // Get all of the current users
+        $current_users = User::where('status', 'Approved')
+                                ->orderBy('last_name')
+                                ->orderBy('first_name')
+                                ->get();
+
+        // Take just the management users that can be allocated report tasks out of current_users list
+        $management_users = $current_users->filter(function ($u) {
+                                            return $u->hasAnyRole(['Operational Manager', 'Owner']);
+                                        });        
+
+        // Create the new validated Task and add it to the database
+        $task = AllocatedTask::create([
+            'date' => $validated['date'],
+            'task_id' => $validated['task_id'],
+            'notes' => $validated['notes'],
+            'tree_id' => $validated['tree_id'],
+            'location_1_id' => $validated['location_1_id'],
+            'done' => 0,
+            'allocated' => 1,
+            'created_by' => auth()->id(),
+            'modified_by' => auth()->id(),
+        ]);
+
+        // Allocate the users to the task 
+        // For loop through the management users
+        foreach ($management_users as $user)
+        {
+            // Create the Allocated Tasks User record
+            AllocatedTasksUser::create([
+                'allocated_task_id' => $task->id,
+                'user_id' => $user->id,
+                'created_by' => auth()->id(),
+                'modified_by' => auth()->id(),
+            ]);
+                
+        }
+
+        // Redirect to the index view and pass it a success message
+        return redirect("allocated_tasks")->with('success', 'The new Report task has been successfully added.');
+
     }
 
 }

@@ -31,6 +31,9 @@
         <div class="flex gap-4">
             <x-button-admin type="submit" name="view_current" value="View" />
             <x-button-admin type="submit" name="update_current" value="Update" />
+            <a href="{{ route('allocated_tasks.create_report') }}">
+                <x-button-admin type="button" value="Report" />
+            </a>
         </div>
         
     </div>
@@ -134,7 +137,7 @@
                 <a href="{{ route('allocated_tasks.create') }}">
                     <x-button-admin type="submit" name="add" value="Add" />
                 </a>
-                <x-button-admin type="submit" name="deleted_unallocated" value="Delete" />
+                <x-button-admin type="submit" name="delete_unallocated" value="Delete" />
             </div>        
         </div>
         
