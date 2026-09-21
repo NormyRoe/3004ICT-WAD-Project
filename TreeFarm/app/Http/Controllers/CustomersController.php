@@ -201,7 +201,7 @@ class CustomersController extends Controller
 
         ]);
 
-        // Create the new validated Customer and add it to the database
+        // Update the validated Customer in the database
         $customer->update([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['surname'],

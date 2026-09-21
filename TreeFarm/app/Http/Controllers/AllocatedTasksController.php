@@ -418,7 +418,117 @@ class AllocatedTasksController extends Controller
     ****************************************************/
     public function update(Request $request, $id)
     {
-        //
+        // Get the task from the database
+        $task = AllocatedTask::with([
+            'task',
+            'tree',
+            'pot_size',
+            'location_1.area',
+            'location_1.block',
+            'location_1.aisle',
+            'location_2.area',
+            'location_2.block',
+            'location_2.aisle',
+            'allocated_task_users'
+        ])->findOrFail($id);
+
+        // Validate the request
+        $validated = $request->validate([
+
+            'notes' => 'nullable|string|max:200',
+            'location_2_id' => 'nullable|exists:locations,id',
+            'pot_size_id' => 'nullable|exists:pot_sizes,id',
+            'allocated_users' => 'required|array|min:1',
+            'allocated_users.*'    => 'exists:users,id',
+            'done' => 'nullable|numeric',
+            
+        ]);
+
+        // Create the done variable from the request
+        $done = $request->has('done') ? 1 : 0;
+
+        // Grab the task type
+        $task_type = $task->task->name;
+
+        // Create an inventory variable
+        $inventory = null;
+
+        // If there is a tree and location 1 in the task
+        if ($task->tree_id && $task->location_1_id)
+        {
+            // Get the existing inventory record
+            $inventory = Inventory::where('tree_id', $task->tree_id)
+                                    ->where('location_id', $task->location_1_id)
+                                    ->first();
+        }
+
+        // If the inventory record does exist but the pot size is the same
+        if ($inventory && $validated['pot_size_id'] == $inventory->pot_size_id)
+        {
+            // Return back to the edit page with errors
+            return back()
+                    ->withErrors(['task_id' => "That combination of Tree and Existing Location already has that Pot Size.  
+                                    You need to select a different Pot Size."])
+                    ->withInput();
+        }
+
+        // If the task is 'Move'
+        if ($task_type === 'Move')
+        {
+            // If Location 2 is empty
+            if (!$validated['location_2_id'])
+            {
+                // Return back to the edit page with errors
+                return back()
+                        ->withErrors(['task_id' => "You must provide the New Location for a 'Move' task"])
+                        ->withInput();
+            }
+
+        }
+
+        // If the task is 'Re-Pot'
+        if ($task_type === 'Re-Pot')
+        {
+            // If Pot Size is empty
+            if (!$validated['pot_size_id'])
+            {
+                // Return back to the edit page with errors
+                return back()
+                        ->withErrors(['task_id' => "You must provide the Pot Size for a 'Re-Pot' task"])
+                        ->withInput();
+            }
+
+        }        
+
+        // Update the validated Task in the database
+        $task->update([
+            'notes' => $validated['notes'],
+            'location_2_id' => $validated['location_2_id'],
+            'pot_size_id' => $validated['pot_size_id'],
+            'done' => $done,
+            'allocated' => 1,
+            'modified_by' => auth()->id(),
+        ]);
+
+        // Delete the existing allocated users
+        $task->allocated_task_users()->delete();
+
+        // For loop through the selected users
+        foreach ($validated['allocated_users'] as $user_id)
+        {
+            // Create the Allocated Tasks User record
+            AllocatedTasksUser::create([
+                'allocated_task_id' => $task->id,
+                'user_id' => $user_id,
+                'created_by' => auth()->id(),
+                'modified_by' => auth()->id(),
+            ]);
+                
+        }
+
+        // Redirect to the show view to display the Task object and pass it a success message
+        return redirect("allocated_tasks/$task->id")->with('success', 'The task has been successfully updated.');
+
     }
 
 
