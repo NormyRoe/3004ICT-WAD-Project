@@ -142,14 +142,20 @@
         </div>
         
         <!-- ========================= -->
-        <!-- Row: Pot Size -->
+        <!-- Row: Current Pot Size and New Pot Size -->
         <!-- ========================= -->
         <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
 
-            <!-- Pot Size  -->
+            <!-- Current Pot Size  -->
             <div>
-                <label class="block text-green-900 font-semibold block">Pot Size</label>
-                <label class="text-black block">{{ $task->pot_size?->size ?? '' }}</label>
+                <label class="block text-green-900 font-semibold block">Current Pot Size</label>
+                <label class="text-black block">{{ $task->current_pot_size?->size ?? '' }}</label>
+            </div>
+
+            <!-- New Pot Size  -->
+            <div>
+                <label class="block text-green-900 font-semibold block">New Pot Size</label>
+                <label class="text-black block">{{ $task->new_pot_size?->size ?? '' }}</label>
             </div>
 
         </div>

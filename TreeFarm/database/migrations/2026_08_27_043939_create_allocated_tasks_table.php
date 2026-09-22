@@ -31,7 +31,8 @@ return new class extends Migration
             $table->unsignedBigInteger('tree_id')->nullable();
             $table->unsignedBigInteger('location_1_id')->nullable();
             $table->unsignedBigInteger('location_2_id')->nullable();
-            $table->unsignedBigInteger('pot_size_id')->nullable();
+            $table->unsignedBigInteger('current_pot_size_id')->nullable();
+            $table->unsignedBigInteger('new_pot_size_id')->nullable();
 			
             
             /***************************************************
@@ -74,7 +75,10 @@ return new class extends Migration
             $table->foreign('tree_id')
                   ->references('id')->on('trees');
 
-            $table->foreign('pot_size_id')
+            $table->foreign('current_pot_size_id')
+                  ->references('id')->on('pot_sizes');
+
+            $table->foreign('new_pot_size_id')
                   ->references('id')->on('pot_sizes');
 
             $table->foreign('location_1_id')

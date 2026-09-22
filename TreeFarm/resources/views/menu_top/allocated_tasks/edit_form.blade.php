@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-    Add Task
+    Edit a Task
 @endsection
 
 @section('content')
-    <h2 class="text-3xl font-bold text-green-900">Add a New Task</h2>
+    <h2 class="text-3xl font-bold text-green-900">Update an existing Task</h2>
 
     <!-- Back to Index Button  -->
     <x-back-controller route='allocated_tasks.index' label='Back to Tasks Page' />
@@ -22,7 +22,7 @@
     @endif
     
     <!-- ========================= -->
-    <!-- Creation Form -->
+    <!-- Update Form -->
     <!-- ========================= -->
     <form action="{{ route('allocated_tasks.update', $task->id) }}" method="POST" class="mt-6">
         @csrf
@@ -52,7 +52,7 @@
                     <textarea 
                         type="text" 
                         name="notes" 
-                        class="border border-yellow-800 rounded p-2 w-64"
+                        class="border border-yellow-800 text-sm rounded p-2 h-32 w-80"
                     >{{ old('notes', $task->notes) }}</textarea>
                 </div>
 
@@ -133,7 +133,7 @@
                         class="border border-yellow-800 rounded p-2 w-64"
                         x-init="
                             @php $loc2 = old('location_2_id', $task->location_2_id); @endphp
-                            @if(old('location_2_id'))
+                            @if($loc2)
                                 const loc = @js($locations->firstWhere('id', $loc2));
                                 search = loc.area.name + ' : Block ' 
                                     + (loc.block?.name ?? '__') 
@@ -195,15 +195,27 @@
             </div>
 
             <!-- ========================= -->
-            <!-- Row: Pot Size -->
+            <!-- Row: Current Pot Size and New Pot Size -->
             <!-- ========================= -->
             <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
 
-                <!-- Pot Size  -->
+                <!-- Current Pot Size  -->
                 <div class="mt-4">
-                    <label class="block text-green-900 font-semibold block">Pot Size</label>
+                    <label class="block text-green-900 font-semibold block">Current Pot Size</label>
+
+                    @if ($task->current_pot_size)
+                        <label class="text-orange-900 font-semibold block">{{ $task->current_pot_size->size }}</label>
+                    @else
+                        <label class="text-orange-900 font-semibold block">N/A</label>
+                    @endif
+
+                </div>
+
+                <!-- New Pot Size  -->
+                <div class="mt-4">
+                    <label class="block text-green-900 font-semibold block">New Pot Size</label>
                     <select 
-                        name="pot_size_id"
+                        name="new_pot_size_id"
                         class="p-2 border border-yellow-800 rounded text-xs md:text-sm"
                     >
                         <!-- Empty option (deselect filter) -->
@@ -213,7 +225,7 @@
                         @foreach ($pot_sizes as $pot_size)
                             <option 
                                 value="{{ $pot_size->id }}"
-                                {{ old('pot_size_id', $task->pot_size_id) == $pot_size->id ? 'selected' : '' }}
+                                {{ old('new_pot_size_id', $task->new_pot_size_id) == $pot_size->id ? 'selected' : '' }}
                             >
                                 {{ $pot_size->size }}
                             </option>

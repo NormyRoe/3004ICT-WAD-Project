@@ -50,7 +50,8 @@
             "Existing Location",
             "New Location",
             "Quantity",
-            "Pot Size",
+            "Current Pot Size",
+            "New Pot Size",
             "Notes",
         ];
 
@@ -99,13 +100,14 @@
                     $location_1,
                     $location_2,
                     $task->quantity ?? '',
-                    $task->pot_size?->size ?? '',
+                    $task->current_pot_size?->size ?? '',
+                    $task->new_pot_size?->size ?? '',
                     $task->notes ?? '',
                 ];
             }
 
         // Hide Columns on small screens
-        $hideColumns = [4, 5, 6, 7, 8];
+        $hideColumns = [4, 5, 6, 7, 8, 9];
 
     @endphp
 
@@ -153,7 +155,8 @@
                 "Existing Location",
                 "New Location",
                 "Quantity",
-                "Pot Size",
+                "Current Pot Size",
+                "New Pot Size",
                 "Notes",
             ];
 
@@ -202,13 +205,14 @@
                         $location_1,
                         $location_2,
                         $task->quantity ?? '',
-                        $task->pot_size?->size ?? '',
+                        $task->current_pot_size?->size ?? '',
+                        $task->new_pot_size?->size ?? '',
                         $task->notes ?? '',
                     ];
                 }
 
             // Hide Columns on small screens
-            $hideColumns = [4, 5, 6, 7, 8];
+            $hideColumns = [4, 5, 6, 7, 8, 9];
 
         @endphp
 
@@ -256,7 +260,8 @@
                 "Existing Location",
                 "New Location",
                 "Quantity",
-                "Pot Size",
+                "Current Pot Size",
+                "New Pot Size",
                 "Notes",
                 
             ];
@@ -306,13 +311,14 @@
                         $location_1,
                         $location_2,
                         $task->quantity ?? '',
-                        $task->pot_size?->size ?? '',
+                        $task->current_pot_size?->size ?? '',
+                        $task->new_pot_size?->size ?? '',
                         $task->notes ?? '',
                     ];
                 }
 
             // Hide Columns on small screens
-            $hideColumns = [4, 5, 6, 7, 8];
+            $hideColumns = [4, 5, 6, 7, 8, 9];
 
         @endphp
 
@@ -354,7 +360,8 @@
                 "Existing Location",
                 "New Location",
                 "Quantity",
-                "Pot Size",
+                "Current Pot Size",
+                "New Pot Size",
                 "Notes",
                 
             ];
@@ -404,13 +411,14 @@
                         $location_1,
                         $location_2,
                         $task->quantity ?? '',
-                        $task->pot_size?->size ?? '',
+                        $task->current_pot_size?->size ?? '',
+                        $task->new_pot_size?->size ?? '',
                         $task->notes ?? '',
                     ];
                 }
 
             // Hide Columns on small screens
-            $hideColumns = [4, 5, 6, 7, 8];
+            $hideColumns = [4, 5, 6, 7, 8, 9];
 
         @endphp
 

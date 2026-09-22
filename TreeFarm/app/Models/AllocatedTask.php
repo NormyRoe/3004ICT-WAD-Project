@@ -17,7 +17,8 @@ class AllocatedTask extends Model
         'tree_id',
         'location_1_id',
         'location_2_id',
-        'pot_size_id',
+        'current_pot_size_id',
+        'new_pot_size_id',
         'date',
         'notes',
         'quantity',
@@ -84,9 +85,14 @@ class AllocatedTask extends Model
     }
 
     // An allocated task belongs to a pot size (optional)
-    public function pot_size()
+    public function current_pot_size()
     {
-        return $this->belongsTo(PotSize::class, 'pot_size_id');
+        return $this->belongsTo(PotSize::class, 'current_pot_size_id');
+    }
+
+    public function new_pot_size()
+    {
+        return $this->belongsTo(PotSize::class, 'new_pot_size_id');
     }
 
 

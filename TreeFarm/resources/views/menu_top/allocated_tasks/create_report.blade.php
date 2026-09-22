@@ -232,6 +232,36 @@
 
             </div>
 
+            <!-- ========================= -->
+            <!-- Row: Current Pot Size -->
+            <!-- ========================= -->
+            <div class="flex flex-row flex-wrap gap-x-12 gap-y-4 mb-4">
+
+                <!-- Current Pot Size  -->
+                <div class="mt-4">
+                    <label class="block text-green-900 font-semibold block">Current Pot Size</label>
+                    <select 
+                        name="current_pot_size_id"
+                        class="p-2 border border-yellow-800 rounded text-xs md:text-sm"
+                    >
+                        <!-- Empty option (deselect filter) -->
+                        <option value=""></option>
+
+                        <!-- Distinct values -->
+                        @foreach ($pot_sizes as $pot_size)
+                            <option 
+                                value="{{ $pot_size->id }}"
+                                {{ old('current_pot_size_id') == $pot_size->id ? 'selected' : '' }}
+                            >
+                                {{ $pot_size->size }}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </div>
+                
+            </div>
+
         </div>
 
         <!-- Button  -->

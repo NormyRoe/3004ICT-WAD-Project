@@ -44,9 +44,14 @@ class PotSize extends Model
     }
 
     // A pot size can have many allocated tasks
-    public function allocated_tasks()
+    public function allocated_tasks_current()
     {
-        return $this->hasMany(AllocatedTask::class, 'pot_size_id');
+        return $this->hasMany(AllocatedTask::class, 'current_pot_size_id');
+    }
+
+    public function allocated_tasks_new()
+    {
+        return $this->hasMany(AllocatedTask::class, 'new_pot_size_id');
     }
     
 

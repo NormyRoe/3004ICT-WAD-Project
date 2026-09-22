@@ -34,7 +34,8 @@ class AllocatedTasksController extends Controller
         $unallocated_tasks = AllocatedTask::with([
             'task',
             'tree',
-            'pot_size',
+            'current_pot_size',
+            'new_pot_size',
             'location_1.area',
             'location_1.block',
             'location_1.aisle',
@@ -48,7 +49,8 @@ class AllocatedTasksController extends Controller
         $all_allocated_tasks = AllocatedTask::with([
             'task',
             'tree',
-            'pot_size',
+            'current_pot_size',
+            'new_pot_size',
             'location_1.area',
             'location_1.block',
             'location_1.aisle',
@@ -156,7 +158,8 @@ class AllocatedTasksController extends Controller
             'quantity' => 'nullable|numeric|min:0',
             'location_1_id' => 'nullable|exists:locations,id',
             'location_2_id' => 'nullable|exists:locations,id',
-            'pot_size_id' => 'nullable|exists:pot_sizes,id',
+            'current_pot_size_id' => 'nullable|exists:pot_sizes,id',
+            'new_pot_size_id' => 'nullable|exists:pot_sizes,id',
             'allocated_users' => 'nullable|array|min:1',
             'allocated_users.*'    => 'exists:users,id',
             
@@ -168,21 +171,23 @@ class AllocatedTasksController extends Controller
         // Create an inventory variable
         $inventory = null;
 
-        // If there is a tree and location 1 in the task
-        if ($validated['tree_id'] && $validated['location_1_id'])
+        // If there is a tree, location 1 and current pot size in the task
+        if ($validated['tree_id'] && $validated['location_1_id'] && $validated['current_pot_size_id'])
         {
             // Get the existing inventory record
             $inventory = Inventory::where('tree_id', $validated['tree_id'])
                                     ->where('location_id', $validated['location_1_id'])
+                                    ->where('pot_size_id', $validated['current_pot_size_id'])
                                     ->first();
         }
 
-        // If the inventory record doesn't exist, but the Tree and Location 1 were provided
-        if (!$inventory && $validated['tree_id'] && $validated['location_1_id'])
+        // If the inventory record doesn't exist, but the Tree, Location 1 and Current Pot Size were provided
+        if (!$inventory && $validated['tree_id'] && $validated['location_1_id'] && $validated['current_pot_size_id'])
         {
             // Return back to the create page with errors
             return back()
-                    ->withErrors(['task_id' => "There is no current Inventory record for this combination of Tree and Existing Location"])
+                    ->withErrors(['task_id' => "There is no current Inventory record for this combination of Tree, 
+                                                Existing Location and Current Pot Size"])
                     ->withInput();
         }
 
@@ -197,11 +202,11 @@ class AllocatedTasksController extends Controller
         }
 
         // If the inventory record does exist but the pot size is the same
-        if ($inventory && $validated['pot_size_id'] == $inventory->pot_size_id)
+        if ($inventory && $validated['new_pot_size_id'] == $inventory->pot_size_id)
         {
-            // Return back to the create page with errors
+            // Return back to the edit page with errors
             return back()
-                    ->withErrors(['task_id' => "That combination of Tree and Existing Location already has that Pot Size.  
+                    ->withErrors(['task_id' => "That combination of Tree, Existing Location and Current Pot Size already has that Pot Size.  
                                     You need to select a different Pot Size."])
                     ->withInput();
         }
@@ -209,13 +214,14 @@ class AllocatedTasksController extends Controller
         // If the task is 'Move'
         if ($task_type->name === 'Move')
         {
-            // If Tree, Quantity, Location 1, or Location 2 are empty
-            if (!$validated['tree_id'] || !$validated['quantity'] 
+            // If Tree, Quantity, Current Pot Size, Location 1, or Location 2 are empty
+            if (!$validated['tree_id'] || !$validated['quantity'] || !$validated['current_pot_size_id'] 
                 || !$validated['location_1_id'] || !$validated['location_2_id'])
             {
                 // Return back to the create page with errors
                 return back()
-                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Existing Location and New Location for a 'Move' task"])
+                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Current Pot Size, Existing Location 
+                                                    and New Location for a 'Move' task"])
                         ->withInput();
             }
 
@@ -224,12 +230,14 @@ class AllocatedTasksController extends Controller
         // If the task is 'Re-Pot'
         if ($task_type->name === 'Re-Pot')
         {
-            // If Tree, Quantity, Location 1 or Pot Size are empty
-            if (!$validated['tree_id'] || !$validated['quantity'] || !$validated['location_1_id'] || !$validated['pot_size_id'])
+            // If Tree, Quantity, Location 1, Current Pot Size or New Pot Size are empty
+            if (!$validated['tree_id'] || !$validated['quantity'] || !$validated['location_1_id'] 
+                || !$validated['current_pot_size_id'] || !$validated['new_pot_size_id'])
             {
                 // Return back to the create page with errors
                 return back()
-                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Existing Location and Pot Size for a 'Re-Pot' task"])
+                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Existing Location, Current Pot Size 
+                                                    and New Pot Size for a 'Re-Pot' task"])
                         ->withInput();
             }
 
@@ -238,12 +246,13 @@ class AllocatedTasksController extends Controller
         // If the task is 'Destroy'
         if ($task_type->name === 'Destroy')
         {
-            // If Tree, Quantity, or Location 1 are empty
-            if (!$validated['tree_id'] || !$validated['quantity'] || !$validated['location_1_id'])
+            // If Tree, Quantity, Location 1 or Current Pot Size are empty
+            if (!$validated['tree_id'] || !$validated['quantity'] || !$validated['location_1_id'] || !$validated['current_pot_size_id'])
             {
                 // Return back to the create page with errors
                 return back()
-                        ->withErrors(['task_id' => "You must provide the Tree, Quantity and Existing Location for a 'Destroy' task"])
+                        ->withErrors(['task_id' => "You must provide the Tree, Quantity, Existing Location and Current Pot Size 
+                                                    for a 'Destroy' task"])
                         ->withInput();
             }
 
@@ -268,7 +277,8 @@ class AllocatedTasksController extends Controller
             'quantity' => $validated['quantity'],
             'location_1_id' => $validated['location_1_id'],
             'location_2_id' => $validated['location_2_id'],
-            'pot_size_id' => $validated['pot_size_id'],
+            'current_pot_size_id' => $validated['current_pot_size_id'],
+            'new_pot_size_id' => $validated['new_pot_size_id'],
             'done' => 0,
             'allocated' => $allocated,
             'created_by' => auth()->id(),
@@ -312,7 +322,8 @@ class AllocatedTasksController extends Controller
         $task = AllocatedTask::with([
             'task',
             'tree',
-            'pot_size',
+            'current_pot_size',
+            'new_pot_size',
             'location_1.area',
             'location_1.block',
             'location_1.aisle',
@@ -354,7 +365,8 @@ class AllocatedTasksController extends Controller
         $task = AllocatedTask::with([
             'task',
             'tree',
-            'pot_size',
+            'current_pot_size',
+            'new_pot_size',
             'location_1.area',
             'location_1.block',
             'location_1.aisle',
@@ -422,7 +434,8 @@ class AllocatedTasksController extends Controller
         $task = AllocatedTask::with([
             'task',
             'tree',
-            'pot_size',
+            'current_pot_size',
+            'new_pot_size',
             'location_1.area',
             'location_1.block',
             'location_1.aisle',
@@ -437,7 +450,7 @@ class AllocatedTasksController extends Controller
 
             'notes' => 'nullable|string|max:200',
             'location_2_id' => 'nullable|exists:locations,id',
-            'pot_size_id' => 'nullable|exists:pot_sizes,id',
+            'new_pot_size_id' => 'nullable|exists:pot_sizes,id',
             'allocated_users' => 'required|array|min:1',
             'allocated_users.*'    => 'exists:users,id',
             'done' => 'nullable|numeric',
@@ -453,21 +466,22 @@ class AllocatedTasksController extends Controller
         // Create an inventory variable
         $inventory = null;
 
-        // If there is a tree and location 1 in the task
-        if ($task->tree_id && $task->location_1_id)
+        // If there is a tree, location 1 and current pot size in the task
+        if ($task->tree_id && $task->location_1_id && $task->current_pot_size_id)
         {
             // Get the existing inventory record
             $inventory = Inventory::where('tree_id', $task->tree_id)
                                     ->where('location_id', $task->location_1_id)
+                                    ->where('pot_size_id', $task->current_pot_size_id)
                                     ->first();
         }
 
-        // If the inventory record does exist but the pot size is the same
-        if ($inventory && $validated['pot_size_id'] == $inventory->pot_size_id)
+        // If the inventory record does exist but the new pot size is the same
+        if ($inventory && $validated['new_pot_size_id'] == $inventory->pot_size_id)
         {
             // Return back to the edit page with errors
             return back()
-                    ->withErrors(['task_id' => "That combination of Tree and Existing Location already has that Pot Size.  
+                    ->withErrors(['task_id' => "That combination of Tree, Existing Location and Current Pot Size already has that Pot Size.  
                                     You need to select a different Pot Size."])
                     ->withInput();
         }
@@ -489,22 +503,22 @@ class AllocatedTasksController extends Controller
         // If the task is 'Re-Pot'
         if ($task_type === 'Re-Pot')
         {
-            // If Pot Size is empty
-            if (!$validated['pot_size_id'])
+            // If new Pot Size is empty
+            if (!$validated['new_pot_size_id'])
             {
                 // Return back to the edit page with errors
                 return back()
-                        ->withErrors(['task_id' => "You must provide the Pot Size for a 'Re-Pot' task"])
+                        ->withErrors(['task_id' => "You must provide the new Pot Size for a 'Re-Pot' task"])
                         ->withInput();
             }
 
-        }        
+        }
 
         // Update the validated Task in the database
         $task->update([
             'notes' => $validated['notes'],
             'location_2_id' => $validated['location_2_id'],
-            'pot_size_id' => $validated['pot_size_id'],
+            'new_pot_size_id' => $validated['new_pot_size_id'],
             'done' => $done,
             'allocated' => 1,
             'modified_by' => auth()->id(),
@@ -524,6 +538,211 @@ class AllocatedTasksController extends Controller
                 'modified_by' => auth()->id(),
             ]);
                 
+        }
+
+        // Create a new inventory variable
+        $new_inventory = null;
+
+        // Get all of the current users
+        $current_users = User::where('status', 'Approved')
+                                ->orderBy('last_name')
+                                ->orderBy('first_name')
+                                ->get();
+
+        // Take just the field hands out of current_users list
+        $field_hands = $current_users->filter(function ($u) {
+                                            return $u->hasRole('Field Hand');
+                                        });
+
+        // Take just the potters out of current_users list
+        $potters = $current_users->filter(function ($u) {
+                                            return $u->hasRole('Potter');
+                                        });
+
+        // Get the new location from the database
+        $new_location = Location::with('area')->with('block')->with('aisle')
+                                ->where('id', $task->location_2_id)
+                                ->first();
+
+        // If the task is 'Move', the Inventory record exists and the task is completed
+        if ($task_type === 'Move' && $inventory && $task->done == 1)
+        {
+            // Get the new inventory record
+            $new_inventory = Inventory::where('tree_id', $task->tree_id)
+                                    ->where('location_id', $task->location_2_id)
+                                    ->where('pot_size_id', $task->current_pot_size_id)
+                                    ->first();
+
+            // Update the current inventory record
+            $inventory->update([
+                'quantity' => $inventory->quantity - $task->quantity,
+                'modified_by' => auth()->id(),
+            ]);
+
+            // If the current inventory record now has a quantity of zero
+            if ($inventory->quantity == 0)
+            {
+                // Delete the inventory record
+                $inventory->delete();
+            }
+
+            // If new inventory record already exists
+            if ($new_inventory)
+            {
+                // Update the new inventory record
+                $new_inventory->update([
+                    'quantity' => $new_inventory->quantity + $task->quantity,
+                    'modified_by' => auth()->id(),
+                ]);
+            }
+            else
+            {
+                // Create a new Inventory record and add it to the database
+                $new_inventory = Inventory::create([
+                    'tree_id' => $task->tree_id,
+                    'pot_size_id' => $task->current_pot_size_id,
+                    'location_id' => $task->location_2_id,
+                    'quantity' => $task->quantity,
+                    'created_by' => auth()->id(),
+                    'modified_by' => auth()->id(),
+                ]);
+            }
+
+            // If the new location is a Potting area
+            if (str_starts_with($new_location->area->name, 'Potting'))
+            {
+                // Get the 'Re-Pot' task type record
+                $new_task_type = Task::where('name', 'Re-Pot')->first();
+
+                // Create a new 'Re-Pot' task and add it to the database
+                $new_task = AllocatedTask::create([
+                    'date' => today(),
+                    'task_id' => $new_task_type->id,
+                    'notes' => "This tree has been moved to a potting area, please re-pot it in to a larger pot.  
+                                The new Pot Size will need to be selected.",
+                    'tree_id' => $task->tree_id,
+                    'quantity' => $task->quantity,
+                    'location_1_id' => $task->location_2_id,
+                    'location_2_id' => null,
+                    'current_pot_size_id' => $task->current_pot_size_id,
+                    'new_pot_size_id' => null,
+                    'done' => 0,
+                    'allocated' => 1,
+                    'created_by' => auth()->id(),
+                    'modified_by' => auth()->id(),
+                ]);
+
+                // For loop through the potters list of users
+                foreach ($potters as $user)
+                {
+                    // Create the Allocated Tasks User records
+                    AllocatedTasksUser::create([
+                        'allocated_task_id' => $new_task->id,
+                        'user_id' => $user->id,
+                        'created_by' => auth()->id(),
+                        'modified_by' => auth()->id(),
+                    ]);
+                        
+                }
+            }
+
+        }
+
+        // If the task is 'Re-Pot', the Inventory record exists and the task is completed
+        if ($task_type === 'Re-Pot' && $inventory && $task->done == 1)
+        {
+            // Get the new inventory record
+            $new_inventory = Inventory::where('tree_id', $task->tree_id)
+                                    ->where('location_id', $task->location_1_id)
+                                    ->where('pot_size_id', $task->new_pot_size_id)
+                                    ->first();
+
+            // Update the current inventory record
+            $inventory->update([
+                'quantity' => $inventory->quantity - $task->quantity,
+                'modified_by' => auth()->id(),
+            ]);
+
+            // If the current inventory record now has a quantity of zero
+            if ($inventory->quantity == 0)
+            {
+                // Delete the inventory record
+                $inventory->delete();
+            }
+
+            // If new inventory record already exists
+            if ($new_inventory)
+            {
+                // Update the new inventory record
+                $new_inventory->update([
+                    'quantity' => $new_inventory->quantity + $task->quantity,
+                    'modified_by' => auth()->id(),
+                ]);
+            }
+            else
+            {
+                // Create a new Inventory record and add it to the database
+                $new_inventory = Inventory::create([
+                    'tree_id' => $task->tree_id,
+                    'pot_size_id' => $task->new_pot_size_id,
+                    'location_id' => $task->location_1_id,
+                    'quantity' => $task->quantity,
+                    'created_by' => auth()->id(),
+                    'modified_by' => auth()->id(),
+                ]);
+            }
+
+            // Get the 'Move' task type record
+            $new_task_type = Task::where('name', 'Move')->first();
+
+            // Create a new 'Move' task and add it to the database
+            $new_task = AllocatedTask::create([
+                'date' => today(),
+                'task_id' => $new_task_type->id,
+                'notes' => "This tree has been re-potted, please move it to it's new location.  The new location will need to be selected",
+                'tree_id' => $task->tree_id,
+                'quantity' => $task->quantity,
+                'location_1_id' => $task->location_1_id,
+                'location_2_id' => null,
+                'current_pot_size_id' => $task->new_pot_size_id,
+                'new_pot_size_id' => null,
+                'done' => 0,
+                'allocated' => 1,
+                'created_by' => auth()->id(),
+                'modified_by' => auth()->id(),
+            ]);
+
+            // For loop through the field hands list of users
+            foreach ($field_hands as $user)
+            {
+                // Create the Allocated Tasks User records
+                AllocatedTasksUser::create([
+                    'allocated_task_id' => $new_task->id,
+                    'user_id' => $user->id,
+                    'created_by' => auth()->id(),
+                    'modified_by' => auth()->id(),
+                ]);
+                        
+            }
+
+        }
+
+        // If the task is 'Destroy', the Inventory record exists and the task is completed
+        if ($task_type === 'Destroy' && $inventory && $task->done == 1)
+        {
+            // Update the current inventory record
+            $inventory->update([
+                'quantity' => $inventory->quantity - $task->quantity,
+                'modified_by' => auth()->id(),
+            ]);
+
+            // If the current inventory record now has a quantity of zero
+            if ($inventory->quantity == 0)
+            {
+                // Delete the inventory record
+                $inventory->delete();
+            }
+
         }
 
         // Redirect to the show view to display the Task object and pass it a success message
@@ -611,6 +830,9 @@ class AllocatedTasksController extends Controller
         // Get the trees from the database
         $trees = Tree::orderBy('plant_id')->get();
 
+        // Get the pot sizes from the database
+        $pot_sizes = PotSize::orderBy('size')->get();
+
         // Get the locations from the database
         $locations = Location::with('area')->with('block')->with('aisle')
                                 ->leftJoin('areas', 'locations.area_id', '=', 'areas.id')
@@ -625,6 +847,7 @@ class AllocatedTasksController extends Controller
         return view('menu_top.allocated_tasks.create_report', [
             'task' => $task,
             'trees' => $trees,
+            'pot_sizes' => $pot_sizes,
             'locations' => $locations,
         ]);
 
@@ -649,27 +872,30 @@ class AllocatedTasksController extends Controller
             'notes' => 'required|string|max:200',
             'tree_id' => 'nullable|exists:trees,id',
             'location_1_id' => 'nullable|exists:locations,id',
+            'current_pot_size_id' => 'nullable|exists:pot_sizes,id',
             
         ]);
 
         // Create an inventory variable
         $inventory = null;
 
-        // If there is a tree and location 1 in the task
-        if ($validated['tree_id'] && $validated['location_1_id'])
+        // If there is a tree, location 1 and current pot size in the task
+        if ($validated['tree_id'] && $validated['location_1_id'] && $validated['current_pot_size_id'])
         {
             // Get the existing inventory record
             $inventory = Inventory::where('tree_id', $validated['tree_id'])
                                     ->where('location_id', $validated['location_1_id'])
+                                    ->where('pot_size_id', $validated['current_pot_size_id'])
                                     ->first();
         }
 
-        // If the inventory record doesn't exist, but the Tree and Location 1 were provided
-        if (!$inventory && $validated['tree_id'] && $validated['location_1_id'])
+        // If the inventory record doesn't exist, but the Tree, Location 1 and Current Pot Size were provided
+        if (!$inventory && $validated['tree_id'] && $validated['location_1_id'] && $validated['current_pot_size_id'])
         {
             // Return back to the create page with errors
             return back()
-                    ->withErrors(['task_id' => "There is no current Inventory record for this combination of Tree and Existing Location"])
+                    ->withErrors(['task_id' => "There is no current Inventory record for this combination of Tree, Existing Location 
+                                                and Current Pot Size."])
                     ->withInput();
         }
 
@@ -691,6 +917,7 @@ class AllocatedTasksController extends Controller
             'notes' => $validated['notes'],
             'tree_id' => $validated['tree_id'],
             'location_1_id' => $validated['location_1_id'],
+            'current_pot_size_id' => $validated['current_pot_size_id'],
             'done' => 0,
             'allocated' => 1,
             'created_by' => auth()->id(),
