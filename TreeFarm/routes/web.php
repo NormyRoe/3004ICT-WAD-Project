@@ -17,8 +17,6 @@ use App\Http\Controllers\ProfileController;
 ****************************************************/
 
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\RolesController;
-use App\Http\Controllers\UsersRolesController;
 use App\Http\Controllers\PotSizesController;
 use App\Http\Controllers\TreeTypesController;
 use App\Http\Controllers\TreesController;
@@ -31,10 +29,8 @@ use App\Http\Controllers\PricesController;
 use App\Http\Controllers\ExceptionPricesController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\AllocatedTasksController;
-use App\Http\Controllers\AllocatedTasksUsersController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\SalesController;
-use App\Http\Controllers\SaleItemsController;
 use App\Http\Controllers\FarmDetailsController;
 use App\Http\Controllers\UserProfileController;
 
@@ -65,7 +61,6 @@ Route::middleware(['auth', 'can.admin-ops'])->group(function () {
 Route::middleware('auth')->group(function () {
     
     Route::resource('allocated_tasks', AllocatedTasksController::class);
-    Route::resource('allocated_tasks_users', AllocatedTasksUsersController::class);
     Route::get('inventories', [InventoriesController::class, 'index'])->name('inventories.index');
     Route::get('inventories/{id}', [InventoriesController::class, 'show'])->whereNumber('id')->name('inventories.show');
 
@@ -85,16 +80,13 @@ Route::middleware(['auth', 'can.sales'])->group(function () {
 
     Route::resource('customers', CustomersController::class);
     Route::resource('sales', SalesController::class);
-    Route::resource('sale_items', SaleItemsController::class);
 
 });
 
 Route::middleware(['auth', 'can.admin'])->group(function () {
 
     Route::resource('farm_details', FarmDetailsController::class);
-    Route::resource('users', UsersController::class);
-    Route::resource('roles', RolesController::class);
-    Route::resource('users_roles', UsersRolesController::class);    
+    Route::resource('users', UsersController::class);    
 
 });
 
