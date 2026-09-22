@@ -23,6 +23,18 @@
     :deleteRoute="route('locations.destroy', $location->id)"
     :cancelRoute="route('locations.index')"
     :name="auth()->user()->first_name"
-/>
+>
+
+    <!-- Conditional message inside the details box -->
+    @if ($location->area->name && ($location->area->name == 'Delivery'
+                            || str_starts_with($location->area->name, 'Potting')))
+
+        <p class="mt-4 text-red-700 font-semibold">
+            Deleting this location record will break system functionality.  Are you sure that you want to do that?
+        </p>
+
+    @endif
+    
+</x-confirm-delete>
 
 @endsection
