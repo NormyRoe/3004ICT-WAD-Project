@@ -52,7 +52,7 @@
             "Quantity",
             "Current Pot Size",
             "New Pot Size",
-            "Notes",
+            "Has Notes",
         ];
 
         // Initialise an empty array for the rows
@@ -91,6 +91,9 @@
                     }
                 }
 
+                // Determine if the task has notes
+                $has_notes = $task->notes ? 'Yes' : 'No';
+
                 // Add the contents of the task variable to the table
                 $currentUserTaskRows[] = [
                     $task->id,
@@ -102,12 +105,12 @@
                     $task->quantity ?? '',
                     $task->current_pot_size?->size ?? '',
                     $task->new_pot_size?->size ?? '',
-                    $task->notes ?? '',
+                    $has_notes,
                 ];
             }
 
         // Hide Columns on small screens
-        $hideColumns = [4, 5, 6, 7, 8, 9];
+        $hideColumns = [4, 5, 6, 7, 8];
 
     @endphp
 
@@ -157,7 +160,7 @@
                 "Quantity",
                 "Current Pot Size",
                 "New Pot Size",
-                "Notes",
+                "Has Notes",
             ];
 
             // Initialise an empty array for the rows
@@ -196,6 +199,9 @@
                         }
                     }
 
+                    // Determine if the task has notes
+					$has_notes = $task->notes ? 'Yes' : 'No';
+
                     // Add the contents of the task variable to the table
                     $unallocatedTaskRows[] = [
                         $task->id,
@@ -207,12 +213,12 @@
                         $task->quantity ?? '',
                         $task->current_pot_size?->size ?? '',
                         $task->new_pot_size?->size ?? '',
-                        $task->notes ?? '',
+                        $has_notes,
                     ];
                 }
 
             // Hide Columns on small screens
-            $hideColumns = [4, 5, 6, 7, 8, 9];
+            $hideColumns = [4, 5, 6, 7, 8];
 
         @endphp
 
@@ -262,8 +268,7 @@
                 "Quantity",
                 "Current Pot Size",
                 "New Pot Size",
-                "Notes",
-                
+                "Has Notes",
             ];
 
             // Initialise an empty array for the rows
@@ -302,6 +307,9 @@
                         }
                     }
 
+                    // Determine if the task has notes
+					$has_notes = $task->notes ? 'Yes' : 'No';
+
                     // Add the contents of the task variable to the table
                     $allAllocatedTaskRows[] = [
                         $task->id,
@@ -313,12 +321,12 @@
                         $task->quantity ?? '',
                         $task->current_pot_size?->size ?? '',
                         $task->new_pot_size?->size ?? '',
-                        $task->notes ?? '',
+                        $has_notes,
                     ];
                 }
 
             // Hide Columns on small screens
-            $hideColumns = [4, 5, 6, 7, 8, 9];
+            $hideColumns = [4, 5, 6, 7, 8];
 
         @endphp
 
@@ -362,8 +370,7 @@
                 "Quantity",
                 "Current Pot Size",
                 "New Pot Size",
-                "Notes",
-                
+                "Has Notes",
             ];
 
             // Initialise an empty array for the rows
@@ -402,6 +409,9 @@
                         }
                     }
 
+                    // Determine if the task has notes
+					$has_notes = $task->notes ? 'Yes' : 'No';
+
                     // Add the contents of the task variable to the table
                     $completedTaskRows[] = [
                         $task->id,
@@ -413,12 +423,12 @@
                         $task->quantity ?? '',
                         $task->current_pot_size?->size ?? '',
                         $task->new_pot_size?->size ?? '',
-                        $task->notes ?? '',
+                        $has_notes,
                     ];
                 }
 
             // Hide Columns on small screens
-            $hideColumns = [4, 5, 6, 7, 8, 9];
+            $hideColumns = [4, 5, 6, 7, 8];
 
         @endphp
 

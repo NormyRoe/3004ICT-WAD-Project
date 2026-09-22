@@ -14,6 +14,11 @@ use App\Models\ExceptionPrice;
 use App\Models\PotSize;
 use App\Models\Tree;
 use App\Models\Inventory;
+use App\Models\Location;
+use App\Models\Area;
+use App\Models\Task;
+use App\Models\AllocatedTask;
+use App\Models\AllocatedTasksUser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -200,10 +205,12 @@ class SalesController extends Controller
         // Get the current inventory
         $inventories = Inventory::select('inventories.*')
                                     ->join('trees', 'inventories.tree_id', '=', 'trees.id')
+                                    ->join('locations', 'inventories.location_id', '=', 'locations.id')
+                                    ->join('areas', 'locations.area_id', '=', 'areas.id')
                                     ->with([
                                         'tree',
                                         'pot_size',
-                                    ])->orderBy('trees.common_name')->get();
+                                    ])->where('areas.name', 'Selling')->orderBy('trees.common_name')->get();
 
         // Get the farm's details from the database
         $farm = FarmDetail::first();
@@ -231,7 +238,7 @@ class SalesController extends Controller
     public function update(Request $request, $id)
     {
         // Get the sale object
-        $sale = Sale::findOrFail($id);
+        $sale = Sale::with('customer')->findOrFail($id);
 
         // Wrap everything in a database transaction to prevent partial successes
         DB::transaction(function () use ($request, $sale) {
@@ -294,6 +301,13 @@ class SalesController extends Controller
                     // Save the inventory record
                     $inventory->save();
 
+                    // Check if the inventory's quantity is now zero
+                    if ($inventory->quantity === 0)
+                    {
+                        // Delete the inventory record
+                        $inventory->delete();
+                    }
+
                 }
 
             }
@@ -309,6 +323,113 @@ class SalesController extends Controller
                 'modified_by' => auth()->id(),
             ]);
 
+            // If the status has gone to "Awaiting Delivery"
+            if ($new_status === 'Awaiting Delivery')
+            {
+                // Get all of the current users
+                $current_users = User::where('status', 'Approved')
+                                        ->orderBy('last_name')
+                                        ->orderBy('first_name')
+                                        ->get();
+
+                // Take just the field hands out of current_users list
+                $field_hands = $current_users->filter(function ($u) {
+                                                    return $u->hasRole('Field Hand');
+                                                });
+
+                // Get the 'Move' task type record
+                $task_type = Task::where('name', 'Move')->first();
+
+                // Get the delivery area location
+                $delivery_location = Location::select('locations.*')
+                                    ->join('areas', 'locations.area_id', '=', 'areas.id')
+                                    ->where('areas.name', 'Delivery')
+                                    ->first();
+
+                // For each of the sale items
+                foreach ($items as $item) {
+
+                    // Get the inventory object
+                    $inventory = Inventory::find($item['inventory_id']);
+
+                    // Create a new 'Move' task and add it to the database
+                    $new_task = AllocatedTask::create([
+                        'date' => today(),
+                        'task_id' => $task_type->id,
+                        'notes' => "This tree is for {$sale->customer->first_name} {$sale->customer->last_name}.  Please move it to the delivery area",
+                        'tree_id' => $inventory->tree_id,
+                        'quantity' => $item['quantity'],
+                        'location_1_id' => $inventory->location_id,
+                        'location_2_id' => $delivery_location->id,
+                        'current_pot_size_id' => $inventory->pot_size_id,
+                        'new_pot_size_id' => null,
+                        'done' => 0,
+                        'allocated' => 1,
+                        'created_by' => auth()->id(),
+                        'modified_by' => auth()->id(),
+                    ]);
+
+                    // For loop through the field hands list of users
+                    foreach ($field_hands as $user)
+                    {
+                        // Create the Allocated Tasks User records
+                        AllocatedTasksUser::create([
+                            'allocated_task_id' => $new_task->id,
+                            'user_id' => $user->id,
+                            'created_by' => auth()->id(),
+                            'modified_by' => auth()->id(),
+                        ]);
+                                
+                    }
+
+                }
+
+            }
+
+            // If the status has gone from "Awaiting Delivery" to "Delivered"
+            if ($old_status === 'Awaiting Delivery' && $new_status === 'Delivered')
+            {
+                // Get the delivery area location
+                $delivery_location = Location::select('locations.*')
+                                    ->join('areas', 'locations.area_id', '=', 'areas.id')
+                                    ->where('areas.name', 'Delivery')
+                                    ->first();
+
+                // For each of the sale items
+                foreach ($items as $item) {
+
+                    // Get the sale inventory object
+                    $sale_inventory = Inventory::find($item['inventory_id']);
+
+                    // Get the delivery inventory record from the delivery area
+                    $delivery_inventory = Inventory::with('location')
+                                            ->where('tree_id', $sale_inventory->tree_id)
+                                            ->where('location_id', $delivery_location->id)
+                                            ->where('pot_size_id', $sale_inventory->pot_size_id)
+                                            ->first();
+
+                    // If the delivery record doesn't exist
+                    if (!$delivery_inventory) {
+                        throw new \Exception("Invalid: The Inventory record does not exist in the Delivery location.");
+                    }
+
+                    // Update the inventory's quantity
+                    $delivery_inventory->quantity -= $item['quantity'];
+
+                    // Save the inventory record
+                    $delivery_inventory->save();
+
+                    // Check if the delivery inventory's quantity is now zero
+                    if ($delivery_inventory->quantity === 0)
+                    {
+                        // Delete the delivery inventory record
+                        $delivery_inventory->delete();
+                    }
+
+                }
+
+            }
+
         });
 
         // If the status is Delivered or Cancelled
@@ -323,6 +444,7 @@ class SalesController extends Controller
         return redirect()->route('sales.edit', $sale->id)->with('success', 'The Sales record has been successfully updated.');
 
     }
+
 
     /***************************************************
 

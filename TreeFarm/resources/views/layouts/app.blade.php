@@ -11,7 +11,7 @@
         <x-sidebar :name="auth()->user()->username" />
 
         <!-- Main Content Area -->
-        <main class="flex-1 p-6">
+        <main class="flex-1 p-6 overflow-hidden">
             @yield('content')
             
         </main>

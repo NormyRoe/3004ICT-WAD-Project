@@ -144,6 +144,8 @@
                             <label class="text-orange-900 font-semibold block">
                                 {{ $sale->delivery_kms }}
                             </label>
+                            <!-- Hidden inputs so the update() method still receives the required information -->
+                            <input type="hidden" name="delivery_kms" value="{{ $sale->delivery_kms }}">
                         @endif
 
                     </label>
@@ -183,6 +185,8 @@
                         <label class="text-orange-900 font-semibold block">
                             {{ $sale->delivery_fee }}
                         </label>
+                        <!-- Hidden inputs so the update() method still receives the required information -->
+                        <input type="hidden" name="delivery_fee" value="{{ $sale->delivery_fee }}">
                     @endif
 
                 </div>
@@ -202,6 +206,8 @@
                         <label class="text-orange-900 font-semibold block">
                             {{ $sale->discount }}
                         </label>
+                        <!-- Hidden inputs so the update() method still receives the required information -->
+                        <input type="hidden" name="discount" value="{{ $sale->discount }}">
                     @endif
 
                 </div>
@@ -220,8 +226,10 @@
                         >
                     @else
                         <label class="text-orange-900 font-semibold block">
-                            {{ $sale->discount }}
+                            {{ $sale->total_sales_price }}
                         </label>
+                        <!-- Hidden inputs so the update() method still receives the required information -->
+                        <input type="hidden" name="total_sales" value="{{ $sale->total_sales_price }}">
                     @endif
 
                 </div>

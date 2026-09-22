@@ -618,8 +618,7 @@ class AllocatedTasksController extends Controller
                 $new_task = AllocatedTask::create([
                     'date' => today(),
                     'task_id' => $new_task_type->id,
-                    'notes' => "This tree has been moved to a potting area, please re-pot it in to a larger pot.  
-                                The new Pot Size will need to be selected.",
+                    'notes' => "This tree has been moved to a potting area, please re-pot it in to a larger pot.  The new Pot Size will need to be selected.",
                     'tree_id' => $task->tree_id,
                     'quantity' => $task->quantity,
                     'location_1_id' => $task->location_2_id,
