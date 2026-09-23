@@ -21,7 +21,7 @@
 >
 
     <!-- Conditional message inside the details box -->
-    @if ($area->name && $area->name == 'Delivery')
+    @if ($area->name && ($area->name == 'Delivery' || $area->name == 'Selling'))
 
         <p class="mt-4 text-red-700 font-semibold">
             Deleting this area record will break system functionality.  Are you sure that you want to do that?

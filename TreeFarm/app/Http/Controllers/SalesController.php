@@ -47,8 +47,12 @@ class SalesController extends Controller
                                     ['customer.first_name', 'asc'],
                                 ]);
 
+        // Create a cut off period of 6 months ago
+        $cut_off = today()->subMonths(6);
+
         // Get the completed sales from the database
         $completed_sales = Sale::with(['customer', 'user'])
+                                ->where('date', '>=', $cut_off)
                                 ->whereIn('status', ['Delivered', 'Cancelled'])
                                 ->get()
                                 ->sortBy([

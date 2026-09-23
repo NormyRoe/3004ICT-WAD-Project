@@ -60,6 +60,12 @@
                             In Progress
                         </option>
                         <option 
+                            value="Cancelled"
+                            {{ old('status', $sale->status) == 'Cancelled' ? 'selected' : '' }}
+                        >
+                            Cancelled
+                        </option>
+                        <option 
                             value="Awaiting Payment"
                             {{ old('status', $sale->status) == 'Awaiting Payment' ? 'selected' : '' }}
                         >

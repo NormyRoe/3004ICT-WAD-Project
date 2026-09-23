@@ -45,7 +45,10 @@ class AllocatedTasksController extends Controller
             'allocated_task_users'
         ])->where('allocated', 0)->where('done', 0)->orderBy('date')->get();
 
-        // Get all of the allocated tasks from the database
+        // Create a cut off period of 6 months ago
+        $cut_off = today()->subMonths(6);
+
+        // Get all of the allocated tasks from the database within the cut off period
         $all_allocated_tasks = AllocatedTask::with([
             'task',
             'tree',
@@ -58,7 +61,7 @@ class AllocatedTasksController extends Controller
             'location_2.block',
             'location_2.aisle',
             'allocated_task_users'
-        ])->where('allocated', 1)->orderBy('date')->get();
+        ])->where('allocated', 1)->where('date', '>=', $cut_off)->orderBy('date')->get();
 
         // Derive the open allocated tasks
         $allocated_tasks = $all_allocated_tasks->filter(function ($t) {

@@ -34,21 +34,6 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\FarmDetailsController;
 use App\Http\Controllers\UserProfileController;
 
-/***************************************************
-
-    AJAX Controller Routes for the application
-    (these are for refreshing tables without 
-    reloading the page)
-    (Protected by authentication middleware)
-
-****************************************************/
-
-Route::middleware(['auth', 'can.admin-ops'])->group(function () {
-
-    Route::get('pot_sizes/json', [PotSizesController::class, 'list_json'])
-            ->name('pot_sizes.json');
-
-});
 
 /***************************************************
 
@@ -115,7 +100,7 @@ Route::middleware(['auth', 'can.admin-sales'])->group(function () {
 
     Additional Controller Routes for the application
     (these are not part of the standard 7 resource 
-    routes and aren't part of AJAX functionality)
+    routes)
     (Protected by authentication middleware)
 
 ****************************************************/

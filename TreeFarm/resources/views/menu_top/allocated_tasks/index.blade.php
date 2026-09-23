@@ -11,7 +11,7 @@
     <!-- Page text  -->
     <p class="mt-4 text-stone-700">
         Here are all of your currently allocated tasks.  If you are a manager, then this page also shows all unallocated, 
-        currently allocated and completed tasks.
+        all currently allocated, and completed tasks for the last 6 months.
     </p>
 
     <!-- Update Success Message  -->
@@ -349,7 +349,7 @@
 
         <!-- Label and Buttons -->
         <div class="flex justify-between items-center mt-10">
-            <h3 class="text-2xl font-bold text-green-900">All Completed Tasks</h3>
+            <h3 class="text-2xl font-bold text-green-900">Completed Tasks (last 6 Months)</h3>
             <div class="flex gap-4">
                 <x-button-admin type="submit" name="view_completed" value="View" />
             </div>

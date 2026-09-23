@@ -98,7 +98,7 @@
 
     <!-- Label and Buttons -->
     <div class="flex justify-between items-center mt-10">
-        <h3 class="text-2xl font-bold text-green-900">Completed and Cancelled Sales</h3>
+        <h3 class="text-2xl font-bold text-green-900">Completed and Cancelled Sales (last 6 Months)</h3>
         <div class="flex gap-4">
             <x-button-admin type="submit" name="view" value="View" />
         </div>
