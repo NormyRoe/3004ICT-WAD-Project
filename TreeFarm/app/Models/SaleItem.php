@@ -16,6 +16,8 @@ class SaleItem extends Model
         'sales_id',
         'inventory_id',
         'quantity',
+        'common_name',
+        'pot_size',
         'unit_price',
         'discount',
         'total_price',
