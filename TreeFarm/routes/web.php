@@ -33,6 +33,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\FarmDetailsController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\ReportsController;
 
 
 /***************************************************
@@ -186,6 +187,35 @@ Route::middleware(['auth', 'can.inventory'])->group(function () {
 
 /***************************************************
 
+    Report Controller Routes for the application
+    (Protected by authentication middleware)
+
+****************************************************/
+
+Route::middleware(['auth', 'can.admin'])->group(function () {
+
+    // Sales reports menu page
+    Route::get('/reports/sales', [ReportsController::class, 'sales_reports'])
+        ->name('reports.sales_reports');
+
+    // Sales by salesperson
+    Route::post('/reports/sales/by-user', [ReportsController::class, 'sales_by_user'])
+        ->name('reports.sales_by_user');
+    // Sales by tree & pot size
+    Route::post('/reports/sales/by-tree-pot', [ReportsController::class, 'sales_by_tree_pot'])
+        ->name('reports.sales_by_tree_pot');
+
+    // Export to CSV
+    Route::post('/reports/sales_by_user/csv', [ReportsController::class, 'sales_by_user_csv'])
+        ->name('reports.sales_by_user_csv');
+    Route::post('/reports/sales_by_tree_pot/csv', [ReportsController::class, 'sales_by_tree_pot_csv'])
+        ->name('reports.sales_by_tree_pot_csv');
+
+});
+
+
+/***************************************************
+
     Routes added by Breeze to the application
 
 ****************************************************/
@@ -256,6 +286,10 @@ Route::middleware(['auth', 'can.admin'])->group(function () {
     Route::get('/admin', function () {
         return view('menu_top.admin');
     })->name('admin');
+
+    Route::get('/reports', function () {
+        return view('menu_top.reports');
+    })->name('reports');
 
 });
 

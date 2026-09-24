@@ -14,7 +14,7 @@ Note about the base URL:
 
     This ensures that the application works successfully, even if the application is not located immediately under your html folder.
 
-Note about the use of Third-Party API:
+Note about the use of a Third-Party API:
 
     The Delivery Distance calculation is done using the free OpenRouteService APIs.
 
@@ -27,3 +27,6 @@ Note about the use of Third-Party API:
 
     The environment that this application was created in required the use of a Proxy Server in order to make outgoing HTTPS requests.  Please either update those proxy settings in SalesController.php to match your Proxy Server; or remove them if your environment doesn't require a Proxy Server.
 
+Note about GST:
+
+    If your prices already include GST in them, then please change the GST Rate in the Prices table to '0'.  The application has been built to handle a GST Rate of zero, so please do not delete that reference data record.

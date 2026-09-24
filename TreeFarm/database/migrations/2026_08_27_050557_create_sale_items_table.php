@@ -37,6 +37,8 @@ return new class extends Migration
 
             ****************************************************/
             $table->integer('quantity');
+            $table->string('common_name', 100);
+            $table->string('pot_size', 10);
             $table->decimal('unit_price', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->nullable();
             $table->decimal('total_price', 10, 2)->nullable();

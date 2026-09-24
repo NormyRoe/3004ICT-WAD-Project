@@ -31,12 +31,13 @@
 
     @endcan
 
-    <!-- Everyone can see this menu option -->
-    <a class="block text-emerald-900 font-semibold hover:bg-yellow-200 py-3 px-2" href="#"
-    >Reports</a>
-
-    <!-- Only those with Admin access can see this menu option -->
+    <!-- Only those with Admin access can see these menu options -->
     @can('admin-access')
+
+        <a class="{{ request()->routeIs('reports*') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
+                    hover:bg-yellow-200 py-3 px-2"
+            href="{{ route('reports') }}"
+        >Reports</a>
 
         <a class="{{ request()->routeIs('admin*') ? 'bg-emerald-700 text-yellow-200 rounded' : '' }} block text-emerald-900 font-semibold 
                     hover:bg-yellow-200 py-3 px-2" 

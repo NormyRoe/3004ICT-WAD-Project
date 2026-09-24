@@ -5,6 +5,7 @@
     'hideColumns' => [],
     'tbodyId' => null,
     'paginate' => false,
+    'report' => false,
 ])
 
 <!-- ========================================= -->
@@ -73,20 +74,24 @@
                 @foreach ($rows as $row)
                     <tr class="hover:bg-amber-200">
 
-                        <!-- Radio button column -->
-                        <td class="px-2 py-1 border border-yellow-800 text-center w-12">
-                            <input 
-                                type="radio" 
-                                name="selected_row" 
-                                value="{{ $row[0] }}" 
-                                class="select-row"
-                            >
-                        </td>
+                        @if(!$report)
+
+                            <!-- Radio button column -->
+                            <td class="px-2 py-1 border border-yellow-800 text-center w-12">
+                                <input 
+                                    type="radio" 
+                                    name="selected_row" 
+                                    value="{{ $row[0] }}" 
+                                    class="select-row"
+                                >
+                            </td>
+
+                        @endif
 
                         <!-- Other columns -->
                         @foreach ($row as $index => $cell)
 
-                            @if ($index === 0)
+                            @if ($index === 0 && !$report)
                                 <!-- Hide ID column -->
                                 <td class="hidden"></td>
                             @else

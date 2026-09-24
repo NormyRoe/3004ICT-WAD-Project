@@ -276,11 +276,19 @@ class SalesController extends Controller
             // Create ALL sale_items from items_json
             foreach ($items as $item) {
 
+                // Get the inventory object
+                $inventory = Inventory::with([
+                                            'tree',
+                                            'pot_size',
+                                        ])->findOrFail($item['inventory_id']);
+
                 // Create the Sale Item
                 SaleItem::create([
                     'sales_id'     => $sale->id,
                     'inventory_id' => $item['inventory_id'],
                     'quantity'     => $item['quantity'],
+                    'common_name'  => $inventory->tree->common_name,
+                    'pot_size'     => $inventory->pot_size->size,
                     'unit_price'   => $item['unit_price'],
                     'discount'     => $item['discount'],
                     'total_price'  => $item['total_price'],
