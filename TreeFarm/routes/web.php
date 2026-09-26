@@ -172,6 +172,8 @@ Route::middleware(['auth', 'can.sales'])->group(function () {
 
     Route::get('customers/{id}/sales', [CustomersController::class, 'sales_history'])
             ->name('customers.sales');
+    Route::get('customers/{id}/new_sale', [CustomersController::class, 'new_sale'])
+            ->name('customers.new_sale');
     Route::post('/sales/calc-kms', [SalesController::class, 'calcKms'])
             ->name('sales.calcKms');
 

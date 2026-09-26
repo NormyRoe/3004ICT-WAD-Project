@@ -81,6 +81,11 @@
             <x-button-admin type="button" value="Update" />
         </a>
 
+        <!-- New Sale -->
+        <a href="{{ route('customers.new_sale', $customer->id) }}">
+            <x-button-admin type="button" value="New Sale" />
+        </a>
+
         <!-- Sales History -->
         <a href="{{ route('customers.sales', $customer->id) }}">
             <x-button-admin type="button" value="Sales History" />

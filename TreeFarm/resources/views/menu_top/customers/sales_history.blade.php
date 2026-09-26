@@ -59,8 +59,8 @@
                             $sale_item->id,
                             $sale->status,
                             $sale->date->format('d/m/Y'),
-                            $sale_item->inventory->tree->common_name,
-                            $sale_item->inventory->pot_size->size,
+                            $sale_item->common_name,
+                            $sale_item->pot_size,
                             $sale_item->quantity,
                             $sale_item->total_price,
                         ];
@@ -125,8 +125,8 @@
                         $deliveredSaleRows[] = [
                             $sale_item->id,
                             $sale->date->format('d/m/Y'),
-                            $sale_item->inventory->tree->common_name,
-                            $sale_item->inventory->pot_size->size,
+                            $sale_item->common_name,
+                            $sale_item->pot_size,
                             $sale_item->quantity,
                             $sale_item->total_price,
                         ];

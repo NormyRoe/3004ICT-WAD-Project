@@ -50,6 +50,7 @@
                     class="p-2 border border-yellow-800 rounded text-xs md:text-sm"
                     required
                 >
+                    
                     <!-- Empty option (deselect filter) -->
                     <option value=""></option>
 
@@ -71,51 +72,64 @@
             <div x-data="{ search: '', open: false }" class="mt-4">
 
                 <label class="block text-green-900 font-semibold">Customer</label>
-
-                <!-- Search box -->
-                <input 
-                    x-model="search"
-                    @focus="open = true"
-                    @click.away="open = false"
-                    type="text"
-                    placeholder="Search customers..."
-                    class="border border-yellow-800 rounded p-2 w-64"
-                    x-init="
-                        @if(old('customer_id'))
-                            search = '{{ $customers->firstWhere('id', old('customer_id'))->last_name }}, {{ $customers->firstWhere('id', old('customer_id'))->first_name }}';
-                            $refs.customerSelect.value = '{{ old('customer_id') }}';
-                        @endif
-                    "
-                >
-
-                <!-- Hidden select that actually submits -->
-                <select name="customer_id" x-ref="customerSelect" class="hidden" required>
-                    @foreach ($customers as $customer)
+                @if (isset($customer))
+                    <!-- Select that actually submits -->
+                    <select 
+                        name="customer_id" 
+                        class="p-2 border border-yellow-800 rounded text-xs md:text-sm" 
+                        required
+                    >                        
                         <option value="{{ $customer->id }}">
                             {{ $customer->last_name }}, {{ $customer->first_name }}
                         </option>
-                    @endforeach
-                </select>
+                    </select>
+                @else
+                    <!-- Search box -->
+                    <input 
+                        x-model="search"
+                        @focus="open = true"
+                        @click.away="open = false"
+                        type="text"
+                        placeholder="Search customers..."
+                        class="border border-yellow-800 rounded p-2 w-64"
+                        x-init="
+                            @if(old('customer_id'))
+                                search = '{{ $customers->firstWhere('id', old('customer_id'))->last_name }}, {{ $customers->firstWhere('id', old('customer_id'))->first_name }}';
+                                $refs.customerSelect.value = '{{ old('customer_id') }}';
+                            @endif
+                        "
+                    >
 
-                <!-- Filtered dropdown -->
-                <ul 
-                    x-show="open"
-                    class="border border-yellow-800 bg-white rounded mt-1 max-h-40 overflow-y-auto w-64 absolute z-50"
-                >
-                    @foreach ($customers as $customer)
-                        <li 
-                            @click="
-                                $refs.customerSelect.value = '{{ $customer->id }}';
-                                search = '{{ $customer->last_name }}, {{ $customer->first_name }}';
-                                open = false;
-                            "
-                            x-show="'{{ strtolower($customer->last_name . ', ' . $customer->first_name) }}'.includes(search.toLowerCase())"
-                            class="p-2 hover:bg-yellow-200 cursor-pointer"
-                        >
-                            {{ $customer->last_name }}, {{ $customer->first_name }}
-                        </li>
-                    @endforeach
-                </ul>
+                    <!-- Hidden select that actually submits -->
+                    <select name="customer_id" x-ref="customerSelect" class="hidden" required>
+                        @foreach ($customers as $customer)
+                            <option value="{{ $customer->id }}">
+                                {{ $customer->last_name }}, {{ $customer->first_name }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <!-- Filtered dropdown -->
+                    <ul 
+                        x-show="open"
+                        class="border border-yellow-800 bg-white rounded mt-1 max-h-40 overflow-y-auto w-64 absolute z-50"
+                    >
+                        @foreach ($customers as $customer)
+                            <li 
+                                @click="
+                                    $refs.customerSelect.value = '{{ $customer->id }}';
+                                    search = '{{ $customer->last_name }}, {{ $customer->first_name }}';
+                                    open = false;
+                                "
+                                x-show="'{{ strtolower($customer->last_name . ', ' . $customer->first_name) }}'.includes(search.toLowerCase())"
+                                class="p-2 hover:bg-yellow-200 cursor-pointer"
+                            >
+                                {{ $customer->last_name }}, {{ $customer->first_name }}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+                
 
             </div>
 

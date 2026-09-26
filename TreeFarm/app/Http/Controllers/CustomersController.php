@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Sale;
 use App\Models\SaleItem;
-use App\Models\Inventory;
-use App\Models\Tree;
-use App\Models\PotSize;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\UsersRole;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -234,32 +234,54 @@ class CustomersController extends Controller
         // Get the delivered sales for this customer
         $delivered_sales = $customer->sales()
                             ->where('status', 'Delivered')
-                            ->with([
-                                'sale_items',
-                                'sale_items.inventory',
-                                'sale_items.inventory.tree',
-                                'sale_items.inventory.pot_size',
-                            ])
+                            ->with('sale_items')
                             ->orderBy('date', 'desc')
                             ->get();
 
         // Get all other sales for this customer
         $other_sales = $customer->sales()
                             ->where('status', '!=', 'Delivered')
-                            ->with([
-                                'sale_items',
-                                'sale_items.inventory',
-                                'sale_items.inventory.tree',
-                                'sale_items.inventory.pot_size',
-                            ])                            
+                            ->with('sale_items')                            
                             ->orderBy('date', 'desc')
                             ->get();
 
-        // Return the edit view and pass it the customer object
+        // Return the sales histry view and pass it the customer object and arrays
         return view('menu_top.customers.sales_history', [
             'customer' => $customer,
             'delivered_sales' => $delivered_sales,
             'other_sales' => $other_sales,
+        ]);
+
+    }
+
+    /***************************************************
+
+    new_sale($id)
+
+    This function displays the form for creating a new
+    Sale for the selected Customer.
+
+    ****************************************************/
+    public function new_sale($id)
+    {
+        // Get all of the other current users
+        $current_users = User::where('status', 'Approved')
+                                ->orderBy('last_name')
+                                ->orderBy('first_name')
+                                ->get();
+
+        // Take just the sales users out of current_users list
+        $sales_users = $current_users->filter(function ($u) {
+                                            return $u->hasAnyRole(['Owner', 'Sales Manager', 'Sales']);
+                                        });
+        
+        // Get the customer object
+        $customer = Customer::findOrFail($id);
+
+        // Return the sales create view and pass it the customer object
+        return view('menu_top.sales.create_form', [
+            'sales_users' => $sales_users,
+            'customer' => $customer,
         ]);
 
     }
