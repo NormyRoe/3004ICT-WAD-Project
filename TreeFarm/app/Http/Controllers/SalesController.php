@@ -41,10 +41,10 @@ class SalesController extends Controller
         $current_sales = Sale::with(['customer', 'user'])
                                 ->whereNotIn('status', ['Delivered', 'Cancelled'])
                                 ->get()
-                                ->sortBy([
-                                    ['status', 'asc'],
+                                ->sortBy([                                    
                                     ['customer.last_name', 'asc'],
                                     ['customer.first_name', 'asc'],
+                                    ['date', 'asc'],
                                 ]);
 
         // Create a cut off period of 6 months ago
@@ -55,10 +55,10 @@ class SalesController extends Controller
                                 ->where('date', '>=', $cut_off)
                                 ->whereIn('status', ['Delivered', 'Cancelled'])
                                 ->get()
-                                ->sortBy([
-                                    ['status', 'asc'],
+                                ->sortBy([                                    
                                     ['customer.last_name', 'asc'],
                                     ['customer.first_name', 'asc'],
+                                    ['date', 'desc'],
                                 ]);
 
         // Return the index view and pass it the array
