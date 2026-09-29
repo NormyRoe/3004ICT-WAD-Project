@@ -54,7 +54,7 @@
             'Plant ID',
             'Type',
             "Tree",
-            "Pot_Size",
+            "Pot Size",
             "Area",
             "Block",
             "Aisle",

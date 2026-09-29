@@ -45,11 +45,11 @@
             "Status",
             "Customer",
             "Date",
-            "Delivery_Notes",
-            "Delivery_Kms",
-            "Delivery_Fee",
+            "Delivery Notes",
+            "Delivery Kms",
+            "Delivery Fee",
             "Discount",
-            "Total_Sales",
+            "Total Sales",
             "User",
         ];
 
@@ -83,7 +83,7 @@
         :headings="$currentSaleHeadings" 
         :rows="$currentSaleRows"
         :hideColumns="$hideColumns"
-        :filterColumns="[1, 3, 8, 9]"
+        :filterColumns="[1, 2, 3, 9]"
         :showTotals="true"
         :sumColumn="8"
         tbodyId="current_sales_table_body"
@@ -113,11 +113,11 @@
             "Status",
             "Customer",
             "Date",
-            "Delivery_Notes",
-            "Delivery_Kms",
-            "Delivery_Fee",
+            "Delivery Notes",
+            "Delivery Kms",
+            "Delivery Fee",
             "Discount",
-            "Total_Sales",
+            "Total Sales",
             "User",
         ];
 
@@ -151,7 +151,7 @@
         :headings="$completedSaleHeadings" 
         :rows="$completedSaleRows"
         :hideColumns="$hideColumns"
-        :filterColumns="[1, 3, 8, 9]"
+        :filterColumns="[1, 2, 3,  9]"
         :showTotals="true"
         :sumColumn="8"
         tbodyId="completed_sales_table_body"
