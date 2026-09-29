@@ -747,8 +747,21 @@ class AllocatedTasksController extends Controller
 
         }
 
-        // Redirect to the show view to display the Task object and pass it a success message
-        return redirect("allocated_tasks/$task->id")->with('success', 'The task has been successfully updated.');
+        // Check if the task is completed
+        if ($done == 1)
+        {
+            // Redirect to the index page and pass it a success message
+            return redirect('allocated_tasks')->with('success', 'The task has been successfully updated.');
+            
+        }
+
+        // Else the task is still to be completed
+        else
+        {
+            // Redirect to the show view to display the Task object and pass it a success message
+            return redirect("allocated_tasks/$task->id")->with('success', 'The task has been successfully updated.');
+
+        }
 
     }
 
